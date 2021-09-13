@@ -14,10 +14,15 @@ let candidateSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    specialization_id: [{
-        type: ObjectId,
-        required: true
-    }],
+    phone: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    // specialization_id: [{
+    //     type: ObjectId,
+    //     required: true
+    // }],
     password: {
         type: String,
         required: true,
