@@ -9,6 +9,35 @@ const candidateRegisterService = async (body) => {
     return new Promise(async (resolve, reject) => {
         let model = {};
         model = new CandidateDetailSchema(body);
+        // var transporter = nodemailer.createTransport({
+        //     host: 'smtp.gmail.com',
+        //     port: 465,
+        //     auth: {
+        //         user: "intralogicitsolutions.developer@gmail.com",
+        //         pass: "IntralogicITDev@12",
+        //     },
+        // });
+        // fs.readFile('index.html', { encoding: 'utf-8' }, function (err, html) {
+        //     if (err) {
+        //         console.log(err);
+        //     } else {
+        //         var mailOptions = {
+        //             from: "intralogicitsolutions.developer@gmail.com",
+        //             to: "leena@bloombit.co",
+        //             subject: "Subject",
+        //             html: html
+        //         };
+        //         transporter.sendMail(mailOptions, function (err, info) {
+        //             if (err) {
+        //                 console.log(err)
+        //             } else {
+        //                 console.log(info);
+        //             }
+        //             func.msCons.successJson['data'] = docs;
+        //             return resolve(func.msCons.successJson)
+        //         })
+        //     }
+        // });
         await model.validate(async function (err, data) {
             if (err) {
                 const keys = Object.keys(err.errors)
@@ -32,36 +61,37 @@ const candidateRegisterService = async (body) => {
                         func.msCons.errorJson['error'] = err
                         return resolve(func.msCons.errorJson)
                     } else {
-                        var transporter = nodemailer.createTransport({
-                            host: 'smtp.gmail.com',
-                            port: 465,
-                            auth: {
-                                user: "intralogicitsolutions.developer@gmail.com",
-                                pass: "IntralogicITDev@12",
-                            },
-                        });
-                        fs.readFile('index.html', { encoding: 'utf-8' }, function (err, html) {
-                            if (err) {
-                                console.log(err);
-                            } else {
-                                var mailOptions = {
-                                    from: "intralogicitsolutions.developer@gmail.com",
-                                    to: "leena@bloombit.co",
-                                    subject: "Subject",
-                                    html: html
-                                };
-                                transporter.sendMail(mailOptions, function (err, info) {
-                                    if (err) {
-                                        console.log(err)
-                                    } else {
-                                        console.log(info);
-                                    }
-                                    func.msCons.successJson['data'] = docs;
-                                    return resolve(func.msCons.successJson)
-                                })
-                            }
-                        });
-
+                        // var transporter = nodemailer.createTransport({
+                        //     host: 'smtp.gmail.com',
+                        //     port: 465,
+                        //     auth: {
+                        //         user: "intralogicitsolutions.developer@gmail.com",
+                        //         pass: "IntralogicITDev@12",
+                        //     },
+                        // });
+                        // fs.readFile('index.html', { encoding: 'utf-8' }, function (err, html) {
+                        //     if (err) {
+                        //         console.log(err);
+                        //     } else {
+                        //         var mailOptions = {
+                        //             from: "intralogicitsolutions.developer@gmail.com",
+                        //             to: "leena@bloombit.co",
+                        //             subject: "Subject",
+                        //             html: html
+                        //         };
+                        //         transporter.sendMail(mailOptions, function (err, info) {
+                        //             if (err) {
+                        //                 console.log(err)
+                        //             } else {
+                        //                 console.log(info);
+                        //             }
+                        //             func.msCons.successJson['data'] = docs;
+                        //             return resolve(func.msCons.successJson)
+                        //         })
+                        //     }
+                        // });
+                        func.msCons.successJson['data'] = docs;
+                        return resolve(func.msCons.successJson)
                     }
                 });
             }
@@ -71,12 +101,22 @@ const candidateRegisterService = async (body) => {
 
 const candidateLoginService = async (body) => {
     console.log(body);
-    let query = {
-        $and: [{
-            email: body.email
-        }, {
-            password: body.password
-        }]
+    let query = {};
+    if (req.body.password !== undefined) {
+
+        query = {
+            $and: [{
+                email: body.email
+            }, {
+                password: body.password
+            }]
+        }
+    } else {
+        query = {
+            $and: [{
+                email: body.email
+            }]
+        }
     }
     return new Promise((resolve, reject) => {
         CandidateDetailSchema.find(query, function (err, docs) {

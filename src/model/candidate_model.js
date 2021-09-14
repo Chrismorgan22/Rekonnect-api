@@ -16,16 +16,23 @@ let candidateSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true,
         unique: true
+    },
+    google_login: {
+        type: String,
+    },
+    facebook_login: {
+        type: String,
+    },
+    linkedin_login: {
+        type: String
     },
     // specialization_id: [{
     //     type: ObjectId,
     //     required: true
     // }],
     password: {
-        type: String,
-        required: true,
+        type: String
     },
     token: {
         type: String
