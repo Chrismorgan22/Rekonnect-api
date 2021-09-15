@@ -82,8 +82,7 @@ const candidateRegisterService = async (body) => {
 const candidateLoginService = async (body) => {
     console.log(body);
     let query = {};
-    if (req.body.password !== undefined) {
-
+    if (body.password !== undefined) {
         query = {
             $and: [{
                 email: body.email
@@ -98,9 +97,10 @@ const candidateLoginService = async (body) => {
             }]
         }
     }
+    console.log(query)
     return new Promise((resolve, reject) => {
         CandidateDetailSchema.find(query, function (err, docs) {
-            console.log(docs)
+            console.log(docs,err)
             if (!docs || docs.length === 0) {
                 func.msCons.notFoundJson['message'] = 'No candidate found';
                 return resolve(func.msCons.notFoundJson)
