@@ -4,40 +4,12 @@ const { ObjectId } = require('bson');
 var jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 var fs = require('fs');
+var handlebars = require('handlebars');
 const candidateRegisterService = async (body) => {
     console.log(body);
     return new Promise(async (resolve, reject) => {
         let model = {};
         model = new CandidateDetailSchema(body);
-        // var transporter = nodemailer.createTransport({
-        //     host: 'smtp.gmail.com',
-        //     port: 465,
-        //     auth: {
-        //         user: "intralogicitsolutions.developer@gmail.com",
-        //         pass: "IntralogicITDev@12",
-        //     },
-        // });
-        // fs.readFile('index.html', { encoding: 'utf-8' }, function (err, html) {
-        //     if (err) {
-        //         console.log(err);
-        //     } else {
-        //         var mailOptions = {
-        //             from: "intralogicitsolutions.developer@gmail.com",
-        //             to: "leena@bloombit.co",
-        //             subject: "Subject",
-        //             html: html
-        //         };
-        //         transporter.sendMail(mailOptions, function (err, info) {
-        //             if (err) {
-        //                 console.log(err)
-        //             } else {
-        //                 console.log(info);
-        //             }
-        //             func.msCons.successJson['data'] = docs;
-        //             return resolve(func.msCons.successJson)
-        //         })
-        //     }
-        // });
         await model.validate(async function (err, data) {
             if (err) {
                 const keys = Object.keys(err.errors)
@@ -61,37 +33,44 @@ const candidateRegisterService = async (body) => {
                         func.msCons.errorJson['error'] = err
                         return resolve(func.msCons.errorJson)
                     } else {
-                        // var transporter = nodemailer.createTransport({
-                        //     host: 'smtp.gmail.com',
-                        //     port: 465,
-                        //     auth: {
-                        //         user: "intralogicitsolutions.developer@gmail.com",
-                        //         pass: "IntralogicITDev@12",
-                        //     },
-                        // });
-                        // fs.readFile('index.html', { encoding: 'utf-8' }, function (err, html) {
-                        //     if (err) {
-                        //         console.log(err);
-                        //     } else {
-                        //         var mailOptions = {
-                        //             from: "intralogicitsolutions.developer@gmail.com",
-                        //             to: "leena@bloombit.co",
-                        //             subject: "Subject",
-                        //             html: html
-                        //         };
-                        //         transporter.sendMail(mailOptions, function (err, info) {
-                        //             if (err) {
-                        //                 console.log(err)
-                        //             } else {
-                        //                 console.log(info);
-                        //             }
-                        //             func.msCons.successJson['data'] = docs;
-                        //             return resolve(func.msCons.successJson)
-                        //         })
-                        //     }
-                        // });
-                        func.msCons.successJson['data'] = docs;
-                        return resolve(func.msCons.successJson)
+                        var transporter = nodemailer.createTransport({
+                            host: 'smtp.gmail.com',
+                            port: 465,
+                            auth: {
+                                user: "bloombit.co@gmail.com",
+                                pass: "bloombitgoa",
+                            },
+                        });
+                        fs.readFile('index.html', { encoding: 'utf-8' }, function (err, html) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                var template = handlebars.compile(html);
+                                var replacements = {
+                                    firstName: body.first_name,
+                                    lastName: body.last_name
+                                };
+                                var htmlToSend = template(replacements);
+                                console.log(body.email)
+                                var mailOptions = {
+                                    from: "bloombit.co@gmail.com",
+                                    to: body.email,
+                                    subject: "Subject",
+                                    html: htmlToSend
+                                };
+                                transporter.sendMail(mailOptions, function (err, info) {
+                                    if (err) {
+                                        console.log(err)
+                                    } else {
+                                        console.log(info);
+                                    }
+                                    func.msCons.successJson['data'] = docs;
+                                    return resolve(func.msCons.successJson)
+                                })
+                            }
+                        });
+                        // func.msCons.successJson['data'] = docs;
+                        // return resolve(func.msCons.successJson)
                     }
                 });
             }
@@ -138,5 +117,30 @@ const candidateLoginService = async (body) => {
         });
     })
 }
+const getCandidateListService = async () => {
+    return new Promise(async (resolve, reject) => {
+        let query = {};
 
-module.exports = { candidateRegisterService, candidateLoginService }
+        query = {
+            $match: {
+                is_deleted: false
+            }
+        }
+        await CandidateDetailSchema.find(query, function (err, docs) {
+            console.log(err, docs);
+            if (err) {
+                func.msCons.errorJson["message"] = "Error in retrieving data";
+                func.msCons.errorJson["error"] = err;
+                return resolve(func.msCons.errorJson);
+            } else if (!docs || docs.length === 0) {
+                func.msCons.errorJson["message"] = "Error in retrieving data";
+                func.msCons.errorJson["error"] = err;
+                return resolve(func.msCons.errorJson);
+            } else {
+                func.msCons.successJson['data'] = docs;
+                return resolve(func.msCons.successJson)
+            }
+        });
+    })
+}
+module.exports = { candidateRegisterService, candidateLoginService, getCandidateListService }

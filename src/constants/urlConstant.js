@@ -7,6 +7,7 @@ const urlConstants = {
     /* Candidate API */
     URL_CANDIDATE_REGISTRATION: '/registration',
     URL_CANDIDATE_LOGIN: '/login',
+    URL_GET_CANDIDATE: '/',
 
     /* Expert API */
     URL_EXPERT_REGISTRATION: '/registration',

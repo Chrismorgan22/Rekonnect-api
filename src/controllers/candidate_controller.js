@@ -22,4 +22,15 @@ const candidateLogin = async (req, res) => {
     }
 
 }
-module.exports = { candidateRegistration, candidateLogin }
+
+const getCandidateList = async (req, res) => {
+    try {
+        const candidateData = await candidateService.getCandidateListService()
+        console.log(candidateData)
+        return res.send(candidateData)
+    } catch (err) {
+        return res.send(err)
+    }
+
+}
+module.exports = { candidateRegistration, candidateLogin, getCandidateList }
