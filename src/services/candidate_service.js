@@ -35,7 +35,8 @@ const candidateRegisterService = async (body) => {
                     } else {
                         var transporter = nodemailer.createTransport({
                             host: 'smtp.gmail.com',
-                            port: 465,
+                            port: 587,
+                            secure: false,
                             auth: {
                                 user: "bloombit.co@gmail.com",
                                 pass: "bloombitgoa",
