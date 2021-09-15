@@ -38,8 +38,8 @@ const candidateRegisterService = async (body) => {
                             port: 587,
                             secure: false,
                             auth: {
-                                user: "intralogicitsolutions.developer@gmail.com",
-                                pass: "IntralogicITDev@12",
+                                user: "bloombit.co@gmail.com",
+                                pass: "bloombit@goa",
                             },
                         });
                         fs.readFile('index.html', { encoding: 'utf-8' }, function (err, html) {
@@ -54,7 +54,7 @@ const candidateRegisterService = async (body) => {
                                 var htmlToSend = template(replacements);
                                 console.log(body.email)
                                 var mailOptions = {
-                                    from: "intralogicitsolutions.developer@gmail.com",
+                                    from: "bloombit.co@gmail.com",
                                     to: body.email,
                                     subject: "Subject",
                                     html: htmlToSend
