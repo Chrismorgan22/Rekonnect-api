@@ -72,6 +72,6 @@ mongoose.connect("mongodb+srv://rekonnect:UxyfPRexWLEHVq9F@cluster0.z8ojn.mongod
         // });
     })
 const PORT = process.env.PORT || 8000;
-app.listen(8000, () => {
+app.listen(PORT, () => {
     console.log(`Our app is running on port ${PORT}`);
 });
