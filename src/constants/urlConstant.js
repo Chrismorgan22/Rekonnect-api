@@ -8,6 +8,7 @@ const urlConstants = {
     URL_CANDIDATE_REGISTRATION: '/registration',
     URL_CANDIDATE_LOGIN: '/login',
     URL_GET_CANDIDATE: '/',
+    URL_LINKED_LOGIN: '/linkedin',
 
     /* Expert API */
     URL_EXPERT_REGISTRATION: '/registration',

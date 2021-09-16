@@ -15,8 +15,7 @@ let candidateSchema = new mongoose.Schema({
         unique: true
     },
     phone: {
-        type: String,
-        unique: true
+        type: String
     },
     google_login: {
         type: String,

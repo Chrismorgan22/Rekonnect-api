@@ -5,6 +5,8 @@ var jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 var fs = require('fs');
 var handlebars = require('handlebars');
+let http = require('https');
+var qs = require('querystring');
 const candidateRegisterService = async (body) => {
     console.log(body);
     return new Promise(async (resolve, reject) => {
@@ -100,7 +102,7 @@ const candidateLoginService = async (body) => {
     console.log(query)
     return new Promise((resolve, reject) => {
         CandidateDetailSchema.find(query, function (err, docs) {
-            console.log(docs,err)
+            console.log(docs, err)
             if (!docs || docs.length === 0) {
                 func.msCons.notFoundJson['message'] = 'No candidate found';
                 return resolve(func.msCons.notFoundJson)
@@ -144,4 +146,87 @@ const getCandidateListService = async () => {
         });
     })
 }
-module.exports = { candidateRegisterService, candidateLoginService, getCandidateListService }
+
+const linkedInLoginService = async (body) => {
+    return new Promise((resolve, reject) => {
+        let options = {
+            'method': 'POST',
+            'hostname': 'www.linkedin.com',
+            'path': "/oauth/v2/accessToken",
+            'headers': {
+                'content-type': 'application/x-www-form-urlencoded',
+            }
+        };
+        let req = http.request(options, function (res) {
+            // console.log(res);
+            let chunks = [];
+            res.on('data', function (chunk) {
+                chunks.push(chunk);
+            });
+            res.on('end', function () {
+                let body = Buffer.concat(chunks);
+                return resolve(JSON.parse(body))
+            });
+        });
+        var postData = qs.stringify(body);
+        req.write(postData);
+        req.end();
+    })
+}
+
+const linkedInCandidateDataService = async (body) => {
+    return new Promise((resolve, reject) => {
+        let options = {
+            'method': 'GET',
+            'hostname': 'api.linkedin.com',
+            'path': "/v2/me",
+            'headers': {
+                'Authorization': 'Bearer ' + body.access_token,
+                // 'content-type': 'application/x-www-form-urlencoded',
+            }
+        };
+        let req = http.request(options, function (res) {
+            // console.log(res);
+            let chunks = [];
+            res.on('data', function (chunk) {
+                chunks.push(chunk);
+            });
+            res.on('end', function () {
+                let body = Buffer.concat(chunks);
+                return resolve(JSON.parse(body))
+            });
+        });
+        var postData = qs.stringify(body);
+        req.write(postData);
+        req.end();
+    })
+}
+
+const linkedInCandidateEmail = async (body) => {
+    return new Promise((resolve, reject) => {
+        let options = {
+            'method': 'GET',
+            'hostname': 'api.linkedin.com',
+            'path': "/v2/emailAddress?q=members&projection=(elements*(handle~))",
+            'headers': {
+                'Authorization': 'Bearer ' + body.access_token,
+                // 'content-type': 'application/x-www-form-urlencoded',
+            }
+        };
+        let req = http.request(options, function (res) {
+            // console.log(res);
+            let chunks = [];
+            res.on('data', function (chunk) {
+                chunks.push(chunk);
+            });
+            res.on('end', function () {
+                let body = Buffer.concat(chunks);
+                return resolve(JSON.parse(body))
+            });
+        });
+        var postData = qs.stringify(body);
+        req.write(postData);
+        req.end();
+    })
+}
+module.exports = { candidateRegisterService, candidateLoginService, getCandidateListService, linkedInLoginService, linkedInCandidateDataService, linkedInCandidateEmail }
