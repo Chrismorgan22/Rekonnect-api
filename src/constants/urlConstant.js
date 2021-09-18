@@ -26,6 +26,9 @@ const urlConstants = {
     URL_GET_LOCATION: '/',
 
     /* Graduation API */
-    URL_GET_GRADUATION: '/'
+    URL_GET_GRADUATION: '/',
+
+    /* Graduation API */
+    URL_GET_HEALTH: '/'
 }
 module.exports = urlConstants;

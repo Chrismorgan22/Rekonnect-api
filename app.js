@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({
 
 const VerifyToken = require('./src/middleware/verify_token');
 
+const healthRouter = require('./src/routes/health_route');
 const userRouter = require('./src/routes/user_route');
 const candidateRouter = require('./src/routes/candidate_route');
 const expertRouter = require('./src/routes/expert_route');
@@ -39,6 +40,7 @@ const specializationSchema = require('./src/model/specialization_model');
 const locationSchema = require('./src/model/location_model');
 const graduationSchema = require('./src/model/graduation_model');
 
+app.use('/', healthRouter);
 app.use('/user', userRouter);
 app.use('/candidate', candidateRouter);
 app.use('/expert', expertRouter);
@@ -47,7 +49,14 @@ app.use('/specialization', specializationRouter);
 app.use('/graduation', graduationRouter);
 app.use('/location', locationRouter);
 
-mongoose.connect("mongodb+srv://rekonnect:UxyfPRexWLEHVq9F@cluster0.z8ojn.mongodb.net/dbRekonnect?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect("mongodb+srv://rekonnect:UxyfPRexWLEHVq9F@cluster0.z8ojn.mongodb.net/dbRekonnect?retryWrites=true&w=majority", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    poolSize: 100,
+    socketTimeoutMS: 60000
+})
     .then(() => {
         // const specializationBody = {
         //     name: "Devops"
