@@ -52,9 +52,6 @@ app.use('/location', locationRouter);
 mongoose.connect("mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    poolSize: 100,
     socketTimeoutMS: 60000
 })
     .then(() => {
