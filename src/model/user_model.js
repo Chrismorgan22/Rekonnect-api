@@ -14,13 +14,16 @@ let userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    phone: {
+        type: String,
+    },
     company_name: {
         type: String,
-        required: true,
+        // required: true,
     },
     password: {
         type: String,
-        required: true,
+        // required: true,
     },
     token: {
         type: String
