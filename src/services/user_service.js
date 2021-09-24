@@ -40,8 +40,8 @@ const userRegisterService = async (body) => {
                             port: 587,
                             secure: false,
                             auth: {
-                                user: "bloombit.co@gmail.com",
-                                pass: "bloombit@goa",
+                                user: "reachus@rekonnect.in",
+                                pass: "Rekonnect@2021",
                             },
                         });
                         fs.readFile('index.html', { encoding: 'utf-8' }, function (err, html) {
@@ -56,9 +56,9 @@ const userRegisterService = async (body) => {
                                 var htmlToSend = template(replacements);
                                 console.log(body.email)
                                 var mailOptions = {
-                                    from: "bloombit.co@gmail.com",
+                                    from: "reachus@rekonnect.in",
                                     to: body.email,
-                                    subject: "Subject",
+                                    subject: "Welcome to Rekonnect",
                                     html: htmlToSend
                                 };
                                 transporter.sendMail(mailOptions, function (err, info) {

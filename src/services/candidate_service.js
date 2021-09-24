@@ -9,10 +9,12 @@ let http = require('https');
 var qs = require('querystring');
 const candidateRegisterService = async (body) => {
     console.log(body);
+
     return new Promise(async (resolve, reject) => {
         let model = {};
         model = new CandidateDetailSchema(body);
         await model.validate(async function (err, data) {
+
             if (err) {
                 const keys = Object.keys(err.errors)
                 console.log(keys)
@@ -40,8 +42,8 @@ const candidateRegisterService = async (body) => {
                             port: 587,
                             secure: false,
                             auth: {
-                                user: "bloombit.co@gmail.com",
-                                pass: "bloombit@goa",
+                                user: "reachus@rekonnect.in",
+                                pass: "Rekonnect@2021",
                             },
                         });
                         fs.readFile('index.html', { encoding: 'utf-8' }, function (err, html) {
@@ -56,9 +58,9 @@ const candidateRegisterService = async (body) => {
                                 var htmlToSend = template(replacements);
                                 console.log(body.email)
                                 var mailOptions = {
-                                    from: "bloombit.co@gmail.com",
+                                    from: "reachus@rekonnect.in",
                                     to: body.email,
-                                    subject: "Subject",
+                                    subject: "Welcome to Rekonnect",
                                     html: htmlToSend
                                 };
                                 transporter.sendMail(mailOptions, function (err, info) {
