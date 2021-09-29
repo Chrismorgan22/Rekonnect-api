@@ -1,10 +1,14 @@
 const { ObjectId } = require('bson');
 let mongoose = require('mongoose');
-let locationSchema = new mongoose.Schema({
+let lookupSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
         unique: true
+    },
+    lookup_type: {
+        type: String,
+        required: true
     },
     is_deleted: {
         type: Boolean,
@@ -23,4 +27,4 @@ let locationSchema = new mongoose.Schema({
         default: Date.now()
     },
 })
-module.exports = mongoose.model('location_details', locationSchema)
+module.exports = mongoose.model('lookup_details', lookupSchema)

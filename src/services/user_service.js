@@ -81,32 +81,149 @@ const userRegisterService = async (body) => {
 
 const userLoginService = async (body) => {
     console.log(body);
-    let query = {
-        $and: [{
-            email: body.email
-        }, {
-            password: body.password
-        }]
-    }
+
     return new Promise((resolve, reject) => {
-        UserDetailSchema.find(query, function (err, docs) {
-            console.log(docs)
-            if (!docs || docs.length === 0) {
-                func.msCons.notFoundJson['message'] = 'No user found';
-                return resolve(func.msCons.notFoundJson)
-            } else if (err) {
-                func.msCons.errorJson['message'] = err;
-                return resolve(func.msCons.errorJson)
-            } else {
-                var token = jwt.sign({ id: docs._id }, 'intralogicitsolutions', {
-                    expiresIn: 86400 // expires in 24 hours
-                });
-                docs[0]['token'] = token;
-                func.msCons.successJson['data'] = docs;
-                return resolve(func.msCons.successJson)
-            }
-        });
+        let andQuery = [];
+        if (body.password !== undefined) {
+            andQuery.push({
+                email: body.email
+            }, {
+                password: body.password
+            })
+        } else {
+            andQuery.push({
+                email: body.email
+            })
+        }
+        UserDetailSchema.aggregate(
+            [
+                {
+                    $match: {
+                        $and: andQuery
+                    },
+                },
+                {
+                    $lookup: {
+                        from: "user_role_details",
+                        localField: "_id",
+                        foreignField: "user_id",
+                        as: "user_role_details"
+                    }
+                },
+                {
+                    $project: {
+                        first_name: 1,
+                        last_name: 1,
+                        email: 1,
+                        phone: 1,
+                        status: 1,
+                        is_deleted: 1,
+                        token: 1,
+                        "user_role_details.role": 1,
+                    }
+                }
+            ], function (err, docs) {
+                console.log(docs)
+                if (!docs || docs.length === 0) {
+                    func.msCons.notFoundJson['message'] = 'No user found';
+                    return resolve(func.msCons.notFoundJson)
+                } else if (err) {
+                    func.msCons.errorJson['message'] = err;
+                    return resolve(func.msCons.errorJson)
+                } else {
+                    var token = jwt.sign({ id: docs._id }, 'intralogicitsolutions', {
+                        expiresIn: 86400 // expires in 24 hours
+                    });
+                    docs[0]['role'] = docs[0].user_role_details[0].role;
+                    docs[0]['token'] = token;
+                    delete (docs[0].user_role_details);
+                    func.msCons.successJson['data'] = docs;
+                    return resolve(func.msCons.successJson)
+                }
+            });
     })
 }
 
-module.exports = { userRegisterService, userLoginService }
+const linkedInLoginService = async (body) => {
+    return new Promise((resolve, reject) => {
+        let options = {
+            'method': 'POST',
+            'hostname': 'www.linkedin.com',
+            'path': "/oauth/v2/accessToken",
+            'headers': {
+                'content-type': 'application/x-www-form-urlencoded',
+            }
+        };
+        let req = http.request(options, function (res) {
+            // console.log(res);
+            let chunks = [];
+            res.on('data', function (chunk) {
+                chunks.push(chunk);
+            });
+            res.on('end', function () {
+                let body = Buffer.concat(chunks);
+                return resolve(JSON.parse(body))
+            });
+        });
+        var postData = qs.stringify(body);
+        req.write(postData);
+        req.end();
+    })
+}
+
+const linkedInCandidateDataService = async (body) => {
+    return new Promise((resolve, reject) => {
+        let options = {
+            'method': 'GET',
+            'hostname': 'api.linkedin.com',
+            'path': "/v2/me",
+            'headers': {
+                'Authorization': 'Bearer ' + body.access_token,
+                // 'content-type': 'application/x-www-form-urlencoded',
+            }
+        };
+        let req = http.request(options, function (res) {
+            // console.log(res);
+            let chunks = [];
+            res.on('data', function (chunk) {
+                chunks.push(chunk);
+            });
+            res.on('end', function () {
+                let body = Buffer.concat(chunks);
+                return resolve(JSON.parse(body))
+            });
+        });
+        var postData = qs.stringify(body);
+        req.write(postData);
+        req.end();
+    })
+}
+
+const linkedInCandidateEmail = async (body) => {
+    return new Promise((resolve, reject) => {
+        let options = {
+            'method': 'GET',
+            'hostname': 'api.linkedin.com',
+            'path': "/v2/emailAddress?q=members&projection=(elements*(handle~))",
+            'headers': {
+                'Authorization': 'Bearer ' + body.access_token,
+                // 'content-type': 'application/x-www-form-urlencoded',
+            }
+        };
+        let req = http.request(options, function (res) {
+            // console.log(res);
+            let chunks = [];
+            res.on('data', function (chunk) {
+                chunks.push(chunk);
+            });
+            res.on('end', function () {
+                let body = Buffer.concat(chunks);
+                return resolve(JSON.parse(body))
+            });
+        });
+        var postData = qs.stringify(body);
+        req.write(postData);
+        req.end();
+    })
+}
+module.exports = { userRegisterService, userLoginService, linkedInLoginService, linkedInCandidateDataService, linkedInCandidateEmail }

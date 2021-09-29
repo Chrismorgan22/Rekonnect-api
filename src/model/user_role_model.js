@@ -1,10 +1,13 @@
 const { ObjectId } = require('bson');
 let mongoose = require('mongoose');
-let specializationSchema = new mongoose.Schema({
-    name: {
-        type: String,
+let userRoleSchema = new mongoose.Schema({
+    user_id: {
+        type: ObjectId,
         required: true,
-        unique: true
+    },
+    role: {
+        type: Number,
+        required: true,
     },
     is_deleted: {
         type: Boolean,
@@ -23,4 +26,4 @@ let specializationSchema = new mongoose.Schema({
         default: Date.now()
     },
 })
-module.exports = mongoose.model('specialization_details', specializationSchema)
+module.exports = mongoose.model('user_role_details', userRoleSchema)

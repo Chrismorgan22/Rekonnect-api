@@ -1,18 +1,19 @@
 const func = require('../config/function');
-const SpecializationSchema = require('../model/specialization_model');
-const { ObjectId } = require('bson');
+const LookupSchema = require('../model/lookup_model');
 
-const getSpecializationService = async () => {
+const getCountryService = async (body) => {
     return new Promise(async (resolve, reject) => {
         let query = {};
 
         query = {
             $match: {
-                is_deleted: false
+                $and: [
+                    { is_deleted: false },
+                    { lookup_type: body.type }
+                ]
             }
         }
-        console.log('ssssssssssss')
-        await SpecializationSchema.find(query, function (err, docs) {
+        await LookupSchema.find(query, function (err, docs) {
             console.log(err, docs);
             if (err) {
                 func.msCons.errorJson["message"] = "Error in retrieving data";
@@ -29,4 +30,4 @@ const getSpecializationService = async () => {
         });
     })
 }
-module.exports = { getSpecializationService }
+module.exports = { getCountryService }

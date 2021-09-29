@@ -19,16 +19,10 @@ const urlConstants = {
     URL_GET_JOB: '/list',
     URL_FILTER_JOB: '/filter',
 
-    /* Specialization API */
-    URL_GET_SPECIALIZATION: '/',
-
-    /* Location API */
-    URL_GET_LOCATION: '/',
-
     /* Graduation API */
-    URL_GET_GRADUATION: '/',
+    URL_GET_HEALTH: '/',
 
-    /* Graduation API */
-    URL_GET_HEALTH: '/'
+    /* Lookup API */
+    URL_GET_LOOKUP: '/'
 }
 module.exports = urlConstants;
