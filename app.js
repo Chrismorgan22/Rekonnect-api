@@ -26,55 +26,34 @@ const userRouter = require('./src/routes/user_route');
 const candidateRouter = require('./src/routes/candidate_route');
 const expertRouter = require('./src/routes/expert_route');
 const jobRouter = require('./src/routes/job_route');
-const specializationRouter = require('./src/routes/specialization_route');
-const graduationRouter = require('./src/routes/graduation_route');
-const locationRouter = require('./src/routes/location_route');
+const lookupRouter = require('./src/routes/lookup_route');
 
 
 require('./src/model/user_model');
 require('./src/model/candidate_model');
 require('./src/model/expert_model');
 require('./src/model/job_model');
+require('./src/model/user_role_model');
 
-const specializationSchema = require('./src/model/specialization_model');
-const locationSchema = require('./src/model/location_model');
-const graduationSchema = require('./src/model/graduation_model');
+const lookupSchema = require('./src/model/lookup_model');
 
 app.use('/', healthRouter);
 app.use('/user', userRouter);
 app.use('/candidate', candidateRouter);
 app.use('/expert', expertRouter);
+app.use('/lookup', lookupRouter);
 app.use('/job', VerifyToken, jobRouter);
-app.use('/specialization', specializationRouter);
-app.use('/graduation', graduationRouter);
-app.use('/location', locationRouter);
-
-mongoose.connect("mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    socketTimeoutMS: 60000
-})
+// mongodb+srv://rekonnect:UxyfPRexWLEHVq9F@cluster0.z8ojn.mongodb.net/dbRekonnect?retryWrites=true&w=majority
+// mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority
+mongoose.connect("mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
-        // const specializationBody = {
-        //     name: "Devops"
+        // const lookupBody = {
+        //     name: "Devops",
+        //     type: "Specialization"
         // }
-        // const locationBody = {
-        //     name: "Rajkot"
-        // }
-        // const graduationBody = {
-        //     name: "B.E"
-        // }
-        // const specializationData = new specializationSchema(specializationBody);
-        // specializationData.save(function (err, data) {
-        //     console.log('specialization data is inserted')
-        // });
-        // const locationData = new locationSchema(locationBody);
-        // locationData.save(function (err, data) {
-        //     console.log('location data is inserted')
-        // });
-        // const graduationData = new graduationSchema(graduationBody);
-        // graduationData.save(function (err, data) {
-        //     console.log('graduation data is inserted')
+        // const looupData = new lookupSchema(lookupBody);
+        // looupData.save(function (err, data) {
+        //     console.log('lookup data is inserted')
         // });
     })
 const PORT = process.env.PORT || 8000;

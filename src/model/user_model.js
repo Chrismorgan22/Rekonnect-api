@@ -15,15 +15,19 @@ let userSchema = new mongoose.Schema({
         unique: true
     },
     phone: {
+        type: String
+    },
+    google_login: {
         type: String,
     },
-    company_name: {
+    facebook_login: {
         type: String,
-        // required: true,
+    },
+    linkedin_login: {
+        type: String
     },
     password: {
-        type: String,
-        // required: true,
+        type: String
     },
     token: {
         type: String
