@@ -134,7 +134,9 @@ const userLoginService = async (body) => {
                     var token = jwt.sign({ id: docs._id }, 'intralogicitsolutions', {
                         expiresIn: 86400 // expires in 24 hours
                     });
-                    docs[0]['role'] = docs[0].user_role_details[0].role;
+                    if (docs[0].user_role_details.length !== 0) {
+                        docs[0]['role'] = docs[0].user_role_details[0].role;
+                    }
                     docs[0]['token'] = token;
                     delete (docs[0].user_role_details);
                     func.msCons.successJson['data'] = docs;
