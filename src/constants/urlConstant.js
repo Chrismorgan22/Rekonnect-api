@@ -23,6 +23,10 @@ const urlConstants = {
     URL_GET_HEALTH: '/',
 
     /* Lookup API */
-    URL_GET_LOOKUP: '/'
+    URL_GET_LOOKUP: '/',
+
+    /* User Profile API */
+    URL_GET_USER_PROFILE: '/:user_id',
+    URL_UPDATE_USER_PROFILE: '/update/:user_id'
 }
 module.exports = urlConstants;
