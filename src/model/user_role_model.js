@@ -8,6 +8,7 @@ let userRoleSchema = new mongoose.Schema({
     role: {
         type: Number,
         required: true,
+        default: 1
     },
     is_deleted: {
         type: Boolean,
