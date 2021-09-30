@@ -2,7 +2,7 @@ const { ObjectId } = require('bson');
 let mongoose = require('mongoose');
 let candidateSchema = new mongoose.Schema({
     user_id: {
-        type: String,
+        type: ObjectId,
         required: true,
         unique: true
     },
@@ -19,8 +19,12 @@ let candidateSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-        country: {
+        country_id: {
             type: ObjectId,
+            required: true,
+        },
+        country_name: {
+            type: String,
             required: true,
         },
         address: {
@@ -40,11 +44,17 @@ let candidateSchema = new mongoose.Schema({
             company: {
                 type: String
             },
-            location: {
+            location_id: {
                 type: ObjectId
             },
-            country: {
+            location_name: {
+                type: String
+            },
+            country_id: {
                 type: ObjectId
+            },
+            country_name: {
+                type: String
             },
             total_experience: {
                 from: {
@@ -80,11 +90,17 @@ let candidateSchema = new mongoose.Schema({
                 name: {
                     type: String
                 },
-                degree: {
+                degree_id: {
                     type: ObjectId
                 },
-                field: {
+                degree_name: {
+                    type: String
+                },
+                field_id: {
                     type: ObjectId
+                },
+                field_name: {
+                    type: String
                 },
                 total_time: {
                     from: {
@@ -115,14 +131,25 @@ let candidateSchema = new mongoose.Schema({
     },
     skills: [
         {
-            type: ObjectId,
-            required: true
-        }
+            skill_id: {
+                type: ObjectId,
+                required: true
+            },
+            skill_name: {
+                type: String,
+                required: true
+            }
+        },
+
     ],
     languages: [
         {
-            name: {
+            language_id: {
                 type: ObjectId,
+                required: true
+            },
+            language_name: {
+                type: String,
                 required: true
             },
             is_speak: {
@@ -143,8 +170,14 @@ let candidateSchema = new mongoose.Schema({
         }
     ],
     specialization: [{
-        type: ObjectId,
-        required: true
+        specialization_id: {
+            type: ObjectId,
+            required: true
+        },
+        specialization_name: {
+            type: String,
+            required: true
+        }
     }],
     career_change: {
         is_willing: {
