@@ -188,6 +188,21 @@ let candidateSchema = new mongoose.Schema({
             type: String,
         }
     },
+    service_to_be: {
+        type: Boolean,
+        charge: {
+            type: String
+        }
+    },
+    facebook_link: {
+        type: String,
+    },
+    linkedin_link: {
+        type: String
+    },
+    youtube_link: {
+        type: String
+    },
     is_deleted: {
         type: Boolean,
         default: false,
