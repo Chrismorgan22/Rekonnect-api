@@ -6,5 +6,8 @@ const lookupEnum = [
     'Skills',
     'Degree',
     'Field_of_study',
-    'Language'
+    'Language',
+    'Soft_skills',
+    'Technical_skills',
+    'Career'
 ]

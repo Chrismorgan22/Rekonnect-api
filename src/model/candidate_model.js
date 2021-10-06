@@ -129,7 +129,7 @@ let candidateSchema = new mongoose.Schema({
             }
         ],
     },
-    skills: [
+    soft_skills: [
         {
             skill_id: {
                 type: ObjectId,
@@ -142,6 +142,33 @@ let candidateSchema = new mongoose.Schema({
         },
 
     ],
+    technical_skills: [
+        {
+            skill_id: {
+                type: ObjectId,
+                required: true
+            },
+            skill_name: {
+                type: String,
+                required: true
+            }
+        },
+
+    ],
+    current_career: {
+        career_id: {
+            type: ObjectId,
+            required: true
+        },
+        career_name: {
+            type: String,
+            required: true
+        }
+    },
+    passion: {
+        type: String,
+        required: true
+    },
     languages: [
         {
             language_id: {
@@ -169,16 +196,16 @@ let candidateSchema = new mongoose.Schema({
             }
         }
     ],
-    specialization: [{
-        specialization_id: {
-            type: ObjectId,
-            required: true
-        },
-        specialization_name: {
-            type: String,
-            required: true
-        }
-    }],
+    // specialization: [{
+    //     specialization_id: {
+    //         type: ObjectId,
+    //         required: true
+    //     },
+    //     specialization_name: {
+    //         type: String,
+    //         required: true
+    //     }
+    // }],
     career_change: {
         is_willing: {
             type: Boolean,
@@ -188,21 +215,50 @@ let candidateSchema = new mongoose.Schema({
             type: String,
         }
     },
-    service_to_be: {
-        type: Boolean,
-        charge: {
-            type: String
+    expected_salary_range: {
+        min_salary: {
+            type: String,
+            required: true,
+        },
+        max_salary: {
+            type: String,
+            required: true,
         }
     },
-    facebook_link: {
-        type: String,
+    immediate_join:{
+        type:Boolean,
+        required: true
     },
-    linkedin_link: {
-        type: String
+    joining_in:{
+        type:String
     },
-    youtube_link: {
-        type: String
+    resume_url:{
+        type:String,
+        required: true
     },
+    visume_url:{
+        type:String,
+        required: true
+    },
+    onboard_with_this:{
+        type:Boolean,
+        required: true
+    },
+    // service_to_be: {
+    //     type: Boolean,
+    //     charge: {
+    //         type: String
+    //     }
+    // },
+    // facebook_link: {
+    //     type: String,
+    // },
+    // linkedin_link: {
+    //     type: String
+    // },
+    // youtube_link: {
+    //     type: String
+    // },
     is_deleted: {
         type: Boolean,
         default: false,

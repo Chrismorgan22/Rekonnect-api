@@ -5,44 +5,42 @@ let jobSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    job_details: {
+    company: {
+        type: String,
+        requied: true
+    },
+    job_descritption: {
         type: String,
         required: true,
     },
-    graduation_id: {
-        type: ObjectId,
-        required: true,
-    },
-    job_location_id: {
-        type: ObjectId,
-        required: true,
-    },
-    employment_type: {
+    pin_code: {
         type: String,
         required: true,
     },
-    speacialization_id: {
+    location_id: {
         type: ObjectId,
+        required: true,
+    },
+    minimum_experience_required: {
+        type: String,
+        required: true
+    },
+    salary_range: {
+        min: {
+            type: String,
+            required: true
+        },
+        max: {
+            type: String,
+            required: true
+        }
+    },
+    job_type: {
+        type: Number,
         required: true,
     },
     user_id: {
         type: ObjectId,
-        required: true,
-    },
-    min_experience: {
-        type: String,
-        required: true,
-    },
-    max_experience: {
-        type: String,
-        required: true,
-    },
-    min_salary: {
-        type: Number,
-        required: true,
-    },
-    max_salary: {
-        type: Number,
         required: true,
     },
     is_deleted: {
