@@ -5,4 +5,5 @@ const userController = require('../controllers/user_controller');
 router.post(func.urlCons.URL_USER_REGISTRATION, userController.userRegistration);
 router.post(func.urlCons.URL_USER_LOGIN, userController.userLogin);
 router.post(func.urlCons.URL_LINKED_LOGIN, userController.linkedInLogin);
+router.get(func.urlCons.URL_USER_LIST, userController.getUserList);
 module.exports = router;

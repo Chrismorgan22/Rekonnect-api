@@ -141,9 +141,7 @@ const getCandidateListService = async () => {
         let query = {};
 
         query = {
-            $match: {
-                is_deleted: false
-            }
+            is_deleted: false
         }
         await CandidateDetailSchema.find(query, function (err, docs) {
             console.log(err, docs);

@@ -1,5 +1,6 @@
 const func = require('../config/function');
 const UserDetailSchema = require('../model/user_model');
+const UserRoleSchema = require('../model/user_role_model');
 const { ObjectId } = require('bson');
 var jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
@@ -58,7 +59,7 @@ const userRegisterService = async (body) => {
                     return resolve(func.msCons.errorJson)
                 })
             } else {
-                await model.save(function (err, docs) {
+                await model.save(async function (err, docs) {
                     if (err) {
                         console.log('ssssssssssss', err.errors)
                         if (err.code === 11000) {
@@ -72,6 +73,14 @@ const userRegisterService = async (body) => {
                         func.msCons.errorJson['error'] = err
                         return resolve(func.msCons.errorJson)
                     } else {
+                        const roleBody = {
+                            user_id: docs['_id'],
+                            role: body.role
+                        }
+                        const roleModelSchema = new UserRoleSchema(roleBody);
+                        await roleModelSchema.save(function (err, docs) {
+
+                        })
                         var transporter = nodemailer.createTransport({
                             host: 'smtp.gmail.com',
                             port: 587,
@@ -265,4 +274,53 @@ const linkedInCandidateEmail = async (body) => {
         req.end();
     })
 }
-module.exports = { userRegisterService, userLoginService, linkedInLoginService, linkedInCandidateDataService, linkedInCandidateEmail }
+const getUserListService = async (req) => {
+    console.log(req.params.user_role, typeof req.params.user_role)
+    return new Promise(async (resolve, reject) => {
+        let query = [{
+            $match: {
+                $and: [
+                    { is_deleted: false },
+                    { role: Number(req.params.user_role) }
+                ]
+            },
+        },
+        {
+            $lookup:
+            {
+                from: "user_details",
+                localField: "user_id",
+                foreignField: "_id",
+                as: "user_details"
+            }
+        },
+        { $unwind: "$user_details" },
+        {
+            $project: {
+                user_id: 1,
+                role: 1,
+                "user_details.first_name": 1,
+                "user_details.last_name": 1,
+                "user_details.email": 1,
+                "user_details.phone": 1
+            }
+        }
+        ]
+        await UserRoleSchema.aggregate(query, function (err, docs) {
+            console.log(err, docs);
+            if (err) {
+                func.msCons.errorJson["message"] = "Error in retrieving data";
+                func.msCons.errorJson["error"] = err;
+                return resolve(func.msCons.errorJson);
+            } else if (!docs || docs.length === 0) {
+                func.msCons.errorJson["message"] = "Error in retrieving data";
+                func.msCons.errorJson["error"] = err;
+                return resolve(func.msCons.errorJson);
+            } else {
+                func.msCons.successJson['data'] = docs;
+                return resolve(func.msCons.successJson)
+            }
+        });
+    })
+}
+module.exports = { userRegisterService, userLoginService, linkedInLoginService, linkedInCandidateDataService, linkedInCandidateEmail, getUserListService }

@@ -46,4 +46,14 @@ const getFinalJson = async (candidateEmailData, candidateLinkedInData) => {
     json['email'] = candidateEmailData.elements[0]['handle~'].emailAddress;
     return json;
 }
-module.exports = { userRegistration, userLogin, linkedInLogin }
+const getUserList = async (req, res) => {
+    try {
+        const userData = await userService.getUserListService(req)
+        console.log(userData)
+        return res.send(userData)
+    } catch (err) {
+        return res.send(err)
+    }
+
+}
+module.exports = { userRegistration, userLogin, linkedInLogin, getUserList }

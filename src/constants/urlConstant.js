@@ -3,6 +3,7 @@ const urlConstants = {
     /* User API */
     URL_USER_REGISTRATION: '/registration',
     URL_USER_LOGIN: '/login',
+    URL_USER_LIST: '/:user_role',
 
     /* Candidate API */
     URL_CANDIDATE_REGISTRATION: '/registration',
