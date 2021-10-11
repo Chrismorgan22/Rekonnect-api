@@ -9,6 +9,43 @@ let http = require('https');
 var qs = require('querystring');
 const userRegisterService = async (body) => {
     console.log(body);
+    // var transporter = nodemailer.createTransport({
+    //     host: 'smtp.gmail.com',
+    //     port: 587,
+    //     secure: false,
+    //     auth: {
+    //         user: "reachus@rekonnect.in",
+    //         pass: "Rekonnect@2021",
+    //     },
+    // });
+    // fs.readFile('index.html', { encoding: 'utf-8' }, function (err, html) {
+    //     if (err) {
+    //         console.log(err);
+    //     } else {
+    //         var template = handlebars.compile(html);
+    //         var replacements = {
+    //             firstName: body.first_name,
+    //             lastName: body.last_name
+    //         };
+    //         var htmlToSend = template(replacements);
+    //         console.log(body.email)
+    //         var mailOptions = {
+    //             from: "ReKonnect India <reachus@rekonnect.in>",
+    //             to: body.email,
+    //             subject: "Welcome to Rekonnect",
+    //             html: htmlToSend
+    //         };
+    //         transporter.sendMail(mailOptions, function (err, info) {
+    //             if (err) {
+    //                 console.log(err)
+    //             } else {
+    //                 console.log(info);
+    //             }
+    //             // func.msCons.successJson['data'] = docs;
+    //             // return resolve(func.msCons.successJson)
+    //         })
+    //     }
+    // });
     return new Promise(async (resolve, reject) => {
         let model = {};
         model = new UserDetailSchema(body);
@@ -56,7 +93,7 @@ const userRegisterService = async (body) => {
                                 var htmlToSend = template(replacements);
                                 console.log(body.email)
                                 var mailOptions = {
-                                    from: "reachus@rekonnect.in",
+                                    from: "ReKonnect India <reachus@rekonnect.in>",
                                     to: body.email,
                                     subject: "Welcome to Rekonnect",
                                     html: htmlToSend
