@@ -56,4 +56,34 @@ const getUserList = async (req, res) => {
     }
 
 }
-module.exports = { userRegistration, userLogin, linkedInLogin, getUserList }
+
+const tempUserRegister = async (req, res) => {
+    try {
+        const tempRegisterData = await userService.tempUserRegisterService(req.body)
+        console.log(tempRegisterData)
+        return res.send(tempRegisterData)
+    } catch (err) {
+        return res.send(err)
+    }
+}
+const getTempUserData = async (req, res) => {
+    try {
+        const userData = await userService.getTempUserDataService(req.body)
+        console.log(userData)
+        return res.send(userData)
+    } catch (err) {
+        return res.send(err)
+    }
+
+}
+const updateUserRegisterStatus = async (req, res) => {
+    try {
+        const userData = await userService.updateUserRegisterService(req.body)
+        console.log(userData)
+        return res.send(userData)
+    } catch (err) {
+        return res.send(err)
+    }
+
+}
+module.exports = { userRegistration, userLogin, linkedInLogin, getUserList, tempUserRegister, getTempUserData, updateUserRegisterStatus }

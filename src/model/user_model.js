@@ -32,6 +32,13 @@ let userSchema = new mongoose.Schema({
     token: {
         type: String
     },
+    user_token: {
+        type: String
+    },
+    register_complete: {
+        type: Boolean,
+        default: false
+    },
     is_deleted: {
         type: Boolean,
         default: false,

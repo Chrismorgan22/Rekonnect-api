@@ -8,6 +8,7 @@ var fs = require('fs');
 var handlebars = require('handlebars');
 let http = require('https');
 var qs = require('querystring');
+const TempUserSchema = require('../model/temp_user_model');
 const userRegisterService = async (body) => {
     console.log(body);
     // var transporter = nodemailer.createTransport({
@@ -48,6 +49,15 @@ const userRegisterService = async (body) => {
     //     }
     // });
     return new Promise(async (resolve, reject) => {
+        var s = '';
+        var randomchar = function () {
+            var n = Math.floor(Math.random() * 62);
+            if (n < 10) return n; //1-10
+            if (n < 36) return String.fromCharCode(n + 55); //A-Z
+            return String.fromCharCode(n + 61); //a-z
+        }
+        while (s.length < 25) s += randomchar();
+        body['user_token'] = s;
         let model = {};
         model = new UserDetailSchema(body);
         await model.validate(async function (err, data) {
@@ -107,13 +117,22 @@ const userRegisterService = async (body) => {
                                     subject: "Welcome to Rekonnect",
                                     html: htmlToSend
                                 };
-                                transporter.sendMail(mailOptions, function (err, info) {
+                                transporter.sendMail(mailOptions, async function (err, info) {
                                     if (err) {
                                         console.log(err)
                                     } else {
                                         console.log(info);
                                     }
+                                    console.log(docs)
+                                    const tempJson = {
+                                        user_id: docs['_id'],
+                                        user_token: s
+                                    }
+                                    const tempUserSchema = new TempUserSchema(tempJson);
+                                    await tempUserSchema.save()
+                                    docs['user_token'] = s;
                                     func.msCons.successJson['data'] = docs;
+                                    // func.msCons.successJson['data']['user_token'] = s;
                                     return resolve(func.msCons.successJson)
                                 })
                             }
@@ -165,6 +184,8 @@ const userLoginService = async (body) => {
                         status: 1,
                         is_deleted: 1,
                         token: 1,
+                        register_complete: 1,
+                        user_token: 1,
                         "user_role_details.role": 1,
                     }
                 }
@@ -323,4 +344,131 @@ const getUserListService = async (req) => {
         });
     })
 }
-module.exports = { userRegisterService, userLoginService, linkedInLoginService, linkedInCandidateDataService, linkedInCandidateEmail, getUserListService }
+
+const tempUserRegisterService = async (body) => {
+    return new Promise((resolve, reject) => {
+        // const model = new TempUserSchema(body)
+        TempUserSchema.findOne({
+            $and: [
+                { user_id: ObjectId(body.user_id) },
+                { user_token: body.user_token },
+            ],
+        })
+            .select("temp_data")
+            .lean()
+            .then(async (result) => {
+                console.log(result)
+                if (result) {
+                    let tempDataObject = {};
+                    if (result.temp_data !== undefined) {
+                        tempDataObject = Object.assign(result.temp_data, body.temp_data)
+                    } else {
+                        tempDataObject = body.temp_data
+                    }
+                    console.log(tempDataObject)
+                    const query = {
+                        $and: [
+                            { user_id: body.user_id },
+                            { user_token: body.user_token },
+                        ],
+                    };
+                    const update = {
+                        user_id: body.user_id,
+                        user_token: body.user_token,
+                        temp_data: tempDataObject,
+                    };
+                    await TempUserSchema.findOneAndUpdate(
+                        query,
+                        update,
+                        {
+                            returnOriginal: false,
+                        },
+                        function (err, docs) {
+                            if (err) {
+                                if (err.code === 11000) {
+                                    Object.keys(err.keyValue);
+                                    func.msCons.errorJson["message"] =
+                                        Object.keys(err.keyValue) + " already exists";
+                                    return resolve(func.msCons.errorJson);
+                                }
+                            } else if (!docs || docs.length === 0) {
+                                func.msCons.errorJson["message"] =
+                                    "Error in updating data";
+                                func.msCons.errorJson["error"] = err;
+                                return resolve(func.msCons.errorJson);
+                            } else {
+                                func.msCons.successJson["data"] = docs;
+                                return resolve(func.msCons.successJson);
+                            }
+                        }
+                    );
+                }
+            });
+
+    })
+}
+const getTempUserDataService = async (body) => {
+    return new Promise(async (resolve, reject) => {
+        let query = [{
+            $match: {
+                $and: [
+                    { user_id: ObjectId(body.user_id) },
+                    { user_token: body.user_token },
+                ],
+            },
+        }
+        ]
+        await TempUserSchema.aggregate(query, function (err, docs) {
+            console.log(err, docs);
+            if (err) {
+                func.msCons.errorJson["message"] = "Error in retrieving data";
+                func.msCons.errorJson["error"] = err;
+                return resolve(func.msCons.errorJson);
+            } else if (!docs || docs.length === 0) {
+                func.msCons.errorJson["message"] = "Error in retrieving data";
+                func.msCons.errorJson["error"] = err;
+                return resolve(func.msCons.errorJson);
+            } else {
+                func.msCons.successJson['data'] = docs;
+                return resolve(func.msCons.successJson)
+            }
+        });
+    })
+}
+const updateUserRegisterService = async (body) => {
+    return new Promise(async (resolve, reject) => {
+        // const model = new TempUserSchema(body)
+        const query = {
+            "_id": ObjectId(body.user_id)
+        }
+        const update = {
+            "register_complete": true
+        }
+        await UserDetailSchema.findOneAndUpdate(
+            query,
+            update,
+            {
+                returnOriginal: false,
+            },
+            function (err, docs) {
+                if (err) {
+                    if (err.code === 11000) {
+                        Object.keys(err.keyValue);
+                        func.msCons.errorJson["message"] =
+                            Object.keys(err.keyValue) + " already exists";
+                        return resolve(func.msCons.errorJson);
+                    }
+                } else if (!docs || docs.length === 0) {
+                    func.msCons.errorJson["message"] =
+                        "Error in updating data";
+                    func.msCons.errorJson["error"] = err;
+                    return resolve(func.msCons.errorJson);
+                } else {
+                    func.msCons.successJson["data"] = docs;
+                    return resolve(func.msCons.successJson);
+                }
+            }
+        );
+    })
+}
+module.exports = { userRegisterService, userLoginService, linkedInLoginService, linkedInCandidateDataService, linkedInCandidateEmail, getUserListService, tempUserRegisterService, getTempUserDataService, updateUserRegisterService }

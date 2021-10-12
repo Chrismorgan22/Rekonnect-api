@@ -35,6 +35,7 @@ require('./src/model/candidate_model');
 require('./src/model/expert_model');
 require('./src/model/job_model');
 require('./src/model/user_role_model');
+require('./src/model/temp_user_model');
 
 const lookupSchema = require('./src/model/lookup_model');
 
@@ -47,7 +48,7 @@ app.use('/job', VerifyToken, jobRouter);
 app.use('/user/profile', VerifyToken, userProfileRouter);
 // mongodb+srv://rekonnect:UxyfPRexWLEHVq9F@cluster0.z8ojn.mongodb.net/dbRekonnect?retryWrites=true&w=majority
 // mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority
-mongoose.connect(" mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect("mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         // const lookupBody = {
         //     name: "Devops",
