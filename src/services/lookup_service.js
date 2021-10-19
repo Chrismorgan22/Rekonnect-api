@@ -6,13 +6,12 @@ const getCountryService = async (body) => {
         let query = {};
 
         query = {
-            $match: {
-                $and: [
-                    { is_deleted: false },
-                    { lookup_type: body.type }
-                ]
-            }
+            $and: [
+                { is_deleted: false },
+                { lookup_type: body.lookup_type },
+            ]
         }
+
         await LookupSchema.find(query, function (err, docs) {
             console.log(err, docs);
             if (err) {

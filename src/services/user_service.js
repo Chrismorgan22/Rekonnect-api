@@ -206,7 +206,7 @@ const userLoginService = async (body) => {
                     }
                     docs[0]['token'] = token;
                     delete (docs[0].user_role_details);
-                    func.msCons.successJson['data'] = docs;
+                    func.msCons.successJson['data'] = docs[0];
                     return resolve(func.msCons.successJson)
                 }
             });
