@@ -19,75 +19,42 @@ let candidateSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-        country_id: {
-            type: ObjectId,
-            required: true,
-        },
-        country_name: {
-            type: String,
-            required: true,
-        },
-        address: {
-            type: String,
-            required: true,
-        }
-    },
-    experience_details: {
-        experience_type: {
-            type: String,
-            required: true,
-        },
-        work_experience: [{
-            title: {
-                type: String
-            },
-            company: {
-                type: String
-            },
-            location_id: {
+        state: {
+            id: {
                 type: ObjectId
             },
-            location_name: {
+            name: {
                 type: String
-            },
-            country_id: {
-                type: ObjectId
-            },
-            country_name: {
-                type: String
-            },
-            total_experience: {
-                from: {
-                    month: {
-                        type: String
-                    },
-                    year: {
-                        type: String
-                    }
-                },
-                to: {
-                    month: {
-                        type: String
-                    },
-                    year: {
-                        type: String
-                    }
-                }
-            },
-            job_description: {
-                type: String,
             }
-        }]
+        },
+        landmark: {
+            type: String
+        },
+        organization_strength: {
+            type: String
+        },
+        // country_id: {
+        //     type: ObjectId,
+        //     required: true,
+        // },
+        // country_name: {
+        //     type: String,
+        //     required: true,
+        // },
+        // address: {
+        //     type: String,
+        //     required: true,
+        // }
     },
-    education: {
-        is_educated: {
-            type: Boolean,
+    education_data: {
+        education_type: {
+            type: String,
             required: true,
             default: true
         },
         education_details: [
             {
-                name: {
+                school_name: {
                     type: String
                 },
                 degree_id: {
@@ -102,26 +69,27 @@ let candidateSchema = new mongoose.Schema({
                 field_name: {
                     type: String
                 },
-                total_time: {
-                    from: {
-                        month: {
-                            type: String
-                        },
-                        year: {
-                            type: String
-                        }
+                start_date: {
+                    month: {
+                        type: String
                     },
-                    to: {
-                        month: {
-                            type: String
-                        },
-                        year: {
-                            type: String
-                        }
+                    year: {
+                        type: String
+                    }
+                },
+                end_date: {
+                    month: {
+                        type: String
+                    },
+                    year: {
+                        type: String
                     }
                 },
                 grade: {
                     type: String
+                },
+                currently_studying: {
+                    type: Boolean
                 },
                 description: {
                     type: String
@@ -129,13 +97,57 @@ let candidateSchema = new mongoose.Schema({
             }
         ],
     },
+    experience_data: {
+        experience_type: {
+            type: String,
+            required: true,
+        },
+        experience_details: [{
+            designation: {
+                type: String
+            },
+            company: {
+                type: String
+            },
+            location: {
+                id: {
+                    type: ObjectId
+                },
+                name: {
+                    type: String
+                }
+            },
+            country: {
+                id: {
+                    type: ObjectId
+                },
+                name: {
+                    type: String
+                }
+            },
+            start_date: {
+
+                type: String
+            },
+            end_date: {
+                type: String
+            },
+            currently_working: {
+                type: Boolean
+            },
+            job_description: {
+                type: String,
+            }
+        }]
+    },
+
     soft_skills: [
         {
-            skill_id: {
+            id: {
                 type: ObjectId,
                 required: true
             },
-            skill_name: {
+            name: {
                 type: String,
                 required: true
             }
@@ -144,11 +156,11 @@ let candidateSchema = new mongoose.Schema({
     ],
     technical_skills: [
         {
-            skill_id: {
+            id: {
                 type: ObjectId,
                 required: true
             },
-            skill_name: {
+            name: {
                 type: String,
                 required: true
             }
@@ -156,13 +168,24 @@ let candidateSchema = new mongoose.Schema({
 
     ],
     current_career: {
-        career_id: {
+        id: {
             type: ObjectId,
             required: true
         },
-        career_name: {
+        name: {
             type: String,
             required: true
+        }
+    },
+    changecareer: {
+        type: Boolean
+    },
+    change_career: {
+        id: {
+            type: ObjectId
+        },
+        name: {
+            type: String
         }
     },
     passion: {
@@ -171,28 +194,13 @@ let candidateSchema = new mongoose.Schema({
     },
     languages: [
         {
-            language_id: {
+            id: {
                 type: ObjectId,
                 required: true
             },
-            language_name: {
+            name: {
                 type: String,
                 required: true
-            },
-            is_speak: {
-                type: Boolean,
-                required: true,
-                default: false
-            },
-            is_write: {
-                type: Boolean,
-                required: true,
-                default: false
-            },
-            is_read: {
-                type: Boolean,
-                required: true,
-                default: false
             }
         }
     ],
@@ -206,43 +214,30 @@ let candidateSchema = new mongoose.Schema({
     //         required: true
     //     }
     // }],
-    career_change: {
-        is_willing: {
-            type: Boolean,
-            required: true,
-        },
-        career_detail: {
-            type: String,
-        }
-    },
     expected_salary_range: {
         min_salary: {
             type: String,
-            required: true,
+            // required: true,
         },
         max_salary: {
             type: String,
-            required: true,
+            // required: true,
         }
     },
-    immediate_join:{
-        type:Boolean,
-        required: true
+    joining_status: {
+        type: Boolean
     },
-    joining_in:{
-        type:String
+    join_within: {
+        type: String
     },
-    resume_url:{
-        type:String,
-        required: true
+    resume_url: {
+        type: String,
     },
-    visume_url:{
-        type:String,
-        required: true
+    visume_url: {
+        type: String,
     },
-    onboard_with_this:{
-        type:Boolean,
-        required: true
+    onboard_with_this: {
+        type: Boolean,
     },
     // service_to_be: {
     //     type: Boolean,
