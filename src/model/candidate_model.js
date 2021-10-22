@@ -30,9 +30,9 @@ let candidateSchema = new mongoose.Schema({
         landmark: {
             type: String
         },
-        organization_strength: {
-            type: String
-        },
+        // organization_strength: {
+        //     type: String
+        // },
         // country_id: {
         //     type: ObjectId,
         //     required: true,
@@ -109,7 +109,7 @@ let candidateSchema = new mongoose.Schema({
             company: {
                 type: String
             },
-            location: {
+            state: {
                 id: {
                     type: ObjectId
                 },

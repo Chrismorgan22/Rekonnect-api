@@ -83,14 +83,14 @@ const userRegisterService = async (body) => {
                         func.msCons.errorJson['error'] = err
                         return resolve(func.msCons.errorJson)
                     } else {
-                        const roleBody = {
-                            user_id: docs['_id'],
-                            role: body.role
-                        }
-                        const roleModelSchema = new UserRoleSchema(roleBody);
-                        await roleModelSchema.save(function (err, docs) {
+                        // const roleBody = {
+                        //     user_id: docs['_id'],
+                        //     role: body.role
+                        // }
+                        // const roleModelSchema = new UserRoleSchema(roleBody);
+                        // await roleModelSchema.save(function (err, docs) {
 
-                        })
+                        // })
                         var transporter = nodemailer.createTransport({
                             host: 'smtp.gmail.com',
                             port: 587,
