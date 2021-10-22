@@ -214,12 +214,12 @@ let candidateSchema = new mongoose.Schema({
     //         required: true
     //     }
     // }],
-    expected_salary_range: {
-        min_salary: {
+    salary_range: {
+        min: {
             type: String,
             // required: true,
         },
-        max_salary: {
+        max: {
             type: String,
             // required: true,
         }
