@@ -117,13 +117,16 @@ let candidateSchema = new mongoose.Schema({
                     type: String
                 }
             },
-            country: {
+            city: {
                 id: {
                     type: ObjectId
                 },
                 name: {
                     type: String
                 }
+            },
+            other_city: {
+                type: String
             },
             start_date: {
 
