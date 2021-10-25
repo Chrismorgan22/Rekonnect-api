@@ -28,7 +28,7 @@ const expertRouter = require('./src/routes/expert_route');
 const jobRouter = require('./src/routes/job_route');
 const lookupRouter = require('./src/routes/lookup_route');
 const userProfileRouter = require('./src/routes/user_profile_route');
-
+const employerRouter = require('./src/routes/employer_route');
 
 require('./src/model/user_model');
 require('./src/model/candidate_model');
@@ -36,12 +36,14 @@ require('./src/model/expert_model');
 require('./src/model/job_model');
 require('./src/model/user_role_model');
 require('./src/model/temp_user_model');
+require('./src/model/employer_model');
 
 const lookupSchema = require('./src/model/lookup_model');
 
 app.use('/', healthRouter);
 app.use('/user', userRouter);
 app.use('/candidate', candidateRouter);
+app.use('/employer', employerRouter);
 app.use('/expert', expertRouter);
 app.use('/lookup', lookupRouter);
 app.use('/job', VerifyToken, jobRouter);
@@ -51,8 +53,8 @@ app.use('/user/profile', VerifyToken, userProfileRouter);
 mongoose.connect("mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         // const lookupBody = {
-        //     name: "Devops",
-        //     type: "Specialization"
+        //     name: "Other",
+        //     lookup_type: "City"
         // }
         // const looupData = new lookupSchema(lookupBody);
         // looupData.save(function (err, data) {

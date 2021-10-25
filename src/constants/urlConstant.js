@@ -19,6 +19,9 @@ const urlConstants = {
     URL_EXPERT_REGISTRATION: '/registration',
     URL_EXPERT_LOGIN: '/login',
 
+    /* Employer API */
+    URL_EMPLOYER_REGISTRATION: '/registration',
+
     /* Job API */
     URL_POST_JOB: '/save',
     URL_GET_JOB: '/list',
