@@ -33,7 +33,7 @@ const employerRegisterService = async (body) => {
                     } else {
                         const roleBody = {
                             user_id: body.user_id,
-                            role: 1
+                            role: 2
                         }
                         const userRoleData = await addUserRoleData(roleBody);
                         func.msCons.successJson['data'] = docs;
