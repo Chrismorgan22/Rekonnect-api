@@ -47,10 +47,10 @@ app.use('/employer', employerRouter);
 app.use('/expert', expertRouter);
 app.use('/lookup', lookupRouter);
 app.use('/job', VerifyToken, jobRouter);
-app.use('/user/profile', VerifyToken, userProfileRouter);
+app.use('/user/profile', userProfileRouter);
 // mongodb+srv://rekonnect:UxyfPRexWLEHVq9F@cluster0.z8ojn.mongodb.net/dbRekonnect?retryWrites=true&w=majority
 // mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority
-mongoose.connect("mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(" mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         // const lookupBody = {
         //     name: "Other",
