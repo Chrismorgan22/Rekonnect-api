@@ -8,7 +8,7 @@ let candidateSchema = new mongoose.Schema({
     },
     profile_url: {
         type: String,
-        required: true,
+        // required: true,
     },
     address_details: {
         street: {
@@ -21,7 +21,7 @@ let candidateSchema = new mongoose.Schema({
         },
         state: {
             id: {
-                type: ObjectId
+                type: String
             },
             name: {
                 type: String
