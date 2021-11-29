@@ -111,19 +111,19 @@ let candidateSchema = new mongoose.Schema({
             },
             state: {
                 id: {
-                    type: ObjectId
+                    type: String
                 },
                 name: {
                     type: String
                 }
             },
             city: {
-                id: {
-                    type: ObjectId
-                },
-                name: {
+                // id: {
+                //     type: ObjectId
+                // },
+                // name: {
                     type: String
-                }
+                // }
             },
             other_city: {
                 type: String
@@ -148,11 +148,11 @@ let candidateSchema = new mongoose.Schema({
         {
             id: {
                 type: ObjectId,
-                required: true
+                // required: true
             },
             name: {
                 type: String,
-                required: true
+                // required: true
             }
         },
 
@@ -161,11 +161,11 @@ let candidateSchema = new mongoose.Schema({
         {
             id: {
                 type: ObjectId,
-                required: true
+                // required: true
             },
             name: {
                 type: String,
-                required: true
+                // required: true
             }
         },
 
@@ -173,11 +173,11 @@ let candidateSchema = new mongoose.Schema({
     current_career: {
         id: {
             type: ObjectId,
-            required: true
+            // required: true
         },
         name: {
             type: String,
-            required: true
+            // required: true
         }
     },
     changecareer: {
