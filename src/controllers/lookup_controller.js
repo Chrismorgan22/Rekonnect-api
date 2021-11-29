@@ -3,8 +3,8 @@ const carrerList = require("../constants/CarrerField");
 const LookUpModel = require("../model/lookup_model");
 
 const carress = [
-  { name: "Data science intern", lookup_type: "Carrer" },
-  { name: "Data manager intern", lookup_type: "Carrer" },
+  { name: "Data science internship", lookup_type: "Carrer" },
+  { name: "Data manager internship", lookup_type: "Carrer" },
 ];
 const getLookupDetails = async (req, res) => {
   console.log("getLookupDetails");
@@ -34,12 +34,11 @@ const postCarrerOptions = async (req, res) => {
     //   }
     // });
     // try {
-    console.log(carress.length);
     var i = 0;
-    while (i < 2) {
+    while (i < carrerList.length) {
       const newCarrer = new LookUpModel({
-        name: carress[i].name,
-        lookup_type: carress[i].lookup_type,
+        name: carrerList[i].name,
+        lookup_type: carrerList[i].lookup_type,
       });
       const savedCarrer = await newCarrer.save();
       list.push(savedCarrer);
