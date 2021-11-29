@@ -211,6 +211,55 @@ const carrerList = [
     name: "Wind Energy Development Manager",
     lookup_type: "Career",
   },
+  {
+    name: "Communication",
+    lookup_type: "Soft_skills",
+  },
+  {
+    name: "Problem solving",
+    lookup_type: "Soft_skills",
+  },
+  {
+    name: "Leadership",
+    lookup_type: "Soft_skills",
+  },
+  {
+    name: "Creativity",
+    lookup_type: "Soft_skills",
+  },
+
+  {
+    name: "Html",
+    lookup_type: "Technical_skills",
+  },
+  {
+    name: "CSS",
+    lookup_type: "Technical_skills",
+  },
+  {
+    name: "JavaScript",
+    lookup_type: "Technical_skills",
+  },
+  {
+    name: "MySql",
+    lookup_type: "Technical_skills",
+  },
+  {
+    name: "NodeJs",
+    lookup_type: "Technical_skills",
+  },
+  {
+    name: "PHP",
+    lookup_type: "Technical_skills",
+  },
+  {
+    name: "Hindi",
+    lookup_type: "Language",
+  },
+  {
+    name: "English",
+    lookup_type: "Language",
+  },
 ];
 
 module.exports = carrerList;
