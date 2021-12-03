@@ -323,10 +323,37 @@ const getUserListService = async (req) => {
                 "user_details.first_name": 1,
                 "user_details.last_name": 1,
                 "user_details.email": 1,
-                "user_details.phone": 1
+                "user_details.phone": 1,
+                "candidate_details": 1
             }
         }
         ]
+        if (req.params.user_role === '1') {
+            query.push({
+                $lookup:
+                {
+                    from: "candidate_details",
+                    localField: "user_id",
+                    foreignField: "user_id",
+                    as: "candidate_details"
+                }
+            },
+                { $unwind: "$candidate_details" },
+                {
+                    $project: {
+                        user_id: 1,
+                        role: 1,
+                        "user_details.first_name": 1,
+                        "user_details.last_name": 1,
+                        "user_details.email": 1,
+                        "user_details.phone": 1,
+                        "candidate_details": 1
+                    }
+                }
+
+            )
+        }
+
         await UserRoleSchema.aggregate(query, function (err, docs) {
             console.log(err, docs);
             if (err) {

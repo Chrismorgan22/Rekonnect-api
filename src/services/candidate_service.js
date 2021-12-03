@@ -15,7 +15,7 @@ const candidateRegisterService = async (body) => {
         let model = {};
         model = new CandidateDetailSchema(body);
         await model.validate(async function (err, data) {
-
+            console.log(err, data);
             if (err) {
                 const keys = Object.keys(err.errors)
                 console.log(keys)
