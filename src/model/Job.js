@@ -1,27 +1,29 @@
-const mongoose=require("mongoose");
+const mongoose = require("mongoose");
 
-const jobSchema=new mongoose.Schema({
-    title:{
-        type:String,
-        required:true,
-    }
-    ,location:{
-        type:String,
-        required:true,
-    }
-    ,catergory:{
-        type:String,
-        required:true,
-    }
-    ,details:{
-         type:String,
-        required:true,
-    },Requirements:{
-        type:Array,
-        default:[];
-    }
+const jobSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    location: {
+      type: String,
+      required: true,
+    },
+    catergory: {
+      type: String,
+      required: true,
+    },
+    details: {
+      type: String,
+      required: true,
+    },
+    Requirements: {
+      type: Array,
+      default: [],
+    },
+  },
+  { timestamps: true }
+);
 
-    
-},{timestamps:true});
-
-module.exports= mongoose.model("jobInfo",jobSchema)
+module.exports = mongoose.model("jobDetails", jobSchema);
