@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const jobsRouter = require("./src/routes/jobs");
+const jobsRouters = require("./src/routes/jobs");
 app.use(cors());
 const bodyParser = require("body-parser");
 app.use(express.json({ limit: "50mb" }));
@@ -54,7 +54,7 @@ app.use("/lookup", lookupRouter);
 app.use("/job", VerifyToken, jobRouter);
 app.use("/user/profile", userProfileRouter);
 
-app.use("/Job", jobsRouter);
+app.use("/JobCopy", jobsRouters);
 // mongodb+srv://rekonnect:UxyfPRexWLEHVq9F@cluster0.z8ojn.mongodb.net/dbRekonnect?retryWrites=true&w=majority
 // mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority
 mongoose

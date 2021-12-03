@@ -12,10 +12,11 @@ router.post("/createOne", async (req, res) => {
 });
 router.get("/getAll", async (req, res) => {
   try {
-    const fetchedJob = await jobDetails.findAll();
+    const fetchedJob = await jobDetails.find();
     return res.status(200).json(fetchedJob);
   } catch (error) {
-    return res.status(500).json("Error while fetching jobs");
+    console.log(error);
+    return res.status(500).json(error);
   }
 });
 

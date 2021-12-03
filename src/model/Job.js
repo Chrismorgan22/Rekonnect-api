@@ -14,6 +14,10 @@ const jobSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    company: {
+      type: String,
+      required: true,
+    },
     details: {
       type: String,
       required: true,
@@ -21,6 +25,9 @@ const jobSchema = new mongoose.Schema(
     Requirements: {
       type: Array,
       default: [],
+    },
+    Salary: {
+      type: Number,
     },
   },
   { timestamps: true }
