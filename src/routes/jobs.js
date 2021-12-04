@@ -29,4 +29,16 @@ router.post("/deleteOne", async (req, res) => {
   }
 });
 
+router.post("/applyJob/:jobID", async (req, res) => {
+  try {
+    const interestedJob = await jobDetails.find({ _id: req.params.jobID });
+
+    await interestedJob.update({ $push: { applicants: req.body.userId } });
+
+    return res.status(200).json("Applied Successfully");
+  } catch (error) {
+    return res.status(500).json("error while applying for job");
+  }
+});
+
 module.exports = router;

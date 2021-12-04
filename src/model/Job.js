@@ -30,6 +30,10 @@ const jobSchema = new mongoose.Schema(
     Salary: {
       type: Number,
     },
+    applicants: {
+      type: Array,
+      default: [],
+    },
   },
   { timestamps: true }
 );
