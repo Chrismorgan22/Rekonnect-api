@@ -212,24 +212,47 @@ const carrerList = [
     lookup_type: "Career",
   },
   {
+    name: "Business Awareness",
+    lookup_type: "Soft_skills",
+  },
+  {
+    name: "Customer Orientation",
+    lookup_type: "Soft_skills",
+  },
+  {
+    name: "Problem Solving",
+    lookup_type: "Soft_skills",
+  },
+  {
+    name: "Quick Learning/Thinking",
+    lookup_type: "Soft_skills",
+  },
+  {
+    name: "Team Work",
+    lookup_type: "Soft_skills",
+  },
+  {
     name: "Communication",
     lookup_type: "Soft_skills",
   },
   {
-    name: "Problem solving",
+    name: "Decision making",
     lookup_type: "Soft_skills",
   },
-  {
-    name: "Leadership",
-    lookup_type: "Soft_skills",
-  },
-  {
-    name: "Creativity",
-    lookup_type: "Soft_skills",
-  },
-
   {
     name: "Html",
+    lookup_type: "Technical_skills",
+  },
+  {
+    name: "Microsoft Word",
+    lookup_type: "Technical_skills",
+  },
+  {
+    name: "Others",
+    lookup_type: "Technical_skills",
+  },
+  {
+    name: "Excel",
     lookup_type: "Technical_skills",
   },
   {
@@ -259,6 +282,90 @@ const carrerList = [
   {
     name: "English",
     lookup_type: "Language",
+  },
+  {
+    name: "Food",
+    lookup_type: "Career",
+  },
+  {
+    name: "Music",
+    lookup_type: "Career",
+  },
+  {
+    name: "Art",
+    lookup_type: "Career",
+  },
+  {
+    name: "Craft",
+    lookup_type: "Career",
+  },
+  {
+    name: "Sports",
+    lookup_type: "Career",
+  },
+  {
+    name: "Painting",
+    lookup_type: "Career",
+  },
+  {
+    name: "Entertainment",
+    lookup_type: "Career",
+  },
+  {
+    name: "Fashion",
+    lookup_type: "Career",
+  },
+  {
+    name: "Travel",
+    lookup_type: "Career",
+  },
+  {
+    name: "Beauty",
+    lookup_type: "Career",
+  },
+  {
+    name: "Organized",
+    lookup_type: "Career",
+  },
+  {
+    name: "Dance",
+    lookup_type: "Career",
+  },
+  {
+    name: "Lifestyle",
+    lookup_type: "Career",
+  },
+  {
+    name: "Teaching",
+    lookup_type: "Career",
+  },
+  {
+    name: "Photographer",
+    lookup_type: "Career",
+  },
+  {
+    name: "Medicine",
+    lookup_type: "Career",
+  },
+  {
+    name: "Politics",
+    lookup_type: "Career",
+  },
+  {
+    name: "Startup mentor",
+    lookup_type: "Career",
+  },
+  {
+    name: "IT",
+    lookup_type: "Career",
+  },
+  {
+    name: "others",
+    lookup_type: "Career",
+  },
+  {
+    name: "Craft",
+    lookup_type: "Career",
   },
 ];
 

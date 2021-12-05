@@ -30,14 +30,18 @@ router.post("/deleteOne", async (req, res) => {
 });
 
 router.post("/applyJob/:jobID", async (req, res) => {
+  console.log(req.body.userId);
+  console.log(req.params.jobID);
   try {
-    const interestedJob = await jobDetails.find({ _id: req.params.jobID });
+    const applied = await jobDetails.findOneAndUpdate(
+      { _id: req.params.jobID },
+      { $push: { applicants: req.body.userId } }
+    );
 
-    await interestedJob.update({ $push: { applicants: req.body.userId } });
-
-    return res.status(200).json("Applied Successfully");
+    return res.status(200).json(applied);
   } catch (error) {
-    return res.status(500).json("error while applying for job");
+    console.log(error);
+    return res.status(500).json(error);
   }
 });
 
