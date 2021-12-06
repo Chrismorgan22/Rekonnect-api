@@ -1,5 +1,5 @@
 const jobDetails = require("../model/Job.js");
-const router = require("Express").Router();
+const router = require("express").Router();
 
 router.post("/createOne", async (req, res) => {
   try {
