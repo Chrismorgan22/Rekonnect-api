@@ -24,7 +24,7 @@ let employerSchema = new mongoose.Schema({
     },
     state: {
       id: {
-        type: ObjectId,
+        type: String,
       },
       name: {
         type: String,
