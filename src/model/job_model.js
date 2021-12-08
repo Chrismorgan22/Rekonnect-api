@@ -1,29 +1,29 @@
 const { ObjectId } = require('bson');
 let mongoose = require('mongoose');
 let jobSchema = new mongoose.Schema({
+    user_id: {
+        type: ObjectId,
+        required: true,
+    },
     job_title: {
         type: String,
         required: true,
     },
-    company: {
+    job_type: {
+        type: String,
+        required: true,
+    },
+    job_category: {
+        type: String,
+        required: true,
+    },
+    city: {
+        type: String,
+        required: true,
+    },
+    country: {
         type: String,
         requied: true
-    },
-    job_descritption: {
-        type: String,
-        required: true,
-    },
-    pin_code: {
-        type: String,
-        required: true,
-    },
-    location_id: {
-        type: ObjectId,
-        required: true,
-    },
-    minimum_experience_required: {
-        type: String,
-        required: true
     },
     salary_range: {
         min: {
@@ -35,12 +35,40 @@ let jobSchema = new mongoose.Schema({
             required: true
         }
     },
-    job_type: {
-        type: Number,
+    remote_type: {
+        type: String,
+        requied: true
+    },
+    education_level: {
+        type: String,
         required: true,
     },
-    user_id: {
-        type: ObjectId,
+    minimum_experience_required: {
+        type: String,
+        required: true
+    },
+    maximum_experience_required: {
+        type: String,
+        required: true
+    },
+    top_skills: {
+        type: String,
+        required: true,
+    },
+    post_vacancies: {
+        type: String,
+        required: true,
+    },
+    is_visume:{
+        type: Boolean,
+        required: true,
+    },
+    is_scandidate :{
+        type: Boolean,
+        required: true,
+    },
+    job_description: {
+        type: String,
         required: true,
     },
     is_deleted: {
