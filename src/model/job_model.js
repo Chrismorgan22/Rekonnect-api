@@ -53,7 +53,7 @@ let jobSchema = new mongoose.Schema({
     },
     top_skills: {
         type: String,
-        required: true,
+        // required: true,
     },
     post_vacancies: {
         type: String,
