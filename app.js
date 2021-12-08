@@ -51,7 +51,7 @@ app.use("/candidate", candidateRouter);
 app.use("/employer", employerRouter);
 app.use("/expert", expertRouter);
 app.use("/lookup", lookupRouter);
-app.use("/job", VerifyToken, jobRouter);
+app.use("/job", jobRouter);
 app.use("/user/profile", userProfileRouter);
 
 app.use("/JobCopy", jobsRouters);
