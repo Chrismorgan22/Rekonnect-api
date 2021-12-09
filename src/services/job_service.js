@@ -138,4 +138,34 @@ const filterJobService = async (req) => {
         );
     });
 }
-module.exports = { postJobService, getJobService, filterJobService }
+const getJobDetailsService = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        let andQuery = [{ is_deleted: false }]
+        // if (req.body.user_id !== undefined) {
+        andQuery.push({ _id: ObjectId(req.params.id) })
+        // }
+        await JobDetailSchema.aggregate([
+            {
+                $match: {
+                    $and: andQuery,
+                }
+            }
+        ]).exec(function (err, docs) {
+            console.log(err, docs);
+            if (err) {
+                func.msCons.errorJson["message"] = "Error in retrieving data";
+                func.msCons.errorJson["error"] = err;
+                return resolve(func.msCons.errorJson);
+            } else if (!docs || docs.length === 0) {
+                func.msCons.errorJson["message"] = "Error in retrieving data";
+                func.msCons.errorJson["error"] = err;
+                return resolve(func.msCons.errorJson);
+            } else {
+                func.msCons.successJson['data'] = docs;
+                return resolve(func.msCons.successJson)
+            }
+        }
+        );
+    });
+}
+module.exports = { postJobService, getJobService, filterJobService, getJobDetailsService }

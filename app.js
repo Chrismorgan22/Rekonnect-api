@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const jobsRouters = require("./src/routes/jobs");
 app.use(cors());
 const bodyParser = require("body-parser");
 app.use(express.json({ limit: "50mb" }));
@@ -34,6 +33,7 @@ const jobRouter = require("./src/routes/job_route");
 const lookupRouter = require("./src/routes/lookup_route");
 const userProfileRouter = require("./src/routes/user_profile_route");
 const employerRouter = require("./src/routes/employer_route");
+const jobApplicationRouter = require("./src/routes/job_application_route");
 
 require("./src/model/user_model");
 require("./src/model/candidate_model");
@@ -42,6 +42,7 @@ require("./src/model/job_model");
 require("./src/model/user_role_model");
 require("./src/model/temp_user_model");
 require("./src/model/employer_model");
+require("./src/model/job_application_model");
 
 const lookupSchema = require("./src/model/lookup_model");
 
@@ -53,13 +54,13 @@ app.use("/expert", expertRouter);
 app.use("/lookup", lookupRouter);
 app.use("/job", jobRouter);
 app.use("/user/profile", userProfileRouter);
+app.use("/job/application", jobApplicationRouter);
 
-app.use("/JobCopy", jobsRouters);
 // mongodb+srv://rekonnect:UxyfPRexWLEHVq9F@cluster0.z8ojn.mongodb.net/dbRekonnect?retryWrites=true&w=majority
 // mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority
 mongoose
   .connect(
-    " mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority",
+    "mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => {
