@@ -11,10 +11,12 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    const fetchedAdmin = await adminModel.find({ email: req.body.email });
-
+    const fetchedAdmin = await adminModel.findOne({ email: req.body.email });
+    if (fetchedAdmin.password !== req.body.password) {
+      return res.status(500).json("incorrect password");
+    }
     return res.status(200).json(fetchedAdmin);
   } catch (error) {
     return res.status(500).json(error);
