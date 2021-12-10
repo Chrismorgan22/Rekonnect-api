@@ -29,7 +29,15 @@ const filterJob = async (req, res) => {
     } catch (err) {
         return res.send(err)
     }
-
 }
 
-module.exports = { postJob, getJob, filterJob }
+const getJobDetails = async (req, res) => {
+    try {
+        const getJobData = await jobService.getJobDetailsService(req)
+        console.log(getJobData)
+        return res.send(getJobData)
+    } catch (err) {
+        return res.send(err)
+    }
+}
+module.exports = { postJob, getJob, filterJob,getJobDetails }
