@@ -40,6 +40,7 @@ const urlConstants = {
 
   /* Job application */
   URL_POST_JOB_APPLICATION: '/apply',
-  URL_APPLIED_JOB_STATUS: '/applied/status'
+  URL_APPLIED_JOB_STATUS: '/applied/status',
+  URL_USER_DETAILS_BY_JOB:'/getUserByJob'
 };
 module.exports = urlConstants;

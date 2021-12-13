@@ -20,6 +20,16 @@ const appliedJobStatus = async (req, res) => {
     }
 
 }
+const getUserByJob = async (req, res) => {
+    try {
+        const getJobData = await jobApplicationService.getUserDetailsByJobService(req)
+        console.log(getJobData)
+        return res.send(getJobData)
+    } catch (err) {
+        return res.send(err)
+    }
+
+}
 // const getJob = async (req, res) => {
 //     try {
 //         const getJobData = await jobApplicationService.getJobService(req)
@@ -42,4 +52,4 @@ const appliedJobStatus = async (req, res) => {
 
 // }
 
-module.exports = { applyJob, appliedJobStatus }
+module.exports = { applyJob, appliedJobStatus,getUserByJob }
