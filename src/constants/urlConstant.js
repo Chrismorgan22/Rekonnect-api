@@ -24,7 +24,7 @@ const urlConstants = {
   URL_POST_JOB: "/save",
   URL_GET_JOB: "/list",
   URL_FILTER_JOB: "/filter",
-  URL_GET_JOB_DETAILS: '/details/:id',
+  URL_GET_JOB_DETAILS: "/details/:id",
 
   /* Graduation API */
   URL_GET_HEALTH: "/",
@@ -39,7 +39,8 @@ const urlConstants = {
   URL_UPDATE_USER_PROFILE: "/update/:user_id",
 
   /* Job application */
-  URL_POST_JOB_APPLICATION: '/apply',
-  URL_APPLIED_JOB_STATUS: '/applied/status'
+  URL_POST_JOB_APPLICATION: "/apply",
+  URL_APPLIED_JOB_STATUS: "/applied/status",
+  URL_GET_JOB_APPLICATION: "/",
 };
 module.exports = urlConstants;
