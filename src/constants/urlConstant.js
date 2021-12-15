@@ -39,8 +39,10 @@ const urlConstants = {
   URL_UPDATE_USER_PROFILE: "/update/:user_id",
 
   /* Job application */
+
   URL_POST_JOB_APPLICATION: "/apply",
   URL_APPLIED_JOB_STATUS: "/applied/status",
   URL_GET_JOB_APPLICATION: "/",
+
 };
 module.exports = urlConstants;
