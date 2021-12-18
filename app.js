@@ -1,14 +1,12 @@
 /**
  * @author Leena Patoliya
  */
-const shortid = require("shortid");
-
+const payment = require("./src/routes/payment");
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
 const app = express();
 const adminRouter = require("./src/routes/admin.route.js");
-const Razorpay = require("razorpay");
 app.use(cors());
 const bodyParser = require("body-parser");
 app.use(express.json({ limit: "50mb" }));
@@ -59,7 +57,7 @@ app.use("/lookup", lookupRouter);
 app.use("/job", jobRouter);
 app.use("/user/profile", userProfileRouter);
 app.use("/job/application", jobApplicationRouter);
-
+app.use("/", payment);
 app.use("/admin", adminRouter);
 
 // mongodb+srv://rekonnect:UxyfPRexWLEHVq9F@cluster0.z8ojn.mongodb.net/dbRekonnect?retryWrites=true&w=majority
@@ -84,61 +82,6 @@ mongoose
     console.log(err);
   });
 
-const razorpay = new Razorpay({
-  key_id: "rzp_test_nBBe0QbVWt2oIh",
-  key_secret: "KhebpgbRB9k34YRV7nGSyXWL",
-});
-app.post("/verification", (req, res) => {
-  // do a validation
-  const secret = "12345678";
-
-  console.log(req.body);
-
-  const crypto = require("crypto");
-
-  const shasum = crypto.createHmac("sha256", secret);
-  shasum.update(JSON.stringify(req.body));
-  const digest = shasum.digest("hex");
-
-  console.log(digest, req.headers["x-razorpay-signature"]);
-
-  if (digest === req.headers["x-razorpay-signature"]) {
-    console.log("request is legit");
-    // process it
-    require("fs").writeFileSync(
-      "payment1.json",
-      JSON.stringify(req.body, null, 4)
-    );
-  } else {
-    // pass it
-  }
-  res.json({ status: "ok" });
-});
-
-app.post("/razorpay", async (req, res) => {
-  const payment_capture = 1;
-  const amount = 499;
-  const currency = "INR";
-
-  const options = {
-    amount: amount * 100,
-    currency,
-    receipt: shortid.generate(),
-    payment_capture,
-  };
-
-  try {
-    const response = await razorpay.orders.create(options);
-    console.log(response);
-    res.json({
-      id: response.id,
-      currency: response.currency,
-      amount: response.amount,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-});
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
