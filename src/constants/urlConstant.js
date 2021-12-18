@@ -46,5 +46,9 @@ const urlConstants = {
   // RazorPay
   RAZOR_PAY_VERIFICATION: "/verification",
   RAZOR_PAY_PAY: "/razorpay",
+
+  //BGV route url
+  POST_BGV: "/apply",
+  GET_USERS: "/users",
 };
 module.exports = urlConstants;
