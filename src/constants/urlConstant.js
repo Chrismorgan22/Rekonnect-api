@@ -42,5 +42,9 @@ const urlConstants = {
   URL_POST_JOB_APPLICATION: "/apply",
   URL_APPLIED_JOB_STATUS: "/applied/status",
   URL_GET_JOB_APPLICATION: "/",
+
+  // RazorPay
+  RAZOR_PAY_VERIFICATION: "/verification",
+  RAZOR_PAY_PAY: "/razorpay",
 };
 module.exports = urlConstants;
