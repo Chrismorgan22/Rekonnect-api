@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
-const bgvSchema = new bgv.Schema(
+const bgvSchema = new mongoose.Schema(
   {
     userId: {
-      type: ObjectId,
+      type: String,
       required: true,
     },
     fname: {

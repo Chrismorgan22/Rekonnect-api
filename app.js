@@ -2,6 +2,7 @@
  * @author Leena Patoliya
  */
 const payment = require("./src/routes/payment");
+
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
@@ -16,6 +17,7 @@ app.use(
     limit: "50mb",
   })
 );
+const bgvRoute = require("./src/routes/bgv_route.js");
 
 app.use(
   bodyParser.urlencoded({
@@ -57,9 +59,9 @@ app.use("/lookup", lookupRouter);
 app.use("/job", jobRouter);
 app.use("/user/profile", userProfileRouter);
 app.use("/job/application", jobApplicationRouter);
-app.use("/", payment);
+app.use("/api", payment);
 app.use("/admin", adminRouter);
-
+app.use("/report", bgvRoute);
 // mongodb+srv://rekonnect:UxyfPRexWLEHVq9F@cluster0.z8ojn.mongodb.net/dbRekonnect?retryWrites=true&w=majority
 // mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority
 mongoose
