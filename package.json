@@ -26,6 +26,8 @@
     "mongoose": "^5.13.2",
     "nodemailer": "^6.6.3",
     "qs": "^6.10.1",
-    "querystring": "^0.2.1"
+    "querystring": "^0.2.1",
+    "razorpay": "^2.8.0",
+    "shortid": "^2.2.16"
   }
 }
