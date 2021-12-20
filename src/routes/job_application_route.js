@@ -1,5 +1,6 @@
 let express = require("express");
 let router = express.Router();
+
 let func = require("../config/function");
 const jobApplication = require("../model/job_application_model");
 const jobApplicationController = require("../controllers/job_application_controller");
@@ -19,5 +20,6 @@ router.get(func.urlCons.URL_GET_JOB_APPLICATION, async (req, res) => {
     return res.status(500).json(error);
   }
 });
+
 // router.post(func.urlCons.URL_FILTER_JOB, jobApplicationController.filterJob);
 module.exports = router;

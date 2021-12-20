@@ -69,7 +69,63 @@ const appliedJobStatusService = async (body) => {
         );
     });
 }
-
+const getUserDetailsByJobService = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        let query = [];
+        query = [
+            {
+                $match: {
+                    "job_id": ObjectId(req.query.job_id),
+                }
+            },
+            {
+                $lookup:
+                {
+                    "from": "user_details",
+                    "localField": "candidate_id",
+                    "foreignField": "_id",
+                    "as": "userByJob"
+                }
+            },
+            {
+                $lookup:
+                {
+                    "from": "candidate_details",
+                    "localField": "candidate_id",
+                    "foreignField": "user_id",
+                    "as": "candidatebyjob"
+                }
+            },
+            {
+                $project: {
+                    "userByJob.first_name": 1,
+                    "userByJob.last_name": 1,
+                    "userByJob.email": 1,
+                    "userByJob.phone": 1,
+                    "candidatebyjob.address_details": 1,
+                    "candidatebyjob.education_data": 1,
+                    "candidatebyjob.experience_data": 1,
+                }
+            }
+        ]
+        await JobApplicationSchema.aggregate(query).exec(function (err, docs) {
+            console.log(err, docs);
+            if (err) {
+                func.msCons.errorJson["message"] = "Error in retrieving data";
+                func.msCons.errorJson["error"] = err;
+                return resolve(func.msCons.errorJson);
+            } else if (!docs || docs.length === 0) {
+                func.msCons.successJson["message"] = "No data found";
+                func.msCons.successJson["data"] = [];
+                return resolve(func.msCons.successJson);
+            } else {
+                func.msCons.successJson['data'] = docs;
+                return resolve(func.msCons.successJson)
+            }
+        }
+        );
+    });
+}
 // const filterJobService = async (req) => {
 //     let query = {};
 //     let andQuery = [{ is_deleted: false }]
@@ -139,4 +195,4 @@ const appliedJobStatusService = async (body) => {
 //         );
 //     });
 // }
-module.exports = { applyJobService,appliedJobStatusService }
+module.exports = { applyJobService, appliedJobStatusService, getUserDetailsByJobService }

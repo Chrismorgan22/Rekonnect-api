@@ -39,10 +39,12 @@ const urlConstants = {
   URL_UPDATE_USER_PROFILE: "/update/:user_id",
 
   /* Job application */
+
   URL_POST_JOB_APPLICATION: "/apply",
   URL_APPLIED_JOB_STATUS: "/applied/status",
   URL_GET_JOB_APPLICATION: "/",
 
+<<<<<<< HEAD
   // RazorPay
   RAZOR_PAY_VERIFICATION: "/verification",
   RAZOR_PAY_PAY: "/razorpay",
@@ -50,5 +52,7 @@ const urlConstants = {
   //BGV route url
   POST_BGV: "/apply",
   GET_USERS: "/users",
+=======
+>>>>>>> 24c494fb88fc6fc8fcc48533f45b18d7158777d6
 };
 module.exports = urlConstants;
