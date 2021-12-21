@@ -30,4 +30,6 @@ router.get("/applicant/:id", async (req, res) => {
     return res.status(500).json(error);
   }
 });
+
+router.post("/filterUsers", userController.filterUser);
 module.exports = router;
