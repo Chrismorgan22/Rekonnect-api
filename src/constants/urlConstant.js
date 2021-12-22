@@ -35,6 +35,9 @@ const urlConstants = {
   URL_STORE_LOOKUP: "/storeAll",
 
   /* User Profile API */
+  FILTER_BY_ID: "/applicant/:id",
+  FILTER_USERS: "/filter",
+  PAGINATE_USERS: "/paginate",
   URL_GET_USER_PROFILE: "/:user_id",
   URL_UPDATE_USER_PROFILE: "/update/:user_id",
 
@@ -44,7 +47,6 @@ const urlConstants = {
   URL_APPLIED_JOB_STATUS: "/applied/status",
   URL_GET_JOB_APPLICATION: "/",
 
-<<<<<<< HEAD
   // RazorPay
   RAZOR_PAY_VERIFICATION: "/verification",
   RAZOR_PAY_PAY: "/razorpay",
@@ -52,7 +54,7 @@ const urlConstants = {
   //BGV route url
   POST_BGV: "/apply",
   GET_USERS: "/users",
-=======
->>>>>>> 24c494fb88fc6fc8fcc48533f45b18d7158777d6
+  UPLOAD_BGV: "/addPdf",
+  FETCH_BGV: "/single",
 };
 module.exports = urlConstants;

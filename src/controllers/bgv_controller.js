@@ -18,4 +18,30 @@ const fetchUsers = async (req, res) => {
     return res.status(500).json(error);
   }
 };
-module.exports = { addUser, fetchUsers };
+
+const uploadPdf = async (req, res) => {
+  console.log(req.body);
+  try {
+    const updatedUserReport = await bgvModel.findOneAndUpdate(
+      { _id: req.body.id },
+      {
+        $set: { pdf: req.body.url },
+      },
+      { new: true }
+    );
+
+    return res.status(200).json(updatedUserReport);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+const findBgv = async (req, res) => {
+  try {
+    const fetchedBgv = await bgvModel.find({ userId: req.body.id });
+    return res.status(200).json(fetchedBgv);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+module.exports = { addUser, fetchUsers, uploadPdf, findBgv };
