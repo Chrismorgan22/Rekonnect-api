@@ -35,6 +35,9 @@ const urlConstants = {
   URL_STORE_LOOKUP: "/storeAll",
 
   /* User Profile API */
+  FILTER_BY_ID: "/applicant/:id",
+  FILTER_USERS: "/filter",
+  PAGINATE_USERS: "/paginate",
   URL_GET_USER_PROFILE: "/:user_id",
   URL_UPDATE_USER_PROFILE: "/update/:user_id",
 

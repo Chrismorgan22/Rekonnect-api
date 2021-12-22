@@ -24,7 +24,7 @@ router.post(
   func.urlCons.URL_UPDATE_USER_REGISTRATION_STATUS,
   userController.updateUserRegisterStatus
 );
-router.get("/applicant/:id", async (req, res) => {
+router.get(func.urlCons.FILTER_BY_ID, async (req, res) => {
   try {
     const fetchedUser = await userModel.find({ _id: req.params.id });
     return res.status(200).json(fetchedUser);
@@ -33,9 +33,9 @@ router.get("/applicant/:id", async (req, res) => {
   }
 });
 
-router.post("/filterUsers", userController.filterUser);
+router.post(func.urlCons.FILTER_USERS, userController.filterUser);
 router.post(
-  "/paginate",
+  func.urlCons.PAGINATE_USERS,
   paginatedResults(userModel),
   userController.paginateUsers
 );
