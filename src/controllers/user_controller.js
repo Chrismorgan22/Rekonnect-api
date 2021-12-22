@@ -108,6 +108,7 @@ const filterUser = async (req, res) => {
 };
 
 const paginateUsers = (req, res) => {
+  console.log(req.body);
   res.json(res.paginatedResults);
 };
 
