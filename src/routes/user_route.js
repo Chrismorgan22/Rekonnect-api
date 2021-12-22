@@ -3,6 +3,8 @@ let router = express.Router();
 let func = require("../config/function");
 let userModel = require("../model/user_model");
 const userController = require("../controllers/user_controller");
+const paginatedResults = require("../middleware/paginate_result");
+
 router.post(
   func.urlCons.URL_USER_REGISTRATION,
   userController.userRegistration
@@ -32,4 +34,9 @@ router.get("/applicant/:id", async (req, res) => {
 });
 
 router.post("/filterUsers", userController.filterUser);
+router.post(
+  "/paginate",
+  paginatedResults(userModel),
+  userController.paginateUsers
+);
 module.exports = router;

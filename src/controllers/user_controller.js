@@ -1,6 +1,7 @@
 const userService = require("../services/user_service");
 const userModel = require("../model/user_model");
 const func = require("../config/function");
+const paginatedResults = require("../middleware/paginate_result");
 const userRegistration = async (req, res) => {
   try {
     const registerData = await userService.userRegisterService(req.body);
@@ -105,9 +106,15 @@ const filterUser = async (req, res) => {
     return res.status(500).json(error);
   }
 };
+
+const paginateUsers = (req, res) => {
+  res.json(res.paginatedResults);
+};
+
 module.exports = {
   userRegistration,
   userLogin,
+  paginateUsers,
   linkedInLogin,
   filterUser,
   getUserList,
