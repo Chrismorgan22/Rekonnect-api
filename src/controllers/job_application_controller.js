@@ -35,10 +35,9 @@ const getUserByJob = async (req, res) => {
 
 const getApplicant = async (req, res) => {
   try {
-    const applicant = await jobModel.find({ candidate_id: req.params.id });
+    const applicant = await jobModel.find({ candidate_id: req.body.userId });
 
-    const isPresent = applicant.length !== 0;
-    return res.status(200).json(isPresent);
+    return res.status(200).json(applicant);
   } catch (error) {
     return res.status(500).json(error);
   }
