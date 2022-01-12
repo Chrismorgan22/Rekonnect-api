@@ -25,7 +25,7 @@ const urlConstants = {
   URL_GET_JOB: "/list",
   URL_FILTER_JOB: "/filter",
   URL_GET_JOB_DETAILS: "/details/:id",
-
+  URL_GET_ALL_JOBS: "/getALL",
   /* Graduation API */
   URL_GET_HEALTH: "/",
 

@@ -1,5 +1,4 @@
 /**
- * @author Leena Patoliya
  */
 const payment = require("./src/routes/payment");
 

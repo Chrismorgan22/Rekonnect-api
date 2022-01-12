@@ -21,5 +21,17 @@ router.get(func.urlCons.URL_GET_JOB_APPLICATION, async (req, res) => {
   }
 });
 
+router.post("/getApplicant/:id", async (req, res) => {
+  try {
+    const candidate = await jobApplication.find({
+      candidate_id: req.params.id,
+    });
+
+    return res.status(200).json(candidate);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
+
 // router.post(func.urlCons.URL_FILTER_JOB, jobApplicationController.filterJob);
 module.exports = router;
