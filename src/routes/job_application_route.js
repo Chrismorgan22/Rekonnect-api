@@ -21,5 +21,10 @@ router.get(func.urlCons.URL_GET_JOB_APPLICATION, async (req, res) => {
   }
 });
 
+router.post(
+  func.urlCons.URL_GET_APPLICANT,
+  jobApplicationController.getApplicant
+);
+
 // router.post(func.urlCons.URL_FILTER_JOB, jobApplicationController.filterJob);
 module.exports = router;
