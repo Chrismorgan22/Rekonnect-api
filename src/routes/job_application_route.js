@@ -37,5 +37,17 @@ router.post("/applyForJob", async (req, res) => {
     return res.status(500).json(error);
   }
 });
+router.post("/getUserByJob", async (req, res) => {
+  console.log(req.body);
+  try {
+    const applied = await jobApplication.find({
+      job_id: req.body.job_id,
+    });
+
+    return res.status(200).json(applied);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
 // router.post(func.urlCons.URL_FILTER_JOB, jobApplicationController.filterJob);
 module.exports = router;
