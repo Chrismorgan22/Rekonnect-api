@@ -67,14 +67,6 @@ mongoose
     { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
   )
   .then(() => {
-    // const lookupBody = {
-    //     name: "Other",
-    //     lookup_type: "City"
-    // }
-    // const looupData = new lookupSchema(lookupBody);
-    // looupData.save(function (err, data) {
-    //     console.log('lookup data is inserted')
-    // });
     console.log("connection to DB succesfull");
   })
   .catch(function (err) {
