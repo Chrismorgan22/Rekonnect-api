@@ -31,7 +31,6 @@ const urlConstants = {
 
   /* Lookup API */
   URL_GET_LOOKUP: "/",
-  /*Store carrer options*/
   URL_STORE_LOOKUP: "/storeAll",
 
   /* User Profile API */
