@@ -61,22 +61,12 @@ app.use("/job/application", jobApplicationRouter);
 app.use("/api", payment);
 app.use("/admin", adminRouter);
 app.use("/report", bgvRoute);
-// mongodb+srv://rekonnect:UxyfPRexWLEHVq9F@cluster0.z8ojn.mongodb.net/dbRekonnect?retryWrites=true&w=majority
-// mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority
 mongoose
   .connect(
     "mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
   )
   .then(() => {
-    // const lookupBody = {
-    //     name: "Other",
-    //     lookup_type: "City"
-    // }
-    // const looupData = new lookupSchema(lookupBody);
-    // looupData.save(function (err, data) {
-    //     console.log('lookup data is inserted')
-    // });
     console.log("connection to DB succesfull");
   })
   .catch(function (err) {
