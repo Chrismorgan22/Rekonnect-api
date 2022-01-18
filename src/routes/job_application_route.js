@@ -49,5 +49,5 @@ router.post("/getUserByJob", async (req, res) => {
     return res.status(500).json(error);
   }
 });
-// router.post(func.urlCons.URL_FILTER_JOB, jobApplicationController.filterJob);
+
 module.exports = router;
