@@ -203,6 +203,51 @@ const carrerList = [
     name: " Influencer",
     lookup_type: "Career",
   },
+  { name: "Algorithms", lookup_type: "Technical_skills" },
+  { name: "Analytics", lookup_type: "Technical_skills" },
+
+  { name: "Artificial Intelligence", lookup_type: "Technical_skills" },
+
+  { name: "Automation", lookup_type: "Technical_skills" },
+
+  { name: "Audit Trail", lookup_type: "Technical_skills" },
+
+  { name: "Availability Management", lookup_type: "Technical_skills" },
+
+  { name: "Back up and Recovery", lookup_type: "Technical_skills" },
+
+  { name: "Batch processing", lookup_type: "Technical_skills" },
+
+  { name: "Billing", lookup_type: "Technical_skills" },
+  { name: "Capacity Managemnet", lookup_type: "Technical_skills" },
+  { name: "cloud computing", lookup_type: "Technical_skills" },
+  { name: "Computing infrastucture", lookup_type: "Technical_skills" },
+  { name: "Configuration Management", lookup_type: "Technical_skills" },
+  { name: "Centent Delivery Network", lookup_type: "Technical_skills" },
+  { name: "Centent Management", lookup_type: "Technical_skills" },
+  { name: "Cryptography", lookup_type: "Technical_skills" },
+  { name: "Data Analysis", lookup_type: "Technical_skills" },
+  { name: "Data Architecture", lookup_type: "Technical_skills" },
+  { name: "Data Mining", lookup_type: "Technical_skills" },
+  { name: "Data Processing", lookup_type: "Technical_skills" },
+  { name: "Data Security", lookup_type: "Technical_skills" },
+  { name: "Data Science", lookup_type: "Technical_skills" },
+  { name: "DevOps", lookup_type: "Technical_skills" },
+  { name: "Digital Advertising", lookup_type: "Technical_skills" },
+  { name: "Digital Publishing", lookup_type: "Technical_skills" },
+  { name: "E-Commerce", lookup_type: "Technical_skills" },
+  { name: "Embedded System", lookup_type: "Technical_skills" },
+  { name: "Encryption", lookup_type: "Technical_skills" },
+  { name: "ETL", lookup_type: "Technical_skills" },
+  { name: "Event Processing", lookup_type: "Technical_skills" },
+  { name: "Game Development", lookup_type: "Technical_skills" },
+  { name: "Hardware Design", lookup_type: "Technical_skills" },
+  { name: "Incident Management", lookup_type: "Technical_skills" },
+  { name: "Information Assurance", lookup_type: "Technical_skills" },
+  { name: "Information Design", lookup_type: "Technical_skills" },
+  { name: "Information Security", lookup_type: "Technical_skills" },
+  { name: "Internet Of Things", lookup_type: "Technical_skills" },
+  { name: "It Infrastucture", lookup_type: "Technical_skills" },
 ];
 
 module.exports = carrerList;

@@ -9,4 +9,14 @@ router.post(func.urlCons.URL_FILTER_JOB, jobController.filterJob);
 router.get(func.urlCons.URL_GET_JOB_DETAILS, jobController.getJobDetails);
 
 router.get(func.urlCons.URL_GET_ALL_JOBS, jobController.getAllJobs);
+router.get("/getJobsPosted/:id", async (req, res) => {
+  console.log(req.params.id);
+  try {
+    const listOfJobs = await jobModel.find({ user_id: req.params.id });
+
+    return res.status(200).json(listOfJobs);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
 module.exports = router;
