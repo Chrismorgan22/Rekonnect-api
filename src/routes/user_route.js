@@ -32,7 +32,17 @@ router.get(func.urlCons.FILTER_BY_ID, async (req, res) => {
     return res.status(500).json(error);
   }
 });
-
+router.post("/update/:id", async (req, res) => {
+  try {
+    const updatedDocument = await userModel.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    );
+    return res.status(200).json("update success");
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
 router.post(func.urlCons.FILTER_USERS, userController.filterUser);
 router.post(
   func.urlCons.PAGINATE_USERS,
