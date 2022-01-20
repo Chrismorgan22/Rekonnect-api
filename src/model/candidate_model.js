@@ -228,11 +228,13 @@ let candidateSchema = new mongoose.Schema({
   },
   last_drawn_salary_range: {
     min: {
-      type: String,
+      //   required: true,
+      type: Number,
       // required: true,
     },
     max: {
-      type: String,
+      //   required: true,
+      type: Number,
       // required: true,
     },
   },

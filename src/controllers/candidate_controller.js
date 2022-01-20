@@ -1,6 +1,7 @@
 const candidateService = require("../services/candidate_service");
 const func = require("../config/function");
 const candidateRegistration = async (req, res) => {
+  console.log(req.body);
   try {
     const registerData = await candidateService.candidateRegisterService(
       req.body
