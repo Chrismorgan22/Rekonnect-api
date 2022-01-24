@@ -196,6 +196,22 @@ const carrerList = [
     lookup_type: "Career",
   },
   {
+    name: "Banking and Finance",
+    lookup_type: "Career",
+  },
+  {
+    name: "Accounting and Taxation",
+    lookup_type: "Career",
+  },
+  {
+    name: "Insurance",
+    lookup_type: "Career",
+  },
+  {
+    name: "Management",
+    lookup_type: "Career",
+  },
+  {
     name: "Gaming ",
     lookup_type: "Career",
   },
@@ -240,6 +256,12 @@ const carrerList = [
   { name: "Encryption", lookup_type: "Technical_skills" },
   { name: "ETL", lookup_type: "Technical_skills" },
   { name: "Event Processing", lookup_type: "Technical_skills" },
+  { name: "Event Processing", lookup_type: "Technical_skills" },
+
+  { name: "Event Processing", lookup_type: "Technical_skills" },
+
+  { name: "Event Processing", lookup_type: "Technical_skills" },
+
   { name: "Game Development", lookup_type: "Technical_skills" },
   { name: "Hardware Design", lookup_type: "Technical_skills" },
   { name: "Incident Management", lookup_type: "Technical_skills" },
