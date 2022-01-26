@@ -44,7 +44,6 @@ let employerSchema = new mongoose.Schema({
   },
   designation: {
     type: String,
-    required: true,
   },
   no_of_employees: {
     type: Number,
