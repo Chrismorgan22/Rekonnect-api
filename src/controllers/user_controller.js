@@ -5,7 +5,6 @@ const paginatedResults = require("../middleware/paginate_result");
 const userRegistration = async (req, res) => {
   try {
     const registerData = await userService.userRegisterService(req.body);
-    console.log(registerData);
     return res.send(registerData);
   } catch (err) {
     return res.send(err);
