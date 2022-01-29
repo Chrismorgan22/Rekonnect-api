@@ -19,4 +19,13 @@ router.get("/getJobsPosted/:id", async (req, res) => {
     return res.status(500).json(error);
   }
 });
+
+router.delete("/deleteJobById/:id", async (req, res) => {
+  try {
+    await jobModel.findByIdAndDelete(req.params.id);
+    return res.status(200).json("resourse deleted");
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
 module.exports = router;
