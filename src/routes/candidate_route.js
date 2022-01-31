@@ -39,4 +39,20 @@ router.get("/findById/:id", async (req, res) => {
     return res.status(500).json(error);
   }
 });
+
+router.post("/urgentJoining/:id", async (req, res) => {
+  try {
+    const fetched = await candidateDetails.findOne({ user_id: req.params.id });
+    const updatedDocument = await fetched.update({
+      $set: {
+        urgentJoiningStatus: req.body.condition,
+        urgentDateInput: Date.now(),
+      },
+    });
+
+    return res.status(200).json("Updated!!");
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
 module.exports = router;
