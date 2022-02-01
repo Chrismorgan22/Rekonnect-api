@@ -253,6 +253,12 @@ let candidateSchema = new mongoose.Schema({
   onboard_with_this: {
     type: Boolean,
   },
+  urgentJoiningStatus: {
+    type: Boolean,
+  },
+  urgentDateInput: {
+    type: Date,
+  },
   // service_to_be: {
   //     type: Boolean,
   //     charge: {
