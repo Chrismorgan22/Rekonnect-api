@@ -3,8 +3,8 @@ const shortid = require("shortid");
 const Razorpay = require("razorpay");
 
 const razorpay = new Razorpay({
-  key_id: "rzp_test_nBBe0QbVWt2oIh",
-  key_secret: "KhebpgbRB9k34YRV7nGSyXWL",
+  key_id: "rzp_live_Kvzf4vq5RV7FiC",
+  key_secret: "oOmuttV5JCGJJ6P8V3kX3zcS",
 });
 
 const verify = (req, res) => {
@@ -35,7 +35,7 @@ const verify = (req, res) => {
 };
 const payment = async (req, res) => {
   const payment_capture = 1;
-  const amount = 499;
+  const amount = 1;
   const currency = "INR";
 
   const options = {
