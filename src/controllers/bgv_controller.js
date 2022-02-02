@@ -38,7 +38,7 @@ const uploadPdf = async (req, res) => {
 
 const findBgv = async (req, res) => {
   try {
-    const fetchedBgv = await bgvModel.find({ userId: req.body.id });
+    const fetchedBgv = await bgvModel.find({ userId: req.params.id });
     return res.status(200).json(fetchedBgv);
   } catch (error) {
     return res.status(500).json(error);

@@ -54,6 +54,6 @@ const urlConstants = {
   POST_BGV: "/apply",
   GET_USERS: "/users",
   UPLOAD_BGV: "/addPdf",
-  FETCH_BGV: "/single",
+  FETCH_BGV: "/single/:id",
 };
 module.exports = urlConstants;
