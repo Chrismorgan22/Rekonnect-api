@@ -4,6 +4,7 @@ let candidateSchema = new mongoose.Schema({
   user_id: {
     type: ObjectId,
     required: true,
+
     unique: true,
   },
   profile_url: {

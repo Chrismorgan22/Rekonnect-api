@@ -57,8 +57,8 @@ router.post("/urgentJoining/:id", async (req, res) => {
   }
 });
 
-router.post(
-  "/fetch/paginated",
+router.get(
+  "/fetch/paginate",
   paginatedResults(candidateDetails),
   async (req, res) => {
     return res.json(res.paginatedResults);
