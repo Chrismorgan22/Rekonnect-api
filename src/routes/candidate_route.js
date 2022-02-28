@@ -1,6 +1,7 @@
 let express = require("express");
 let router = express.Router();
 let func = require("../config/function");
+let paginatedResults = require("../middleware/paginate_result");
 const candidateDetails = require("../model/candidate_model");
 const candidateController = require("../controllers/candidate_controller");
 router.post(
@@ -55,4 +56,12 @@ router.post("/urgentJoining/:id", async (req, res) => {
     return res.status(500).json(error);
   }
 });
+
+router.get(
+  "/fetch/paginate",
+  paginatedResults(candidateDetails),
+  async (req, res) => {
+    return res.json(res.paginatedResults);
+  }
+);
 module.exports = router;

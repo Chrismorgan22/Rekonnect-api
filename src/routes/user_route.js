@@ -1,13 +1,14 @@
 let express = require("express");
 let router = express.Router();
 let func = require("../config/function");
+let paginatedResults = require("../middleware/paginate_result");
+
 let nodemailer = require("nodemailer");
 const fs = require("fs");
 var handlebars = require("handlebars");
 
 let userModel = require("../model/user_model");
 const userController = require("../controllers/user_controller");
-const paginatedResults = require("../middleware/paginate_result");
 
 router.post(
   func.urlCons.URL_USER_REGISTRATION,
@@ -100,4 +101,14 @@ router.post(
   paginatedResults(userModel),
   userController.paginateUsers
 );
+
+router.get("/getById/:id", async (req, res) => {
+  try {
+    const fetchedUser = await userModel.findById(req.params.id);
+    res.status(200).json(fetchedUser);
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+});
+
 module.exports = router;

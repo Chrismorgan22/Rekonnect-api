@@ -4,6 +4,7 @@ let candidateSchema = new mongoose.Schema({
   user_id: {
     type: ObjectId,
     required: true,
+
     unique: true,
   },
   profile_url: {
@@ -160,7 +161,6 @@ let candidateSchema = new mongoose.Schema({
   technical_skills: [
     {
       id: {
-        type: ObjectId,
         // required: true
       },
       name: {
@@ -171,8 +171,7 @@ let candidateSchema = new mongoose.Schema({
   ],
   current_career: {
     id: {
-      type: ObjectId,
-      // required: true
+      type: String,
     },
     name: {
       type: String,
