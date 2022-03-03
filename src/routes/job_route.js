@@ -19,7 +19,18 @@ router.get("/getJobsPosted/:id", async (req, res) => {
     return res.status(500).json(error);
   }
 });
-
+router.post("/updateJob/:id", async (req, res) => {
+  try {
+    const updatedJob = await jobModel.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    );
+    return res.status(200).json("updated job");
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json(error);
+  }
+});
 router.delete("/deleteJobById/:id", async (req, res) => {
   try {
     await jobModel.findByIdAndDelete(req.params.id);
