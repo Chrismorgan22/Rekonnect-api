@@ -17,12 +17,12 @@ router.post(
 router.post("/email", async (req, res) => {
   try {
     var transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
+      host: "smtp.gmail.com",
       port: 587,
       secure: false,
       auth: {
-        user: "reachus@rekonnect.in",
-        pass: "Rekonnect@2021",
+        user: "alroyfernandes07518@gmail.com",
+        pass: "zzcihbfuzmiuuhnl",
       },
       tls: {
         rejectUnauthorized: false,
