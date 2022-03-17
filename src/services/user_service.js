@@ -11,54 +11,47 @@ var qs = require("querystring");
 const TempUserSchema = require("../model/temp_user_model");
 const userRegisterService = async (body) => {
   console.log(body);
-  //   var transporter = nodemailer.createTransport({
-  //     service: "gmail",
-  //     auth: {
-  //       user: "reachus@rekonnect.in",
-  //       pass: "Rekonnect@2021",
-  //     },
-  //   });
-  //   let info = await transporter.sendMail({
-  //     from: '"Fred Foo 👻" <foo@example.com>', // sender address
-  //     to: "alroyfernandes07518@gmail.com, baz@example.com", // list of receivers
-  //     subject: "Hello ✔", // Subject line
-  //     text: "Hello world?", // plain text body
-  //     html: "<b>Hello world?</b>", // html body
-  //   });
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "reachus@rekonnect.in",
+      pass: "Rekonnect@2021",
+    },
+  });
 
-  //   console.log("Message sent: %s", info.messageId);
-  //   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-  //   // Preview only available when sending through an Ethereal account
-  //   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-  //   fs.readFile("index.html", { encoding: "utf-8" }, function (err, html) {
-  //     if (err) {
-  //       console.log(err);
-  //     } else {
-  //       var template = handlebars.compile(html);
-  //       var replacements = {
-  //         firstName: body.first_name,
-  //         lastName: body.last_name,
-  //       };
-  //       var htmlToSend = template(replacements);
-  //       console.log(body.email);
-  //       var mailOptions = {
-  //         from: "ReKonnect India <reachus@rekonnect.in>",
-  //         to: body.email,
-  //         subject: "Welcome to Rekonnect",
-  //         html: htmlToSend,
-  //       };
-  //       transporter.sendMail(mailOptions, function (err, info) {
-  //         if (err) {
-  //           console.log(err);
-  //         } else {
-  //           console.log(info);
-  //         }
-  //         // func.msCons.successJson['data'] = docs;
-  //         // return resolve(func.msCons.successJson)
-  //       });
-  //     }
-  //   });
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  fs.readFile("index.html", { encoding: "utf-8" }, function (err, html) {
+    if (err) {
+      console.log(err);
+    } else {
+      var template = handlebars.compile(html);
+      var replacements = {
+        firstName: body.first_name,
+        lastName: body.last_name,
+      };
+      var htmlToSend = template(replacements);
+      console.log(body.email);
+      var mailOptions = {
+        from: "ReKonnect India <reachus@rekonnect.in>",
+        to: body.email,
+        subject: "Welcome to Rekonnect",
+        html: htmlToSend,
+      };
+      transporter.sendMail(mailOptions, function (err, info) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(info);
+        }
+        // func.msCons.successJson['data'] = docs;
+        // return resolve(func.msCons.successJson)
+      });
+    }
+  });
   return new Promise(async (resolve, reject) => {
     var s = "";
     var randomchar = function () {
