@@ -102,8 +102,8 @@ const userRegisterService = async (body) => {
               port: 587,
               secure: false,
               auth: {
-                user: "alroyfernandes07518@gmail.com",
-                pass: "zzcihbfuzmiuuhnl",
+                user: "reachus@rekonnect.in",
+                pass: "glhfbcqbcmfymefx",
               },
             });
             fs.readFile(
