@@ -2,6 +2,7 @@ let express = require("express");
 let router = express.Router();
 let func = require("../config/function");
 let jobModel = require("../model/job_model");
+let jobApplicantModel = require("../model/job_application_model");
 const jobController = require("../controllers/job_controller");
 router.post(func.urlCons.URL_POST_JOB, jobController.postJob);
 router.post(func.urlCons.URL_GET_JOB, jobController.getJob);
@@ -39,5 +40,15 @@ router.delete("/deleteJobById/:id", async (req, res) => {
     return res.status(500).json(error);
   }
 });
+router.get("/getJobApplied/:id", async (req, res) => {
+  try {
+    const list = await jobApplicantModel.find({
+      candidate_id: req.params.id,
+    });
 
+    return res.status(200).json(list);
+  } catch (e) {
+    return res.status(500).json(e.message);
+  }
+});
 module.exports = router;
