@@ -82,9 +82,11 @@ let jobSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  top_skills: {
-    type: Array,
-  },
+  top_skills: [
+    {
+      type: String,
+    },
+  ],
   created_at: {
     type: Date,
     default: Date.now(),
