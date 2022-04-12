@@ -4,6 +4,9 @@ const urlConstants = {
   URL_USER_LOGIN: "/login",
   URL_USER_LIST: "/:user_role",
 
+  /*Mentor Api*/
+  URL_MENTOR_REGISTRATION: "/registration",
+
   /* Candidate API */
   URL_CANDIDATE_REGISTRATION: "/registration",
   URL_CANDIDATE_LOGIN: "/login",
