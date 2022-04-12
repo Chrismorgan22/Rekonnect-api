@@ -14,11 +14,9 @@ const mentorSchema = new Schema({
   address_details: {
     street: {
       type: String,
-      required: true,
     },
     zip_code: {
       type: String,
-      required: true,
     },
     state: {
       id: {
