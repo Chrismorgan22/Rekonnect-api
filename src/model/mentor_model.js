@@ -5,6 +5,7 @@ const mentorSchema = new Schema({
     type: String,
     ref: "user_details",
   },
+  user_profile: { type: String },
   expertise: [
     {
       type: String,
@@ -29,7 +30,7 @@ const mentorSchema = new Schema({
     },
     city: {
       id: {
-        type: ObjectId,
+        type: String,
       },
       name: {
         type: String,

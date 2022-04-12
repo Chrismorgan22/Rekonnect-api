@@ -17,7 +17,7 @@ app.use(
   })
 );
 const bgvRoute = require("./src/routes/bgv_route.js");
-
+const mentorRouter = require("./src/routes/mentor_route");
 app.use(
   bodyParser.urlencoded({
     limit: "50mb",
@@ -56,6 +56,7 @@ app.use("/employer", employerRouter);
 app.use("/expert", expertRouter);
 app.use("/lookup", lookupRouter);
 app.use("/job", jobRouter);
+app.use("/mentor", mentorRouter);
 app.use("/user/profile", userProfileRouter);
 app.use("/job/application", jobApplicationRouter);
 app.use("/api", payment);
