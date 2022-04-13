@@ -42,6 +42,18 @@ const mentorSchema = new Schema(
     description: {
       type: String,
     },
+    company: { type: String },
+    designation: { type: String },
+    languages: [
+      {
+        type: String,
+      },
+    ],
+    socials: {
+      linkedin: { type: String },
+      instagram: { type: String },
+      facebook: { type: String },
+    },
   },
   { timestamps: true }
 );
