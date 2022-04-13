@@ -41,7 +41,7 @@ const getJobDetails = async (req, res) => {
 };
 const getAllJobs = async (req, res) => {
   try {
-    const allJobs = await jobModel.find({});
+    const allJobs = await jobModel.find({}).populate("user_id");
     return res.status(200).json(allJobs);
   } catch (error) {
     return res.status(500).json(error);
