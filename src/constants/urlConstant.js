@@ -6,6 +6,7 @@ const urlConstants = {
 
   /*Mentor Api*/
   URL_MENTOR_REGISTRATION: "/registration",
+  URL_MENTOR_FETCH: "/fetch/:id",
 
   /* Candidate API */
   URL_CANDIDATE_REGISTRATION: "/registration",
