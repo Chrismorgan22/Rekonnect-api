@@ -2,7 +2,7 @@ const { ObjectId } = require("bson");
 let mongoose = require("mongoose");
 let jobSchema = new mongoose.Schema({
   user_id: {
-    type: ObjectId,
+    type: String,
     required: true,
     ref: "user_details",
   },
