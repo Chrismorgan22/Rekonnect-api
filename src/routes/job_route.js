@@ -3,6 +3,7 @@ let router = express.Router();
 let func = require("../config/function");
 let jobModel = require("../model/job_model");
 let jobApplicantModel = require("../model/job_application_model");
+const employerModel = require("../model/employer_model");
 const jobController = require("../controllers/job_controller");
 router.post(func.urlCons.URL_POST_JOB, jobController.postJob);
 router.post(func.urlCons.URL_GET_JOB, jobController.getJob);
@@ -49,6 +50,23 @@ router.get("/getJobApplied/:id", async (req, res) => {
     return res.status(200).json(list);
   } catch (e) {
     return res.status(500).json(e.message);
+  }
+});
+
+router.get("/getJobDetails/:id", async (req, res) => {
+  try {
+    const fetched = await jobModel
+      .findOne({ _id: req.params.id })
+      .populate("user_id");
+
+    const { company_logo, company_name, ...rest } = await employerModel.findOne(
+      {
+        user_id: fetched.user_id._id,
+      }
+    );
+    return res.status(202).json({ data: fetched, company_logo, company_name });
+  } catch (error) {
+    return res.status(500).json(error.message);
   }
 });
 module.exports = router;
