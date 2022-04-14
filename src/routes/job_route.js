@@ -53,7 +53,7 @@ router.get("/getJobApplied/:id", async (req, res) => {
   }
 });
 
-router.get("/getJobDetails/:id", async (req, res) => {
+router.get("/entireDetails/:id", async (req, res) => {
   try {
     const fetched = await jobModel
       .findOne({ _id: req.params.id })
