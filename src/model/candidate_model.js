@@ -1,24 +1,21 @@
-const { ObjectId } = require("bson");
+// const { String } = require("bson");
 let mongoose = require("mongoose");
 let candidateSchema = new mongoose.Schema({
   user_id: {
-    type: ObjectId,
-    required: true,
+    type: String,
 
     unique: true,
   },
   profile_url: {
     type: String,
-    // required: true,
+    //
   },
   address_details: {
     street: {
       type: String,
-      required: true,
     },
     zip_code: {
       type: String,
-      required: true,
     },
     state: {
       id: {
@@ -35,22 +32,22 @@ let candidateSchema = new mongoose.Schema({
     //     type: String
     // },
     // country_id: {
-    //     type: ObjectId,
-    //     required: true,
+    //     type: String,
+    //
     // },
     // country_name: {
     //     type: String,
-    //     required: true,
+    //
     // },
     // address: {
     //     type: String,
-    //     required: true,
+    //
     // }
   },
   education_data: {
     education_type: {
       type: String,
-      required: true,
+
       default: true,
     },
     education_details: [
@@ -59,13 +56,13 @@ let candidateSchema = new mongoose.Schema({
           type: String,
         },
         degree_id: {
-          type: ObjectId,
+          type: String,
         },
         degree_name: {
           type: String,
         },
         field_id: {
-          type: ObjectId,
+          type: String,
         },
         field_name: {
           type: String,
@@ -101,7 +98,6 @@ let candidateSchema = new mongoose.Schema({
   experience_data: {
     experience_type: {
       type: String,
-      required: true,
     },
     experience_details: [
       {
@@ -121,7 +117,7 @@ let candidateSchema = new mongoose.Schema({
         },
         city: {
           // id: {
-          //     type: ObjectId
+          //     type: String
           // },
           // name: {
           type: String,
@@ -149,7 +145,7 @@ let candidateSchema = new mongoose.Schema({
   soft_skills: [
     {
       id: {
-        type: ObjectId,
+        type: String,
         // required: true
       },
       name: {
@@ -183,7 +179,7 @@ let candidateSchema = new mongoose.Schema({
   },
   change_career: {
     id: {
-      type: ObjectId,
+      type: String,
     },
     name: {
       type: String,
@@ -191,23 +187,20 @@ let candidateSchema = new mongoose.Schema({
   },
   passion: {
     type: String,
-    required: true,
   },
   languages: [
     {
       id: {
-        type: ObjectId,
-        required: true,
+        type: String,
       },
       name: {
         type: String,
-        required: true,
       },
     },
   ],
   // specialization: [{
   //     specialization_id: {
-  //         type: ObjectId,
+  //         type: String,
   //         required: true
   //     },
   //     specialization_name: {
@@ -218,23 +211,23 @@ let candidateSchema = new mongoose.Schema({
   salary_range: {
     min: {
       type: String,
-      // required: true,
+      //
     },
     max: {
       type: String,
-      // required: true,
+      //
     },
   },
   last_drawn_salary_range: {
     min: {
-      //   required: true,
+      //
       type: Number,
-      // required: true,
+      //
     },
     max: {
-      //   required: true,
+      //
       type: Number,
-      // required: true,
+      //
     },
   },
   joining_status: {

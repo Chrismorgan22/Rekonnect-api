@@ -40,9 +40,11 @@ router.post("/applyForJob", async (req, res) => {
 router.post("/getUserByJob", async (req, res) => {
   console.log(req.body);
   try {
-    const applied = await jobApplication.find({
-      job_id: req.body.job_id,
-    });
+    const applied = await jobApplication
+      .find({
+        job_id: req.body.job_id,
+      })
+      .populate("candidate_id");
 
     return res.status(200).json(applied);
   } catch (error) {

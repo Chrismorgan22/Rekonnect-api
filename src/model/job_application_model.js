@@ -4,6 +4,7 @@ let jobApplicationSchema = new mongoose.Schema({
   candidate_id: {
     type: ObjectId,
     required: true,
+    ref: "user_details",
   },
   job_id: {
     type: ObjectId,
