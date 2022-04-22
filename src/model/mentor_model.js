@@ -54,6 +54,12 @@ const mentorSchema = new Schema(
       instagram: { type: String },
       facebook: { type: String },
     },
+    bookings: [
+      {
+        type: String,
+        ref: "mentorBooking",
+      },
+    ],
   },
   { timestamps: true }
 );

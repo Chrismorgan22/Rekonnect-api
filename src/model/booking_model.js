@@ -20,4 +20,4 @@ const bookingSchema = new Schema({
     type: String,
   },
 });
-module.exports = model("booking_schema", bookingSchema);
+module.exports = model("mentorBooking", bookingSchema);
