@@ -3,7 +3,7 @@ let mongoose = require("mongoose");
 let candidateSchema = new mongoose.Schema({
   user_id: {
     type: String,
-
+    ref: "user_details",
     unique: true,
   },
   profile_url: {
