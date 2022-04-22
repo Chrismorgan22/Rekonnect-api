@@ -1,8 +1,9 @@
 // const { String } = require("bson");
 let mongoose = require("mongoose");
+let { ObjectId } = require("bson");
 let candidateSchema = new mongoose.Schema({
   user_id: {
-    type: String,
+    type: ObjectId,
     ref: "user_details",
     unique: true,
   },

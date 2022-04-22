@@ -1,7 +1,8 @@
+const { ObjectId } = require("bson");
 const { Schema, model } = require("mongoose");
 const bookingSchema = new Schema({
   user_id: {
-    type: String,
+    type: ObjectId,
     ref: "candidate_details",
   },
   date: {
@@ -20,4 +21,4 @@ const bookingSchema = new Schema({
     type: String,
   },
 });
-module.exports = model("mentorBooking", bookingSchema);
+module.exports = model("mentor_booking", bookingSchema);

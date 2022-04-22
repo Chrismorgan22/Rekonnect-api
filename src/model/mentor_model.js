@@ -1,5 +1,5 @@
 const { model, Schema } = require("mongoose");
-
+const { ObjectId } = require("bson");
 const mentorSchema = new Schema(
   {
     user_id: {
@@ -56,8 +56,8 @@ const mentorSchema = new Schema(
     },
     bookings: [
       {
-        type: String,
-        ref: "mentorBooking",
+        type: ObjectId,
+        ref: "mentor_booking",
       },
     ],
   },

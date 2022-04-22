@@ -17,6 +17,7 @@ const registerMentor = async (req, res) => {
 };
 const addBooking = async (req, res) => {
   const { bookingData, mentorId } = req.body;
+  console.log(mentorId);
   try {
     //first create  a new collection of booking.
     const newBooking = new bookingModel(bookingData);
@@ -24,9 +25,10 @@ const addBooking = async (req, res) => {
     const savedBooking = await newBooking.save();
     //extract the _id from the booking and store in bookings arr in mentor schema
     const { _id, ...rest } = savedBooking;
-    const mentor = await mentorModel.findOne({ _id: mentorId });
-    if (mentor.booking == null) {
-      mentor.booking = [];
+    const mentor = await mentorModel.findOne({ user_id: mentorId });
+    console.log(mentor);
+    if (mentor?.bookings == null) {
+      mentor.bookings = [];
     }
     mentor?.bookings?.push(_id);
     const savedMentor = await mentor.save();
@@ -47,7 +49,9 @@ const fetchMentor = async (req, res) => {
     const fetchedMentor = await mentorModel
       .findOne({ user_id: req.params.id })
       .populate("user_id", "bookings")
-      .populate({ path: "bookings", popluate: "user_id" });
+      .populate({
+        path: "bookings",
+      });
     return res.status(200).json(fetchedMentor);
   } catch (error) {
     return res.status(500).json(error.message);
