@@ -1,5 +1,5 @@
 const { model, Schema } = require("mongoose");
-
+const { ObjectId } = require("bson");
 const mentorSchema = new Schema(
   {
     user_id: {
@@ -54,6 +54,12 @@ const mentorSchema = new Schema(
       instagram: { type: String },
       facebook: { type: String },
     },
+    bookings: [
+      {
+        type: ObjectId,
+        ref: "mentor_booking",
+      },
+    ],
   },
   { timestamps: true }
 );

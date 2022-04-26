@@ -1,10 +1,11 @@
 /**
  */
 const payment = require("./src/routes/payment");
-
+const { helperExport } = require("./src/controllers/exportToExcel");
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const app = express();
 const adminRouter = require("./src/routes/admin.route.js");
 app.use(cors());
@@ -62,6 +63,21 @@ app.use("/job/application", jobApplicationRouter);
 app.use("/api", payment);
 app.use("/admin", adminRouter);
 app.use("/report", bgvRoute);
+helperExport("62674ef7170fe04dcc1c8d8d");
+app.get("/excel", function (req, res) {
+  var options = {
+    root: path.join(__dirname),
+  };
+
+  var fileName = "data.xlsx";
+  res.sendFile(fileName, options, function (err) {
+    if (err) {
+      next(err);
+    } else {
+      console.log("Sent:", fileName);
+    }
+  });
+});
 mongoose
   .connect(
     "mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority",

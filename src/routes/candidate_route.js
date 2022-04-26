@@ -32,9 +32,11 @@ router.post("/update/:id", async (req, res) => {
 router.post(func.urlCons.URL_LINKED_LOGIN, candidateController.linkedInLogin);
 router.get("/findById/:id", async (req, res) => {
   try {
-    const fetchedDetails = await candidateDetails.findOne({
-      user_id: req.params.id,
-    });
+    const fetchedDetails = await candidateDetails
+      .findOne({
+        user_id: req.params.id,
+      })
+      .populate("user_id");
     return res.status(200).json(fetchedDetails);
   } catch (error) {
     return res.status(500).json(error);

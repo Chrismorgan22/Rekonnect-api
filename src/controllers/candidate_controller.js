@@ -1,4 +1,5 @@
 const candidateService = require("../services/candidate_service");
+const { helperExport } = require("./exportToExcel");
 const func = require("../config/function");
 const candidateRegistration = async (req, res) => {
   console.log(req.body);
@@ -6,7 +7,8 @@ const candidateRegistration = async (req, res) => {
     const registerData = await candidateService.candidateRegisterService(
       req.body
     );
-    console.log(registerData);
+    console.log(registerData.user_id, "reg data");
+    helperExport(req.body.user_id);
     return res.send(registerData);
   } catch (err) {
     return res.send(err);
