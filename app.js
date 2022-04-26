@@ -62,7 +62,8 @@ app.use("/job/application", jobApplicationRouter);
 app.use("/api", payment);
 app.use("/admin", adminRouter);
 app.use("/report", bgvRoute);
-// helperExport("62674ef7170fe04dcc1c8d8d");
+helperExport("62674ef7170fe04dcc1c8d8d");
+
 mongoose
   .connect(
     "mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority",
