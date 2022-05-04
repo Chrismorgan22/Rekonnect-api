@@ -69,4 +69,20 @@ router.get("/entireDetails/:id", async (req, res) => {
     return res.status(500).json(error.message);
   }
 });
+
+router.get("/searchJob", async (req, res) => {
+  try {
+    const searchTerm = req.query.search;
+    const fetchedJobs = await jobModel.find({
+      $or: [
+        { job_title: { $regex: searchTerm, $options: "i" } },
+        { job_description: { $regex: searchTerm, $options: "i" } },
+      ],
+    });
+
+    return res.status(200).json(fetchedJobs);
+  } catch (e) {
+    return res.status(500).json({ error: `error caused due to ${e.message}` });
+  }
+});
 module.exports = router;
