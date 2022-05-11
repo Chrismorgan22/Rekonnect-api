@@ -7,7 +7,7 @@ const helperExport = async (userId) => {
     const ws = wb.addWorksheet("Worksheet Name");
     var listUser = [];
     const candidateData = await candidateModel.find().populate("user_id");
-
+    console.log(candidateData[10]);
     const newState = new Array();
     // candidateData.map(async (can) => {
     //   // console.log("zata re run ho?");
@@ -39,12 +39,24 @@ const helperExport = async (userId) => {
       if (user_id !== null) {
         const mainData = { ...user_id?._doc, ...rest._doc };
 
-        if (index == 0) console.log(mainData, "testdata");
+        // if (index == 9) console.log(mainData, "testdata");
         mainData.user_id = null;
-        listUser.push(mainData);
+        const data = mainData;
+        // console.log(typeof data.first_name);
+        data.education_type = data.education_data.education_type;
+        data.experience_type = data.experience_data.experience_type;
+        data.current_carrer = data.current_career.name;
+        salary_max = data.salary_range.max;
+        salary_min = data.salary_range.min;
+
+        data.state = data.address_details.state.name;
+        data.zip_code = data.address_details.zip_code;
+        data.address_details = null;
+
+        listUser.push(data);
       }
     });
-    // console.log(listUser[77], "list");
+    console.log(listUser[77], "list");
     //get the entire list
     var data = [];
     listUser.map((entry, idx) => {
@@ -67,7 +79,7 @@ const helperExport = async (userId) => {
       // console.log(newBody, "new booty");
       data.push(newBody);
     });
-    console.log(data[77], "final!!");
+    // console.log(data[77], "final!!");
     const headingColumnNames = Object.keys(data[77]);
     //Write Column Title in Excel file
     let headingColumnIndex = 1;
