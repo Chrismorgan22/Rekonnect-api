@@ -164,7 +164,7 @@ const userRegisterService = async (body) => {
 const userLoginService = async (body) => {
   console.log(body);
 
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     let andQuery = [];
     if (body.password !== undefined) {
       body.password = await bcrypt.hash(body.password, salt);
