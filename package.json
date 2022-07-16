@@ -16,6 +16,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/leenabloombit/rekonnect-api#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "excel4node": "^1.7.2",

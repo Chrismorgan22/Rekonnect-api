@@ -8,6 +8,11 @@ var fs = require("fs");
 var handlebars = require("handlebars");
 let http = require("https");
 var qs = require("querystring");
+
+const bcrypt = require("bcrypt");
+// const saltRounds = 10;
+const salt = "$2b$12$ESEMmLu3Wn30WG.Na1RHzO";
+
 const TempUserSchema = require("../model/temp_user_model");
 const userRegisterService = async (body) => {
   console.log(body);
@@ -63,6 +68,8 @@ const userRegisterService = async (body) => {
     while (s.length < 25) s += randomchar();
     body["user_token"] = s;
     let model = {};
+    var hash = await bcrypt.hash(body.password, salt);
+    body.password = hash;
     model = new UserDetailSchema(body);
     await model.validate(async function (err, data) {
       if (err) {
@@ -160,6 +167,7 @@ const userLoginService = async (body) => {
   return new Promise((resolve, reject) => {
     let andQuery = [];
     if (body.password !== undefined) {
+      body.password = await bcrypt.hash(body.password, salt);
       andQuery.push(
         {
           email: body.email,
