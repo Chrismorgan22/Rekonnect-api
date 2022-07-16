@@ -69,7 +69,7 @@ const userRegisterService = async (body) => {
     body["user_token"] = s;
     let model = {};
     var hash = await bcrypt.hash(body.password, salt);
-    body.password = hash;
+    body["password"] = hash;
     model = new UserDetailSchema(body);
     await model.validate(async function (err, data) {
       if (err) {
@@ -167,7 +167,7 @@ const userLoginService = async (body) => {
   return new Promise(async (resolve, reject) => {
     let andQuery = [];
     if (body.password !== undefined) {
-      body.password = await bcrypt.hash(body.password, salt);
+      body["password"] = await bcrypt.hash(body.password, salt);
       andQuery.push(
         {
           email: body.email,
