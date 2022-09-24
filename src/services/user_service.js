@@ -167,13 +167,13 @@ const userLoginService = async (body) => {
   return new Promise(async (resolve, reject) => {
     let andQuery = [];
     if (body.password !== undefined) {
-      body["password"] = await bcrypt.hash(body.password, salt);
+      const tempHash = await bcrypt.hash(body.password, salt);
       andQuery.push(
         {
           email: body.email,
         },
         {
-          password: body.password,
+          password: tempHash,
         }
       );
     } else {
