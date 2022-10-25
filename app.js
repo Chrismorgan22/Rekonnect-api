@@ -80,7 +80,7 @@ app.get("/excel", function (req, res) {
 });
 mongoose
   .connect(
-    "mongodb+srv://rekonnect:FSjWHvDnMIcPC9He@cluster0.fk6rnne.mongodb.net/test",
+      process.env.DATABASE_URL,
     { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
   )
   .then(() => {
