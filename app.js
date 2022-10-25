@@ -80,7 +80,7 @@ app.get("/excel", function (req, res) {
 });
 mongoose
   .connect(
-    "mongodb+srv://rekonnect-prod:kmhvPpAPWGcqPFbc@rekonnect-prod-0.eds9d.mongodb.net/rekonnect?retryWrites=true&w=majority",
+    "mongodb+srv://rekonnect:FSjWHvDnMIcPC9He@cluster0.fk6rnne.mongodb.net/test",
     { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
   )
   .then(() => {
