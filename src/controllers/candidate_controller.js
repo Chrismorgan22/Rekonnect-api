@@ -1,17 +1,30 @@
 const candidateService = require("../services/candidate_service");
 const { helperExport } = require("./exportToExcel");
 const func = require("../config/function");
+
 const candidateRegistration = async (req, res) => {
-  console.log(req.body);
   try {
-    const registerData = await candidateService.candidateRegisterService(
+    const registerData = await candidateService.candidateRegister(
       req.body
     );
-    console.log(registerData.user_id, "reg data");
+    console.log(registerData.user_id);
     helperExport(req.body.user_id);
     return res.send(registerData);
   } catch (err) {
     return res.send(err);
+  }
+};
+
+const candidateRegistrationV2 = async (req, res) => {
+  try {
+    const registerData = await candidateService.candidateRegisterV2(
+      req.body
+    );
+    console.log(registerData.user_id);
+    /* helperExport(req.body.user_id); */
+    return res.send(registerData);
+  } catch (err) {
+    return res.status(400).send(`${err.message}`);
   }
 };
 
@@ -71,6 +84,7 @@ const getFinalJson = async (candidateEmailData, candidateLinkedInData) => {
 
 module.exports = {
   candidateRegistration,
+  candidateRegistrationV2,
   candidateLogin,
   getCandidateList,
   linkedInLogin,

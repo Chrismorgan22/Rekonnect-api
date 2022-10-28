@@ -79,13 +79,13 @@ const helperExport = async (userId) => {
       // console.log(newBody, "new booty");
       data.push(newBody);
     });
-    // console.log(data[77], "final!!");
+/*     // console.log(data[77], "final!!");
     const headingColumnNames = Object.keys(data[77]);
     //Write Column Title in Excel file
     let headingColumnIndex = 1;
     headingColumnNames.forEach((heading) => {
       ws.cell(1, headingColumnIndex++).string(heading);
-    });
+    }); */
     //Write Data in Excel file
     let rowIndex = 2;
     data.forEach((record) => {

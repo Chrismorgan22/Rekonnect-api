@@ -27,6 +27,9 @@ let userSchema = new mongoose.Schema({
   password: {
     type: String,
   },
+  confirm_password: {
+    type: String,
+  },
   token: {
     type: String,
   },

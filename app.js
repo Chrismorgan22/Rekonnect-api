@@ -7,6 +7,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const app = express();
+require('dotenv').config();
 const adminRouter = require("./src/routes/admin.route.js");
 app.use(cors());
 const bodyParser = require("body-parser");

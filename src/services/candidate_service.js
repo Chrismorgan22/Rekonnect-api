@@ -7,7 +7,15 @@ var fs = require('fs');
 var handlebars = require('handlebars');
 let http = require('https');
 var qs = require('querystring');
+const userSchema = require('../model/user_model');
+
+const candidateSchema = require('../model/candidate_model');
 const userRoleSchema = require('../model/user_role_model');
+const bcrypt = require("bcrypt");
+const { log } = require('console');
+// const saltRounds = 10;
+const salt = "$2b$12$ESEMmLu3Wn30WG.Na1RHzO";
+
 const candidateRegisterService = async (body) => {
     console.log(body);
 
@@ -243,4 +251,34 @@ const linkedInCandidateEmail = async (body) => {
         req.end();
     })
 }
-module.exports = { candidateRegisterService, candidateLoginService, getCandidateListService, linkedInLoginService, linkedInCandidateDataService, linkedInCandidateEmail }
+
+const candidateRegisterV2 = async(body) => {
+    //Validation check if user exists
+   const existingUser = await userSchema.findOne({email:body.email})
+   if(existingUser)
+    throw new Error('Email Already exist', 400)
+
+    // Save User
+    var hash = await bcrypt.hash(body.password, salt);
+
+    const newUser = new userSchema();
+    newUser.first_name = body.first_name;
+    newUser.last_name = body.last_name;
+    newUser.email = body.email;
+    newUser.phone = body.phone;
+    newUser.register_complete = true;
+    newUser.password = hash;
+   const saveUser = await newUser.save(); 
+
+   const newCandidate = new candidateSchema();
+   newCandidate.user_id = newUser._id;
+   newCandidate.address_details.street = body.address_details.street;
+   newCandidate.address_details.landmark = body.address_details.landmark;
+   newCandidate.address_details.state = body.address_details.state;
+   newCandidate.address_details.zip_code = body.address_details.zip_code;
+   const saveCandidate = await newCandidate.save(); 
+console.log("newuser: " + saveUser, "newCandidate: " + saveCandidate)
+   return {saveCandidate, saveUser};
+}
+
+module.exports = { candidateRegisterV2, candidateRegisterService, candidateLoginService, getCandidateListService, linkedInLoginService, linkedInCandidateDataService, linkedInCandidateEmail }

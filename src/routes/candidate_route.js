@@ -6,7 +6,7 @@ const candidateDetails = require("../model/candidate_model");
 const candidateController = require("../controllers/candidate_controller");
 router.post(
   func.urlCons.URL_CANDIDATE_REGISTRATION,
-  candidateController.candidateRegistration
+  candidateController.candidateRegistrationV2
 );
 router.post(
   func.urlCons.URL_CANDIDATE_LOGIN,
