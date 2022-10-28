@@ -277,7 +277,6 @@ const candidateRegisterV2 = async(body) => {
    newCandidate.address_details.state = body.address_details.state;
    newCandidate.address_details.zip_code = body.address_details.zip_code;
    const saveCandidate = await newCandidate.save(); 
-console.log("newuser: " + saveUser, "newCandidate: " + saveCandidate)
    return {saveCandidate, saveUser};
 }
 

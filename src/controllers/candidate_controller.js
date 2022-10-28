@@ -20,7 +20,6 @@ const candidateRegistrationV2 = async (req, res) => {
     const registerData = await candidateService.candidateRegisterV2(
       req.body
     );
-    console.log(registerData.user_id);
     /* helperExport(req.body.user_id); */
     return res.send(registerData);
   } catch (err) {
