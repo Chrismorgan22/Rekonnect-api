@@ -13,6 +13,7 @@ const candidateSchema = require('../model/candidate_model');
 const userRoleSchema = require('../model/user_role_model');
 const bcrypt = require("bcrypt");
 const { log } = require('console');
+
 // const saltRounds = 10;
 const salt = "$2b$12$ESEMmLu3Wn30WG.Na1RHzO";
 
@@ -259,15 +260,16 @@ const candidateRegisterV2 = async(body) => {
     throw new Error('Email Already exist', 400)
 
     // Save User
-    var hash = await bcrypt.hash(body.password, salt);
+    var hashedPassword = await bcrypt.hash(body.password, salt);
 
     const newUser = new userSchema();
     newUser.first_name = body.first_name;
     newUser.last_name = body.last_name;
     newUser.email = body.email;
     newUser.phone = body.phone;
+    newUser.password = hashedPassword;
     newUser.register_complete = true;
-    newUser.password = hash;
+
    const saveUser = await newUser.save(); 
 
    const newCandidate = new candidateSchema();
@@ -280,4 +282,25 @@ const candidateRegisterV2 = async(body) => {
    return {saveCandidate, saveUser};
 }
 
-module.exports = { candidateRegisterV2, candidateRegisterService, candidateLoginService, getCandidateListService, linkedInLoginService, linkedInCandidateDataService, linkedInCandidateEmail }
+const candidateLoginV2 = async(body) => {
+
+    const existingUser = await userSchema.findOne({email:body.email})
+
+    const comparePassword= await bcrypt.compare(body.password, existingUser.password)
+        if(comparePassword == false)
+        {
+            throw new Error(`Entered Password is Wrong!`);
+        }
+        else {
+        var token = jwt.sign({ id: existingUser._id },'intralogicitsolutions', {
+        expiresIn: 86400 // expires in 24 hours
+        });
+        return {existingUser,token};
+        }
+
+      }; 
+
+
+
+
+module.exports = { candidateLoginV2,candidateRegisterV2, candidateRegisterService, candidateLoginService, getCandidateListService, linkedInLoginService, linkedInCandidateDataService, linkedInCandidateEmail }

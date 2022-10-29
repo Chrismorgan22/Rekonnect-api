@@ -10,7 +10,7 @@ router.post(
 );
 router.post(
   func.urlCons.URL_CANDIDATE_LOGIN,
-  candidateController.candidateLogin
+  candidateController.candidateLoginV2
 );
 router.get(
   func.urlCons.URL_GET_CANDIDATE,

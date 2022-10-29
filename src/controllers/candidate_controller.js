@@ -4,7 +4,7 @@ const func = require("../config/function");
 
 const candidateRegistration = async (req, res) => {
   try {
-    const registerData = await candidateService.candidateRegister(
+    const registerData = await candidateService.candidateRegisterService(
       req.body
     );
     console.log(registerData.user_id);
@@ -23,7 +23,7 @@ const candidateRegistrationV2 = async (req, res) => {
     /* helperExport(req.body.user_id); */
     return res.send(registerData);
   } catch (err) {
-    return res.status(400).send(`${err.message}`);
+    return res.status(400).json(`${err.message}`);
   }
 };
 
@@ -35,6 +35,15 @@ const candidateLogin = async (req, res) => {
     return res.send(loginData);
   } catch (err) {
     return res.send(err);
+  }
+};
+
+const candidateLoginV2 = async (req, res) => {
+  try {
+    const loginData = await candidateService.candidateLoginV2(req.body);
+    return res.send(loginData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
   }
 };
 
@@ -84,6 +93,7 @@ const getFinalJson = async (candidateEmailData, candidateLinkedInData) => {
 module.exports = {
   candidateRegistration,
   candidateRegistrationV2,
+  candidateLoginV2,
   candidateLogin,
   getCandidateList,
   linkedInLogin,
