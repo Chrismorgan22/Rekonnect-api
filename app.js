@@ -16,7 +16,7 @@ app.use(express.urlencoded({ limit: "50mb" }));
 app.use(
   bodyParser.json({
     limit: "50mb",
-  })
+  }) 
   );
   const bgvRoute = require("./src/routes/bgv_route.js");
   const mentorRouter = require("./src/routes/mentor_route");
