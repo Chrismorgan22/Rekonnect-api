@@ -8,6 +8,7 @@ var fs = require("fs");
 var handlebars = require("handlebars");
 let http = require("https");
 var qs = require("querystring");
+const userSchema = require("../model/user_model");
 
 const bcrypt = require("bcrypt");
 // const saltRounds = 10;
@@ -512,7 +513,23 @@ const updateUserRegisterService = async (body) => {
     );
   });
 };
+
+const userRegisterServiceV2 = async (body) => {
+
+  //Check if user is already registered
+  const existingUser = await userSchema.findOne({email:body.email})
+  if(existingUser){
+    throw new Error('Email Already exist', 400)
+  }
+
+  // return body
+  else{ 
+    return body;
+  }
+}
+
 module.exports = {
+  userRegisterServiceV2,
   userRegisterService,
   userLoginService,
   linkedInLoginService,

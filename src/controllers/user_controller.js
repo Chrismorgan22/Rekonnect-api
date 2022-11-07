@@ -13,6 +13,15 @@ const userRegistration = async (req, res) => {
   }
 };
 
+const userRegistrationV2 = async (req, res) => {
+  try {
+    const registerData = await userService.userRegisterServiceV2(req.body);
+    return res.send(registerData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
+  }
+};
+
 const userLogin = async (req, res) => {
   try {
     console.log(req.body);
@@ -115,6 +124,7 @@ const paginateUsers = (req, res) => {
 
 module.exports = {
   userRegistration,
+  userRegistrationV2,
   userLogin,
   paginateUsers,
   linkedInLogin,

@@ -12,7 +12,7 @@ const userController = require("../controllers/user_controller");
 
 router.post(
   func.urlCons.URL_USER_REGISTRATION,
-  userController.userRegistration
+  userController.userRegistrationV2
 );
 router.post("/email", async (req, res) => {
   try {

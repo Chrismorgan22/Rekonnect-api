@@ -3,20 +3,25 @@ let mongoose = require("mongoose");
 let employerSchema = new mongoose.Schema({
   user_id: {
     type: ObjectId,
-    required: true,
+
     unique: true,
   },
   company_logo: {
     type: String,
   },
+  //
   company_name: {
+    type: String,
+    required: true,
+  },
+  company_address: {
     type: String,
     required: true,
   },
   address_details: {
     street: {
       type: String,
-      required: true,
+
     },
     zip_code: {
       type: String,
@@ -45,21 +50,46 @@ let employerSchema = new mongoose.Schema({
   designation: {
     type: String,
   },
+  company_description: {
+    type: String,
+  },
   no_of_employees: {
     type: Number,
     required: true,
   },
-  website: {
+  experties: {
     type: String,
     required: true,
   },
+  languages: {
+    type: String,
+    required: true,
+  },
+  industry: {
+    type: String,
+    required: true,
+  },
+  //
+  website: {
+    type: String,
+
+  },
+//
   linkedin_url: {
     type: String,
     required: true,
   },
-  official_mail_id: {
+  instagram_url: {
     type: String,
     required: true,
+  },
+  facebook_url: {
+    type: String,
+    required: true,
+  },
+//
+  official_mail_id: {
+    type: String,
   },
   is_deleted: {
     type: Boolean,
@@ -77,5 +107,7 @@ let employerSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+
+
 });
 module.exports = mongoose.model("employer_details", employerSchema);

@@ -49,7 +49,7 @@ const helperExport = async (userId) => {
         salary_max = data.salary_range.max;
         salary_min = data.salary_range.min;
 
-        data.state = data.address_details.state.name;
+      /*   data.state = data.address_details.state.name; */
         data.zip_code = data.address_details.zip_code;
         data.address_details = null;
 

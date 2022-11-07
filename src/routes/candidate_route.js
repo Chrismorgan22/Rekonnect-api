@@ -4,6 +4,7 @@ let func = require("../config/function");
 let paginatedResults = require("../middleware/paginate_result");
 const candidateDetails = require("../model/candidate_model");
 const candidateController = require("../controllers/candidate_controller");
+
 router.post(
   func.urlCons.URL_CANDIDATE_REGISTRATION,
   candidateController.candidateRegistrationV2
