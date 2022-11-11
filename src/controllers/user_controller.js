@@ -22,6 +22,24 @@ const userRegistrationV2 = async (req, res) => {
   }
 };
 
+const userRegistrationGoogle = async (req, res) => {
+  try {
+    const registerData = await userService.userRegisterServiceGoogle(req.body);
+    return res.send(registerData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
+  }
+}; 
+
+const userRegistrationCheckFlag = async (req, res) => {
+  try {
+    const registerData = await userService.userRegisterServiceCheckFlag(req.body);
+    return res.send(registerData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
+  }
+};
+
 const userLogin = async (req, res) => {
   try {
     console.log(req.body);
@@ -123,6 +141,8 @@ const paginateUsers = (req, res) => {
 };
 
 module.exports = {
+  userRegistrationCheckFlag,
+  userRegistrationGoogle,
   userRegistration,
   userRegistrationV2,
   userLogin,

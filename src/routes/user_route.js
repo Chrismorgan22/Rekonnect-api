@@ -14,6 +14,17 @@ router.post(
   func.urlCons.URL_USER_REGISTRATION,
   userController.userRegistrationV2
 );
+
+router.post(
+  func.urlCons.URL_USER_REGISTRATION_GOOGLE,
+  userController.userRegistrationGoogle
+); 
+
+router.post(
+  func.urlCons.URL_USER_REGISTRATION_CHECK_FLAG,
+  userController.userRegistrationCheckFlag
+);
+
 router.post("/email", async (req, res) => {
   try {
     var transporter = nodemailer.createTransport({

@@ -254,32 +254,15 @@ const linkedInCandidateEmail = async (body) => {
 }
 
 const candidateRegisterV2 = async(body) => {
-    //Validation check if user exists
-   const existingUser = await userSchema.findOne({email:body.email})
-   if(existingUser)
-    throw new Error('Email Already exist', 400)
-
-    // Save User
-    var hashedPassword = await bcrypt.hash(body.password, salt);
-
-    const newUser = new userSchema();
-    newUser.first_name = body.first_name;
-    newUser.last_name = body.last_name;
-    newUser.email = body.email;
-    newUser.phone = body.phone;
-    newUser.password = hashedPassword;
-    newUser.register_complete = true;
-
-   const saveUser = await newUser.save(); 
-
+    // Save Candidate
    const newCandidate = new candidateSchema();
-   newCandidate.user_id = newUser._id;
+    newCandidate.user_id = body.user_id; 
    newCandidate.address_details.street = body.address_details.street;
    newCandidate.address_details.landmark = body.address_details.landmark;
    newCandidate.address_details.state = body.address_details.state;
    newCandidate.address_details.zip_code = body.address_details.zip_code;
-   const saveCandidate = await newCandidate.save(); 
-   return { saveUser, saveCandidate };
+   const saveCandidate = await newCandidate.save();
+   return { saveCandidate };
 }
 
 const candidateLoginV2 = async(body) => {

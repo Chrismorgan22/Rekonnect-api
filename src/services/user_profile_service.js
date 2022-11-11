@@ -63,8 +63,8 @@ const getUserProfileService = async (req) => {
                 func.msCons.errorJson["error"] = err;
                 return resolve(func.msCons.errorJson);
             } else {
-                docs[0]['user_role'] = docs[0]['user_role_details'][0].role;
-                delete (docs[0]['user_role_details'])
+               /*  docs[0]['user_role'] = docs[0]['user_role_details'][0].role;
+                delete (docs[0]['user_role_details']) */
                 if (docs[0]['candidate_details'].length === 0) {
                     delete (docs[0]['candidate_details']);
                 }

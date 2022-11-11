@@ -1,6 +1,8 @@
 const urlConstants = {
   /* User API */
   URL_USER_REGISTRATION: "/registration",
+  URL_USER_REGISTRATION_GOOGLE: "/registrationGoogle",
+  URL_USER_REGISTRATION_CHECK_FLAG: "/checkFlag",
   URL_USER_LOGIN: "/login",
   URL_USER_LIST: "/:user_role",
 

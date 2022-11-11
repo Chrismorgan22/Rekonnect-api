@@ -56,5 +56,9 @@ let userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  googleAuth: {
+    type: Boolean,
+    default: false,
+  },
 });
 module.exports = mongoose.model("user_details", userSchema);

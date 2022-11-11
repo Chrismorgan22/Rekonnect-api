@@ -522,13 +522,56 @@ const userRegisterServiceV2 = async (body) => {
     throw new Error('Email Already exist', 400)
   }
 
-  // return body
   else{ 
-    return body;
+    var hashedPassword = await bcrypt.hash(body.password, salt);
+    const newUser = new userSchema();
+    newUser.first_name = body.first_name;
+    newUser.last_name = body.last_name;
+    newUser.email = body.email;
+    newUser.phone = body.phone;
+    newUser.password = hashedPassword;
+    newUser.register_complete = true;
+    const saveUser = await newUser.save(); 
+    return saveUser;
+  }
+}
+
+const userRegisterServiceGoogle = async (body) => {
+
+  const existingUser = await userSchema.findOne({email:body.email})
+  if(existingUser){
+    return existingUser
+  }
+else{
+  const newUser = new userSchema();
+  newUser.first_name = body.first_name;
+  newUser.last_name = body.last_name;
+  newUser.register_complete = true;
+  newUser.email = body.email;
+  newUser.googleAuth = true;
+
+  const saveUser = await newUser.save(); 
+  return saveUser;
+  }
+}
+
+const userRegisterServiceCheckFlag = async (body) => {
+
+  const existingUser = await userSchema.findOne({email:body.email})
+  
+  if(existingUser){
+    return existingUser;
+  }
+ else{
+  const newUser = new userSchema()
+  newUser.googleAuth = false;
+  return newUser;
   }
 }
 
 module.exports = {
+  userRegisterServiceCheckFlag,
+  userRegisterServiceGoogle,
   userRegisterServiceV2,
   userRegisterService,
   userLoginService,

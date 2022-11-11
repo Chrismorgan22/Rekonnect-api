@@ -65,7 +65,7 @@ let jobSchema = new mongoose.Schema({
   },
   is_visume: {
     type: Boolean,
-    required: true,
+    /* required: true, */
   },
   is_scandidate: {
     type: Boolean,
