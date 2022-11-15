@@ -1,5 +1,8 @@
 const mentorModel = require("../model/mentor_model");
 const bookingModel = require("../model/booking_model");
+const mentorService = require("../services/mentor_service");
+
+
 const registerMentor = async (req, res) => {
   const newMentor = new mentorModel(req.body);
 
@@ -15,6 +18,29 @@ const registerMentor = async (req, res) => {
       .json({ message: ` Error caused due to ${error.message}` });
   }
 };
+
+
+const mentorRegistrationV2 = async (req, res) => {
+  try {
+    const registerData = await mentorService.mentorRegisterV2(
+      req.body
+    );
+    return res.send(registerData);
+  } catch (err) {
+    return res.send(err);
+  }
+};
+
+const mentorLoginV2 = async (req, res) => {
+  try {
+    const loginData = await mentorService.mentorLoginV2(req.body);
+    return res.send(loginData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
+  }
+};
+
+
 const addBooking = async (req, res) => {
   const { bookingData, mentorId } = req.body;
   console.log(mentorId);
@@ -58,4 +84,4 @@ const fetchMentor = async (req, res) => {
   }
 };
 
-module.exports = { registerMentor, fetchMentor, addBooking };
+module.exports = { mentorLoginV2, mentorRegistrationV2, registerMentor, fetchMentor, addBooking };

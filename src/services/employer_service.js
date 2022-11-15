@@ -89,24 +89,6 @@ const addUserRoleData = async (body) => {
 
 const employerRegisterServiceV2 = async (body) => {
 
-    //Validation check if user exists
-    const existingUser = await userSchema.findOne({email:body.email})
-    if(existingUser)
-     throw new Error('Email Already exist', 400)
- 
-     // Save User
-     var hashedPassword = await bcrypt.hash(body.password, salt);
- 
-     const newUser = new userSchema();
-     newUser.first_name = body.first_name;
-     newUser.last_name = body.last_name;
-     newUser.email = body.email;
-     newUser.phone = body.phone;
-     newUser.password = hashedPassword;
-     newUser.register_complete = true;
- 
-    const saveUser = await newUser.save(); 
- 
     const newEmployer = new EmployerDetailSchema();
     newEmployer.user_id = newUser._id;
 
@@ -128,7 +110,12 @@ const employerRegisterServiceV2 = async (body) => {
     newEmployer.facebook_url = body.facebook_url;
 
     const saveEmployer = await newEmployer.save(); 
-    return { saveUser,saveEmployer };
+
+    var token = jwt.sign({ id: saveEmployer._id }, 'intralogicitsolutions', {
+        expiresIn: 86400 // expires in 24 hours
+    });
+    
+      return {saveEmployer, token};
 }
 
 module.exports = { employerRegisterService, employerRegisterServiceV2 }

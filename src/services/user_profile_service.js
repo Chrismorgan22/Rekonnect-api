@@ -1,9 +1,47 @@
 const func = require('../config/function');
+
 const UserDetailSchema = require('../model/user_model');
 const CandidateDetailSchema = require('../model/candidate_model');
+const EmployerDetailSchema = require('../model/employer_model');
+const MentorDetailSchema = require('../model/mentor_model');
+
 const ExpertDetailSchema = require('../model/expert_model');
 const { ObjectId } = require('bson');
+var jwt = require('jsonwebtoken');
 
+const getUserProfileServiceV2 = async (req) => {
+
+    const token = req.body[0];
+    var data ;
+    await jwt.verify(token, 'intralogicitsolutions', async function(err, decoded) {
+        if (err){
+            data = err.message
+    }
+        const existingUser = await UserDetailSchema.findById({_id: decoded.id})
+        data = existingUser;
+    })
+    // Search for Candidate
+    const data2 = await CandidateDetailSchema.findOne({user_id: data.user_id})
+    if(data2 !== null){
+        return {data,data2};
+    } else{
+            // Search for Employer
+    const data2 = await EmployerDetailSchema.findOne({user_id: data.user_id})
+    if(data2 !== null){
+        return {data, data2};
+    } else{
+                    // Search for Mentor
+    const data2 = await MentorDetailSchema.findOne({user_id: data.user_id})
+    if(data2 !== null){
+        return {data, data2};
+    } else{
+        return data;
+    }
+    }
+    }
+
+}
+ 
 const getUserProfileService = async (req) => {
     return new Promise(async (resolve, reject) => {
         await UserDetailSchema.aggregate([
@@ -12,7 +50,7 @@ const getUserProfileService = async (req) => {
                     _id: new ObjectId(req.params.user_id)
                 },
             },
-            {
+            {  
                 $lookup: {
                     from: "user_role_details",
                     localField: "_id",
@@ -133,4 +171,4 @@ const updateUserProfileService = async (req) => {
     })
 }
 
-module.exports = { getUserProfileService, updateUserProfileService }
+module.exports = { getUserProfileServiceV2, getUserProfileService, updateUserProfileService }

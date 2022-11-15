@@ -14,7 +14,6 @@ const employerRegistration = async (req, res) => {
 const employerRegistrationV2 = async (req, res) => {
     try {
         const registerData = await employerService.employerRegisterServiceV2(req.body)
-        console.log(registerData)
         return res.send(registerData)
     } catch (err) {
         return res.status(400).json(`${err.message}`);

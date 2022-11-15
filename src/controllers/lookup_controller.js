@@ -22,7 +22,7 @@ const postCarrerOptions = async (req, res) => {
         lookup_type: carrerList[i].lookup_type,
       });
       const savedCarrer = await newCarrer.save();
-      list.push(savedCarrer);
+      list.push(savedCarrer); 
       i++;
       //   return res.status(200).json(savedCarrer);
     }

@@ -532,7 +532,12 @@ const userRegisterServiceV2 = async (body) => {
     newUser.password = hashedPassword;
     newUser.register_complete = true;
     const saveUser = await newUser.save(); 
-    return saveUser;
+
+    var token = jwt.sign({ id: saveUser._id }, 'intralogicitsolutions', {
+      expiresIn: 86400 // expires in 24 hours
+  });
+
+    return {saveUser, token};
   }
 }
 
@@ -540,7 +545,10 @@ const userRegisterServiceGoogle = async (body) => {
 
   const existingUser = await userSchema.findOne({email:body.email})
   if(existingUser){
-    return existingUser
+    var token = jwt.sign({ id: existingUser._id }, 'intralogicitsolutions', {
+      expiresIn: 86400 // expires in 24 hours
+  });
+    return {existingUser, token}
   }
 else{
   const newUser = new userSchema();
@@ -551,7 +559,12 @@ else{
   newUser.googleAuth = true;
 
   const saveUser = await newUser.save(); 
-  return saveUser;
+
+  var token = jwt.sign({ id: saveUser._id }, 'intralogicitsolutions', {
+    expiresIn: 86400 // expires in 24 hours
+});
+
+  return {saveUser, token};
   }
 }
 
@@ -560,9 +573,13 @@ const userRegisterServiceCheckFlag = async (body) => {
   const existingUser = await userSchema.findOne({email:body.email})
   
   if(existingUser){
-    return existingUser;
+    var token = jwt.sign({ id: existingUser._id }, 'intralogicitsolutions', {
+      expiresIn: 86400 // expires in 24 hours
+  });
+    return {existingUser, token};
   }
- else{
+ 
+ else {
   const newUser = new userSchema()
   newUser.googleAuth = false;
   return newUser;

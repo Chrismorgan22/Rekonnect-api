@@ -20,12 +20,7 @@ const mentorSchema = new Schema(
         type: String,
       },
       state: {
-        id: {
           type: String,
-        },
-        name: {
-          type: String,
-        },
       },
       city: {
         id: {

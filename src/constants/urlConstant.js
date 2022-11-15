@@ -30,6 +30,7 @@ const urlConstants = {
   /* Job API */
   URL_POST_JOB: "/save",
   URL_GET_JOB: "/list",
+  URL_GET_JOBV2: "/listv2",
   URL_FILTER_JOB: "/filter",
   URL_GET_JOB_DETAILS: "/details/:id",
   URL_GET_ALL_JOBS: "/getALL",
@@ -45,11 +46,12 @@ const urlConstants = {
   FILTER_USERS: "/filter",
   PAGINATE_USERS: "/paginate",
   URL_GET_USER_PROFILE: "/:user_id",
+  URL_GET_USER_PROFILE_V2: "/getProfile",
   URL_UPDATE_USER_PROFILE: "/update/:user_id",
 
   /* Job application */
 
-  URL_POST_JOB_APPLICATION: "/apply",
+  URL_POST_JOB_APPLICATION: "/apply", 
   URL_APPLIED_JOB_STATUS: "/applied/status",
   URL_GET_JOB_APPLICATION: "/",
   URL_GET_APPLICANT: "/getApplicant",

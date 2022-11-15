@@ -262,7 +262,12 @@ const candidateRegisterV2 = async(body) => {
    newCandidate.address_details.state = body.address_details.state;
    newCandidate.address_details.zip_code = body.address_details.zip_code;
    const saveCandidate = await newCandidate.save();
-   return { saveCandidate };
+   
+   var token = jwt.sign({ id: saveCandidate._id }, 'intralogicitsolutions', {
+    expiresIn: 86400 // expires in 24 hours
+});
+
+  return {saveCandidate, token};
 }
 
 const candidateLoginV2 = async(body) => {
