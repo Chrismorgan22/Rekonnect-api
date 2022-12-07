@@ -3,6 +3,8 @@ const EmployerDetailSchema = require('../model/employer_model');
 const userRoleSchema = require('../model/user_role_model');
 const userSchema = require('../model/user_model');
 const bcrypt = require("bcrypt");
+var jwt = require('jsonwebtoken');
+
 // const saltRounds = 10;
 const salt = "$2b$12$ESEMmLu3Wn30WG.Na1RHzO";
 
@@ -89,8 +91,14 @@ const addUserRoleData = async (body) => {
 
 const employerRegisterServiceV2 = async (body) => {
 
+    // Save Employer Role in User Model
+    const existingUser = await userSchema.findOne({email:body.email})
+    existingUser.role = 'employer'
+    const saveUser = await existingUser.save();     
+    
+    // Save Employer
     const newEmployer = new EmployerDetailSchema();
-    newEmployer.user_id = newUser._id;
+    newEmployer.user_id = saveUser._id;
 
     newEmployer.address_details.landmark = body.address_details.landmark;
     newEmployer.address_details.state = body.address_details.state;
@@ -111,11 +119,30 @@ const employerRegisterServiceV2 = async (body) => {
 
     const saveEmployer = await newEmployer.save(); 
 
-    var token = jwt.sign({ id: saveEmployer._id }, 'intralogicitsolutions', {
+    var token = jwt.sign({ id: saveEmployer.user_id }, 'intralogicitsolutions', {
         expiresIn: 86400 // expires in 24 hours
     });
     
-      return {saveEmployer, token};
+      return {saveEmployer, token, saveUser};
 }
 
-module.exports = { employerRegisterService, employerRegisterServiceV2 }
+const employerLoginV2 = async(body) => {
+
+    const existingUser = await userSchema.findOne({email:body.email})
+
+    const comparePassword= await bcrypt.compare(body.password, existingUser.password)
+        if(comparePassword == false)
+        {
+            throw new Error(`Entered Password is Wrong!`);
+        }
+        else {
+        var token = jwt.sign({ id: existingUser._id },'intralogicitsolutions', {
+        expiresIn: 86400 // expires in 24 hours
+        });
+        return {existingUser,token};
+        }
+
+}; 
+
+
+module.exports = { employerLoginV2, employerRegisterService, employerRegisterServiceV2 }

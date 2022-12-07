@@ -10,6 +10,8 @@ const urlConstants = {
   URL_MENTOR_REGISTRATION: "/registration",
   URL_MENTOR_FETCH: "/fetch/:id",
   URL_MENTOR_BOOKING_ADD: "/booking/add",
+  URL_MENTOR_PROFILE: "/profile",
+  URL_BOOKING: "/createBooking",
 
   /* Candidate API */
   URL_CANDIDATE_REGISTRATION: "/registration",
@@ -19,6 +21,8 @@ const urlConstants = {
   URL_TEMP_USER_DATA_SAVE: "/temp/register",
   URL_GET_TEMP_USER_DATA: "/temp/data",
   URL_UPDATE_USER_REGISTRATION_STATUS: "/update/status",
+
+  URL_GET_WORK_EXP: "/addWork",
 
   /* Expert API */
   URL_EXPERT_REGISTRATION: "/registration",
@@ -47,6 +51,7 @@ const urlConstants = {
   PAGINATE_USERS: "/paginate",
   URL_GET_USER_PROFILE: "/:user_id",
   URL_GET_USER_PROFILE_V2: "/getProfile",
+  URL_GET_MENTOR_PROFILE: "/getMentorProfile",
   URL_UPDATE_USER_PROFILE: "/update/:user_id",
 
   /* Job application */

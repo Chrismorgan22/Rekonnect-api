@@ -1,6 +1,7 @@
 const mentorModel = require("../model/mentor_model");
 const bookingModel = require("../model/booking_model");
 const mentorService = require("../services/mentor_service");
+const userModel = require("../model/user_model");
 
 
 const registerMentor = async (req, res) => {
@@ -28,6 +29,40 @@ const mentorRegistrationV2 = async (req, res) => {
     return res.send(registerData);
   } catch (err) {
     return res.send(err);
+  }
+};
+
+const getMentor = async (req, res) => {
+  try {
+    var userData = []
+    var resultArray = []
+
+    var resultObj = {
+    firstName: '',
+    lastName: '',
+    experties: '',
+    desc: '',
+    mentorId: '',
+    }
+
+    const findMentor = await mentorModel.find()
+
+    for (var i = 0; i < findMentor.length; i++) { 
+      var obj1 = findMentor[i].desc //not working check
+      resultObj.experties = findMentor[i].experties;
+      resultObj.desc = findMentor[i].desc;
+      resultObj.mentorId = findMentor[i]._id;
+      const findUser = await userModel.findById({_id: findMentor[i].user_id})
+        resultObj.firstName = findUser.first_name;
+        resultObj.lastName = findUser.last_name;
+        resultObj.desc = 'Im a web developer with experties in nodejs ' // desc not working
+        resultObj.experties = 'Node.js '
+        resultArray.push(resultObj);
+    }
+    
+    return res.send(resultArray);
+  } catch (error) {
+    return res.status(500).json(error.message);
   }
 };
 
@@ -84,4 +119,17 @@ const fetchMentor = async (req, res) => {
   }
 };
 
-module.exports = { mentorLoginV2, mentorRegistrationV2, registerMentor, fetchMentor, addBooking };
+const createBooking = async (req, res) => {
+  try {
+    const registerData = await mentorService.createBooking(
+      req
+    );
+    return res.send(registerData);
+  } catch (err) {
+    return res.send(err);
+  }
+};
+
+
+
+module.exports = { createBooking, getMentor, mentorLoginV2, mentorRegistrationV2, registerMentor, fetchMentor, addBooking };

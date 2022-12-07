@@ -60,5 +60,13 @@ let userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  role: {
+    type: String,
+    default: 'candidate',
+  },
+  bio: {
+    type: String,
+    default: '',
+  }
 });
 module.exports = mongoose.model("user_details", userSchema);

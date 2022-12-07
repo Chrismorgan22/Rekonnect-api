@@ -51,6 +51,15 @@ const userLogin = async (req, res) => {
   }
 };
 
+const userLoginV2 = async (req, res) => {
+  try {
+    const loginData = await userService.userLoginServiceV2(req.body);
+    return res.send(loginData);
+  } catch (err) {
+    return res.send(err);
+  }
+};
+
 const linkedInLogin = async (req, res) => {
   try {
     const candidateData = await candidateService.linkedInLoginService(req.body);
@@ -141,6 +150,7 @@ const paginateUsers = (req, res) => {
 };
 
 module.exports = {
+  userLoginV2,
   userRegistrationCheckFlag,
   userRegistrationGoogle,
   userRegistration,

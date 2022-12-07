@@ -4,6 +4,7 @@ const UserDetailSchema = require('../model/user_model');
 const CandidateDetailSchema = require('../model/candidate_model');
 const EmployerDetailSchema = require('../model/employer_model');
 const MentorDetailSchema = require('../model/mentor_model');
+const BookingDetailSchema = require('../model/booking_model _v2')
 
 const ExpertDetailSchema = require('../model/expert_model');
 const { ObjectId } = require('bson');
@@ -20,26 +21,67 @@ const getUserProfileServiceV2 = async (req) => {
         const existingUser = await UserDetailSchema.findById({_id: decoded.id})
         data = existingUser;
     })
-    // Search for Candidate
-    const data2 = await CandidateDetailSchema.findOne({user_id: data.user_id})
-    if(data2 !== null){
-        return {data,data2};
+    if(data.role == 'candidate'){
+    var data2 = await CandidateDetailSchema.findOne({user_id: data._id})
+    return {data,data2};
+    } else if (data.role == 'employer') {
+    var data2 = await EmployerDetailSchema.findOne({user_id: data._id})
+    return {data,data2}
+    } else if (data.role == 'mentor'){
+        var data2 = await MentorDetailSchema.findOne({user_id: data._id})
+        return {data,data2}
     } else{
-            // Search for Employer
-    const data2 = await EmployerDetailSchema.findOne({user_id: data.user_id})
-    if(data2 !== null){
-        return {data, data2};
-    } else{
-                    // Search for Mentor
-    const data2 = await MentorDetailSchema.findOne({user_id: data.user_id})
-    if(data2 !== null){
-        return {data, data2};
-    } else{
-        return data;
-    }
-    }
+        message = 'Role not found'
+        return message
     }
 
+}
+
+const getMentorProfileService = async (req) => {
+    const token = req.body[0];
+    var data ;
+    await jwt.verify(token, 'intralogicitsolutions', async function(err, decoded) {
+        if (err){
+            data = err.message
+    }
+        const existingUser = await UserDetailSchema.findById({_id: decoded.id})
+        data = existingUser;
+    })
+
+        var resultobjarray = [];
+
+    const existingMentor = await MentorDetailSchema.findOne({user_id: data._id})
+    const existingBooking = await BookingDetailSchema.find({mentor_id: existingMentor._id})
+
+    const sessionWith = await UserDetailSchema.find({_id: existingBooking.candidate_id});
+
+
+    for (var i = 0; i < existingBooking.length; i++) { 
+        
+        const sessionWith = await UserDetailSchema.findOne({_id: existingBooking[i].candidate_id});
+    
+        var resultObj = {
+        firstName: '',
+        lastName: '',
+        date: '',
+        time_slot: '',
+        }
+    
+    var first_name = sessionWith[i].first_name;
+    var last_name = sessionWith[i].last_name;
+    var date = existingBooking[i].time_slot;
+    var time_slot = existingBooking[i].date;
+    
+    resultObj.firstName = first_name;
+    resultObj.lastName = last_name;
+    resultObj.time_slot = time_slot;
+    resultObj.date = date;
+
+    resultobjarray.push(resultObj);
+    
+
+    }
+    return resultobjarray;
 }
  
 const getUserProfileService = async (req) => {
@@ -171,4 +213,4 @@ const updateUserProfileService = async (req) => {
     })
 }
 
-module.exports = { getUserProfileServiceV2, getUserProfileService, updateUserProfileService }
+module.exports = { getMentorProfileService, getUserProfileServiceV2, getUserProfileService, updateUserProfileService }

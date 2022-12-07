@@ -13,8 +13,8 @@ const userController = require("../controllers/user_controller");
 router.post(
   func.urlCons.URL_USER_REGISTRATION,
   userController.userRegistrationV2
-);
-
+  );
+  
 router.post(
   func.urlCons.URL_USER_REGISTRATION_GOOGLE,
   userController.userRegistrationGoogle
@@ -24,6 +24,13 @@ router.post(
   func.urlCons.URL_USER_REGISTRATION_CHECK_FLAG,
   userController.userRegistrationCheckFlag
 );
+
+router.post(
+  func.urlCons. URL_USER_LOGIN,
+  userController.userLoginV2
+  );
+  
+/*   router.post(func.urlCons.URL_USER_LOGIN, userController.userLogin); */
 
 router.post("/email", async (req, res) => {
   try {
@@ -72,7 +79,6 @@ router.post("/email", async (req, res) => {
     console.log(error);
   }
 });
-router.post(func.urlCons.URL_USER_LOGIN, userController.userLogin);
 router.post(func.urlCons.URL_LINKED_LOGIN, userController.linkedInLogin);
 router.get(func.urlCons.URL_USER_LIST, userController.getUserList);
 router.post(

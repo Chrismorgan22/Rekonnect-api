@@ -11,6 +11,16 @@ const getUserProfileV2 = async (req,res) => {
     }
 } 
 
+const getMentorProfile = async (req,res) => {
+    try {
+        const getUserProfileData = await userProfileService.getMentorProfileService(req)
+        const data = getUserProfileData;
+        return res.send(data);
+    } catch (err) {
+      return res.status(400).json(`${err.message}`);
+    }
+}
+
 const getUserProfile = async (req, res) => {
     try {
         const getUserProfileData = await userProfileService.getUserProfileService(req)
@@ -43,4 +53,4 @@ const updateUserProfile = async (req, res) => {
 
 // }
 
-module.exports = { getUserProfileV2, updateUserProfile, getUserProfile }
+module.exports = { getMentorProfile, getUserProfileV2, updateUserProfile, getUserProfile }

@@ -254,6 +254,11 @@ const linkedInCandidateEmail = async (body) => {
 }
 
 const candidateRegisterV2 = async(body) => {
+    // Save Candidate Role in User Model
+    const existingUser = await userSchema.findOne({email:body.email});
+    existingUser.role = 'candidate';
+    const data = await existingUser.save(); 
+
     // Save Candidate
    const newCandidate = new candidateSchema();
     newCandidate.user_id = body.user_id; 
@@ -261,13 +266,12 @@ const candidateRegisterV2 = async(body) => {
    newCandidate.address_details.landmark = body.address_details.landmark;
    newCandidate.address_details.state = body.address_details.state;
    newCandidate.address_details.zip_code = body.address_details.zip_code;
-   const saveCandidate = await newCandidate.save();
-   
-   var token = jwt.sign({ id: saveCandidate._id }, 'intralogicitsolutions', {
+   const data2 = await newCandidate.save();
+   var token = jwt.sign({ id: data2.user_id }, 'intralogicitsolutions', {
     expiresIn: 86400 // expires in 24 hours
 });
 
-  return {saveCandidate, token};
+  return {data2, token, data};
 }
 
 const candidateLoginV2 = async(body) => {
@@ -286,9 +290,47 @@ const candidateLoginV2 = async(body) => {
         return {existingUser,token};
         }
 
-      }; 
+}; 
+
+const addWorkExp = async(body) => {
+    const token = body[0];
+    var data ;
+    await jwt.verify(token, 'intralogicitsolutions', async function(err, decoded) {
+        if (err){
+
+            data = err.message
+    }
+        const existingUser = await userSchema.findById({_id: decoded.id})
+        data = existingUser;
+    })
+
+/*     const findCandidate = await CandidateDetailSchema.findOne({user_id: data._id}); */
+
+    const workExp = await CandidateDetailSchema.update({
+        user_id: data._id
+    }, {   $set: 
+                {   education_data:{
+            experience_data: {
+            designation: body.designation,
+            company: body.company,
+            state: {name: body.state},
+            start_date: body.start_date,
+            end_date: body.end_date,
+            job_description: body.job_description
+                            } 
+                                    }
+                }
+    })
+    return workExp;
+};
+
+/* obj ={
+    designation :"body.seshji",
+    company:"company"
+}
+
+db.employeeset.update( { emp_id: 1231 },{ $set: {"education_data": obj}); */
 
 
 
-
-module.exports = { candidateLoginV2,candidateRegisterV2, candidateRegisterService, candidateLoginService, getCandidateListService, linkedInLoginService, linkedInCandidateDataService, linkedInCandidateEmail }
+module.exports = { addWorkExp, candidateLoginV2, candidateRegisterV2, candidateRegisterService, candidateLoginService, getCandidateListService, linkedInLoginService, linkedInCandidateDataService, linkedInCandidateEmail }

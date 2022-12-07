@@ -4,7 +4,15 @@ let func = require("../config/function");
 let paginatedResults = require("../middleware/paginate_result");
 const candidateDetails = require("../model/candidate_model");
 const candidateController = require("../controllers/candidate_controller");
+/* TESTTTTTTTTTTTTTTT */
 
+router.post(
+  func.urlCons.URL_GET_WORK_EXP,
+  candidateController.addWorkExp
+);
+
+
+/* TESTTTTTTTTTTTTTTT */
 router.post(
   func.urlCons.URL_CANDIDATE_REGISTRATION,
   candidateController.candidateRegistrationV2

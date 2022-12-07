@@ -556,6 +556,7 @@ else{
   newUser.last_name = body.last_name;
   newUser.register_complete = true;
   newUser.email = body.email;
+/*   newUser.phone = body.phone; */
   newUser.googleAuth = true;
 
   const saveUser = await newUser.save(); 
@@ -570,23 +571,42 @@ else{
 
 const userRegisterServiceCheckFlag = async (body) => {
 
-  const existingUser = await userSchema.findOne({email:body.email})
+  const User = await userSchema.findOne({email:body.email})
   
-  if(existingUser){
-    var token = jwt.sign({ id: existingUser._id }, 'intralogicitsolutions', {
+  if(User){
+    var token = jwt.sign({ id: User._id }, 'intralogicitsolutions', {
       expiresIn: 86400 // expires in 24 hours
   });
-    return {existingUser, token};
+    return {User, token};
   }
  
  else {
-  const newUser = new userSchema()
-  newUser.googleAuth = false;
-  return newUser;
+  const User = new userSchema()
+  User.googleAuth = false;
+  var message = 'New Registration'
+  return {User, message};
   }
 }
 
+const userLoginServiceV2 = async(body) => {
+
+  const existingUser = await userSchema.findOne({email:body.email})
+  const comparePassword= await bcrypt.compare(body.password, existingUser.password)
+      if(comparePassword == false)
+      {
+          throw new Error(`Entered Password is Wrong!`);
+      }
+      else {
+      var token = jwt.sign({ id: existingUser._id },'intralogicitsolutions', {
+      expiresIn: 86400 // expires in 24 hours
+      });
+      return {existingUser,token};
+      }
+
+}; 
+
 module.exports = {
+  userLoginServiceV2,
   userRegisterServiceCheckFlag,
   userRegisterServiceGoogle,
   userRegisterServiceV2,

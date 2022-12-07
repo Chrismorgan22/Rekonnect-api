@@ -47,6 +47,15 @@ const candidateLoginV2 = async (req, res) => {
   }
 };
 
+const addWorkExp = async (req, res) => {
+  try {
+    const loginData = await candidateService.addWorkExp(req.body);
+    return res.send(loginData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
+  }
+};
+
 const getCandidateList = async (req, res) => {
   try {
     const candidateData = await candidateService.getCandidateListService();
@@ -91,6 +100,7 @@ const getFinalJson = async (candidateEmailData, candidateLinkedInData) => {
 };
 
 module.exports = {
+  addWorkExp,
   candidateRegistration,
   candidateRegistrationV2,
   candidateLoginV2,
