@@ -56,10 +56,11 @@ const getMentorProfileService = async (req) => {
     const sessionWith = await UserDetailSchema.find({_id: existingBooking.candidate_id});
 
 
+    console.log(existingBooking.length, "length")
     for (var i = 0; i < existingBooking.length; i++) { 
-        
+        console.log("code reaches here 1 ", i)
         const sessionWith = await UserDetailSchema.findOne({_id: existingBooking[i].candidate_id});
-    
+    console.log(sessionWith, "sessionwith");
         var resultObj = {
         firstName: '',
         lastName: '',
@@ -67,8 +68,8 @@ const getMentorProfileService = async (req) => {
         time_slot: '',
         }
     
-    var first_name = sessionWith[i].first_name;
-    var last_name = sessionWith[i].last_name;
+    var first_name = sessionWith.first_name;
+    var last_name = sessionWith.last_name;
     var date = existingBooking[i].time_slot;
     var time_slot = existingBooking[i].date;
     
@@ -78,9 +79,9 @@ const getMentorProfileService = async (req) => {
     resultObj.date = date;
 
     resultobjarray.push(resultObj);
-    
-
+    console.log("code reaches end",resultobjarray)
     }
+
     return resultobjarray;
 }
  
