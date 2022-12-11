@@ -34,32 +34,33 @@ const mentorRegistrationV2 = async (req, res) => {
 
 const getMentor = async (req, res) => {
   try {
-    var userData = []
     var resultArray = []
 
-    var resultObj = {
-    firstName: '',
-    lastName: '',
-    experties: '',
-    desc: '',
-    mentorId: '',
-    }
+
 
     const findMentor = await mentorModel.find()
-
+    
     for (var i = 0; i < findMentor.length; i++) { 
-      var obj1 = findMentor[i].desc //not working check
-      resultObj.experties = findMentor[i].experties;
-      resultObj.desc = findMentor[i].desc;
+      
+      var resultObj = {
+        firstName: '',
+        lastName: '',
+        experties: '',
+        desc: '',
+        mentorId: '',
+        available_slots : [],
+        }
+
+      resultObj.available_slots = findMentor[i].available_slots; 
       resultObj.mentorId = findMentor[i]._id;
       const findUser = await userModel.findById({_id: findMentor[i].user_id})
+
         resultObj.firstName = findUser.first_name;
         resultObj.lastName = findUser.last_name;
         resultObj.desc = 'Im a web developer with experties in nodejs ' // desc not working
         resultObj.experties = 'Node.js '
         resultArray.push(resultObj);
     }
-    
     return res.send(resultArray);
   } catch (error) {
     return res.status(500).json(error.message);
@@ -130,6 +131,53 @@ const createBooking = async (req, res) => {
   }
 };
 
+const addMeetLink = async (req, res) => {
+  try {
+    const registerData = await mentorService.addMeetLink(
+      req
+    );
+    
+    return res.send(registerData);
+  } catch (err) {
+    return res.send(err);
+  }
+};
+
+const setSlot = async (req, res) => {
+  try {
+    const registerData = await mentorService.setSlot(
+      req
+    );
+    
+    return res.send(registerData);
+  } catch (err) {
+    return res.send(err);
+  }
+};
+
+const getSlot = async (req, res) => {
+  try {
+    const registerData = await mentorService.getSlot(
+      req
+    );
+    
+    return res.send(registerData);
+  } catch (err) {
+    return res.send(err);
+  }
+};
+
+const getBooking = async (req, res) => {
+  try {
+    const registerData = await mentorService.getBooking(
+      req
+    );
+    
+    return res.send(registerData);
+  } catch (err) {
+    return res.send(err);
+  }
+};
 
 
-module.exports = { createBooking, getMentor, mentorLoginV2, mentorRegistrationV2, registerMentor, fetchMentor, addBooking };
+module.exports = { getBooking, getSlot, setSlot, addMeetLink, createBooking, getMentor, mentorLoginV2, mentorRegistrationV2, registerMentor, fetchMentor, addBooking };

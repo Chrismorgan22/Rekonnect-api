@@ -12,6 +12,10 @@ const urlConstants = {
   URL_MENTOR_BOOKING_ADD: "/booking/add",
   URL_MENTOR_PROFILE: "/profile",
   URL_BOOKING: "/createBooking",
+  URL_ADD_MEET_LINK: "/addMeetLink",
+  URL_GET_MENTOR_SLOT: "/getSlot",
+  URL_SET_MENTOR_SLOT: "/setSlot",
+  URL_GET_MENTOR_BOOKING: "/getMentorBooking",
 
   /* Candidate API */
   URL_CANDIDATE_REGISTRATION: "/registration",

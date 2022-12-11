@@ -39,47 +39,28 @@ const getUserProfileServiceV2 = async (req) => {
 
 const getMentorProfileService = async (req) => {
     const token = req.body[0];
+
     var data ;
     await jwt.verify(token, 'intralogicitsolutions', async function(err, decoded) {
         if (err){
             data = err.message
     }
-        const existingUser = await UserDetailSchema.findById({_id: decoded.id})
+    const existingUser = await UserDetailSchema.findById({_id: decoded.id})
+
         data = existingUser;
     })
-
-        var resultobjarray = [];
-
-    const existingMentor = await MentorDetailSchema.findOne({user_id: data._id})
-    const existingBooking = await BookingDetailSchema.find({mentor_id: existingMentor._id})
-
-    const sessionWith = await UserDetailSchema.find({_id: existingBooking.candidate_id});
-
-
-    for (var i = 0; i < existingBooking.length; i++) { 
-
-    const sessionWith = await UserDetailSchema.findOne({_id: existingBooking[i].candidate_id});
-    var resultObj = {
-        firstName: '',
-        lastName: '',
-        date: '',
-        time_slot: '',
-    }
-
-    var first_name = sessionWith.first_name;
-    var last_name = sessionWith.last_name;
-    var date = existingBooking[i].date;
-    var time_slot = existingBooking[i].time_slot;
     
-    resultObj.firstName = first_name;
-    resultObj.lastName = last_name;
-    resultObj.time_slot = time_slot;
-    resultObj.date = date;
+    const findMentor = await MentorDetailSchema.findOne({user_id: data._id})
 
-    resultobjarray.push(resultObj);
+    const obj = {
+        firstName : data.first_name,
+        lastName : data.last_name,
+        landmark : findMentor.address_details.landmark,
+        state : findMentor.address_details.state,
+        zip_code : findMentor.address_details.zip_code,
     }
 
-    return resultobjarray;
+    return obj;
 }
  
 const getUserProfileService = async (req) => {

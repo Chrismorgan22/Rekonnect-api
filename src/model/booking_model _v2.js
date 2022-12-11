@@ -9,8 +9,8 @@ const bookingSchemaV2 = new Schema({
     type: ObjectId,
     ref: "mentor_details",
   },
-  date: {
-    type: String,
+  days: {
+    type: Array,
   },
   time_slot: {
     type: String,

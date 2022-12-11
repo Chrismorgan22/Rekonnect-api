@@ -306,7 +306,7 @@ const addWorkExp = async(body) => {
 
 /*     const findCandidate = await CandidateDetailSchema.findOne({user_id: data._id}); */
 
-    const workExp = await CandidateDetailSchema.update({
+    const workExp = await CandidateDetailSchema.updateOne({
         user_id: data._id
     }, {   $set: 
                 {   education_data:{
@@ -321,7 +321,7 @@ const addWorkExp = async(body) => {
                                     }
                 }
     })
-    return workExp;
+    return workExp; //incomplete
 };
 
 /* obj ={
