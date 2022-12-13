@@ -6,13 +6,14 @@ const candidateDetails = require("../model/candidate_model");
 const candidateController = require("../controllers/candidate_controller");
 /* TESTTTTTTTTTTTTTTT */
 
-router.post(
-  func.urlCons.URL_GET_WORK_EXP,
-  candidateController.addWorkExp
-);
+router.post(func.urlCons.URL_EDIT_EXP,candidateController.editExp);
+router.post(func.urlCons.URL_ADD_EXP,candidateController.addExp);
+router.post(func.urlCons.URL_ADD_EDU,candidateController.addEdu);
+router.post(func.urlCons.URL_EDIT_EDU,candidateController.editEdu);
+router.post(func.urlCons.URL_EDIT_INFO,candidateController.editInfo);
+router.post(func.urlCons.URL_ADD_SKILL,candidateController.addSkill);
+router.post(func.urlCons.URL_EDIT_SKILL,candidateController.editSkill);
 
-
-/* TESTTTTTTTTTTTTTTT */
 router.post(
   func.urlCons.URL_CANDIDATE_REGISTRATION,
   candidateController.candidateRegistrationV2

@@ -47,14 +47,14 @@ const candidateLoginV2 = async (req, res) => {
   }
 };
 
-const addWorkExp = async (req, res) => {
+/* const addWorkExp = async (req, res) => {
   try {
     const loginData = await candidateService.addWorkExp(req.body);
     return res.send(loginData);
   } catch (err) {
     return res.status(400).json(`${err.message}`);
   }
-};
+}; */
 
 const getCandidateList = async (req, res) => {
   try {
@@ -99,8 +99,79 @@ const getFinalJson = async (candidateEmailData, candidateLinkedInData) => {
   return json;
 };
 
+const editExp = async (req, res) => {
+  try {
+    const loginData = await candidateService.editExp(req.body);
+    return res.send(loginData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
+  }
+};
+
+const addExp = async (req, res) => {
+  try {
+    const loginData = await candidateService.addExp(req.body);
+    return res.send(loginData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
+  }
+};
+
+const editEdu = async (req, res) => {
+  try {
+    const loginData = await candidateService.editEdu(req.body);
+    return res.send(loginData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
+  }
+};
+
+const addEdu = async (req, res) => {
+  try {
+    const loginData = await candidateService.addEdu(req.body);
+    return res.send(loginData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
+  }
+};
+
+const editInfo = async (req, res) => {
+  try {
+    const loginData = await candidateService.editInfo(req.body);
+    return res.send(loginData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
+  }
+};
+
+const addSkill = async (req, res) => {
+  try {
+    const loginData = await candidateService.addSkill(req.body);
+    return res.send(loginData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
+  }
+};
+
+const editSkill = async (req, res) => {
+  try {
+    const loginData = await candidateService.editSkil(req.body);
+    return res.send(loginData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
+  }
+};
+
+
+
 module.exports = {
-  addWorkExp,
+  editExp,
+  addExp,
+  editEdu,
+  addEdu,
+  editInfo,
+  addSkill,
+  editSkill,
   candidateRegistration,
   candidateRegistrationV2,
   candidateLoginV2,

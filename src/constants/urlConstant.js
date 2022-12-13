@@ -26,7 +26,13 @@ const urlConstants = {
   URL_GET_TEMP_USER_DATA: "/temp/data",
   URL_UPDATE_USER_REGISTRATION_STATUS: "/update/status",
 
-  URL_GET_WORK_EXP: "/addWork",
+  URL_EDIT_EXP: "/editExp",
+  URL_ADD_EXP: "/addExp",
+  URL_ADD_EDU: "/addEdu",
+  URL_EDIT_EDU: "/editEdu",
+  URL_EDIT_INFO: "/editInfo",
+  URL_ADD_SKILL: "/addSkill",
+  URL_EDIT_SKILL: "/editSkill",
 
   /* Expert API */
   URL_EXPERT_REGISTRATION: "/registration",
