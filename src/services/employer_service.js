@@ -1,6 +1,13 @@
 const func = require('../config/function');
 const EmployerDetailSchema = require('../model/employer_model');
 const userRoleSchema = require('../model/user_role_model');
+const userSchema = require('../model/user_model');
+const bcrypt = require("bcrypt");
+var jwt = require('jsonwebtoken');
+
+// const saltRounds = 10;
+const salt = "$2b$12$ESEMmLu3Wn30WG.Na1RHzO";
+
 const employerRegisterService = async (body) => {
     console.log(body);
 
@@ -81,4 +88,61 @@ const addUserRoleData = async (body) => {
         });
     })
 }
-module.exports = { employerRegisterService }
+
+const employerRegisterServiceV2 = async (body) => {
+
+    // Save Employer Role in User Model
+    const existingUser = await userSchema.findOne({email:body.email})
+    existingUser.role = 'employer'
+    const saveUser = await existingUser.save();     
+    
+    // Save Employer
+    const newEmployer = new EmployerDetailSchema();
+    newEmployer.user_id = saveUser._id;
+
+    newEmployer.address_details.landmark = body.address_details.landmark;
+    newEmployer.address_details.state = body.address_details.state;
+    newEmployer.address_details.zip_code = body.address_details.zip_code;
+    
+    newEmployer.company_address = body.company_address;
+    newEmployer.company_name = body.company_name;
+    newEmployer.industry = body.industry;
+    newEmployer.company_description = body.company_description;
+    newEmployer.designation = body.designation;
+    newEmployer.no_of_employees = body.no_of_employees;
+    newEmployer.experties = body.experties;
+    newEmployer.languages = body.languages;
+    
+    newEmployer.linkedin_url = body.linkedin_url;
+    newEmployer.instagram_url = body.instagram_url;
+    newEmployer.facebook_url = body.facebook_url;
+
+    const saveEmployer = await newEmployer.save(); 
+
+    var token = jwt.sign({ id: saveEmployer.user_id }, 'intralogicitsolutions', {
+        expiresIn: 86400 // expires in 24 hours
+    });
+    
+      return {saveEmployer, token, saveUser};
+}
+
+const employerLoginV2 = async(body) => {
+
+    const existingUser = await userSchema.findOne({email:body.email})
+
+    const comparePassword= await bcrypt.compare(body.password, existingUser.password)
+        if(comparePassword == false)
+        {
+            throw new Error(`Entered Password is Wrong!`);
+        }
+        else {
+        var token = jwt.sign({ id: existingUser._id },'intralogicitsolutions', {
+        expiresIn: 86400 // expires in 24 hours
+        });
+        return {existingUser,token};
+        }
+
+}; 
+
+
+module.exports = { employerLoginV2, employerRegisterService, employerRegisterServiceV2 }

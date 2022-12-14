@@ -4,10 +4,39 @@ const func = require("../config/function");
 const paginatedResults = require("../middleware/paginate_result");
 const userRegistration = async (req, res) => {
   try {
+    console.log("req body", req.body);
     const registerData = await userService.userRegisterService(req.body);
+    console.log("registerdata", registerData);
     return res.send(registerData);
   } catch (err) {
     return res.send(err);
+  }
+};
+
+const userRegistrationV2 = async (req, res) => {
+  try {
+    const registerData = await userService.userRegisterServiceV2(req.body);
+    return res.send(registerData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
+  }
+};
+
+const userRegistrationGoogle = async (req, res) => {
+  try {
+    const registerData = await userService.userRegisterServiceGoogle(req.body);
+    return res.send(registerData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
+  }
+}; 
+
+const userRegistrationCheckFlag = async (req, res) => {
+  try {
+    const registerData = await userService.userRegisterServiceCheckFlag(req.body);
+    return res.send(registerData);
+  } catch (err) {
+    return res.status(400).json(`${err.message}`);
   }
 };
 
@@ -16,6 +45,15 @@ const userLogin = async (req, res) => {
     console.log(req.body);
     const loginData = await userService.userLoginService(req.body);
     console.log(loginData);
+    return res.send(loginData);
+  } catch (err) {
+    return res.send(err);
+  }
+};
+
+const userLoginV2 = async (req, res) => {
+  try {
+    const loginData = await userService.userLoginServiceV2(req.body);
     return res.send(loginData);
   } catch (err) {
     return res.send(err);
@@ -112,7 +150,11 @@ const paginateUsers = (req, res) => {
 };
 
 module.exports = {
+  userLoginV2,
+  userRegistrationCheckFlag,
+  userRegistrationGoogle,
   userRegistration,
+  userRegistrationV2,
   userLogin,
   paginateUsers,
   linkedInLogin,

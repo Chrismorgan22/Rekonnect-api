@@ -7,28 +7,29 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const app = express();
-const adminRouter = require("./src/routes/admin.route.js");
 app.use(cors());
+require('dotenv').config();
+const adminRouter = require("./src/routes/admin.route.js");
 const bodyParser = require("body-parser");
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb" }));
 app.use(
   bodyParser.json({
     limit: "50mb",
-  })
-);
-const bgvRoute = require("./src/routes/bgv_route.js");
-const mentorRouter = require("./src/routes/mentor_route");
-app.use(
-  bodyParser.urlencoded({
-    limit: "50mb",
-    parameterLimit: 100000,
-    extended: true,
-  })
-);
-
-const VerifyToken = require("./src/middleware/verify_token");
-
+  }) 
+  );
+  const bgvRoute = require("./src/routes/bgv_route.js");
+  const mentorRouter = require("./src/routes/mentor_route");
+  app.use(
+    bodyParser.urlencoded({
+      limit: "50mb",
+      parameterLimit: 100000,
+      extended: true,
+    })
+    );
+    
+    const VerifyToken = require("./src/middleware/verify_token");
+    
 const healthRouter = require("./src/routes/health_route");
 const userRouter = require("./src/routes/user_route");
 const candidateRouter = require("./src/routes/candidate_route");
@@ -49,7 +50,6 @@ require("./src/model/employer_model");
 require("./src/model/job_application_model");
 
 const lookupSchema = require("./src/model/lookup_model");
-
 app.use("/", healthRouter);
 app.use("/user", userRouter);
 app.use("/candidate", candidateRouter);
@@ -63,12 +63,13 @@ app.use("/job/application", jobApplicationRouter);
 app.use("/api", payment);
 app.use("/admin", adminRouter);
 app.use("/report", bgvRoute);
+app.use(cors());
 helperExport("62674ef7170fe04dcc1c8d8d");
 app.get("/excel", function (req, res) {
   var options = {
     root: path.join(__dirname),
   };
-
+  
   var fileName = "data.xlsx";
   res.sendFile(fileName, options, function (err) {
     if (err) {

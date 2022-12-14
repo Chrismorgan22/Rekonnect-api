@@ -5,7 +5,7 @@ let func = require("../config/function");
 const employerController = require("../controllers/employer_controller");
 router.post(
   func.urlCons.URL_EMPLOYER_REGISTRATION,
-  employerController.employerRegistration
+  employerController.employerRegistrationV2
 );
 router.get("/findById/:id", async (req, res) => {
   try {

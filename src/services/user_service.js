@@ -8,6 +8,7 @@ var fs = require("fs");
 var handlebars = require("handlebars");
 let http = require("https");
 var qs = require("querystring");
+const userSchema = require("../model/user_model");
 
 const bcrypt = require("bcrypt");
 // const saltRounds = 10;
@@ -512,7 +513,103 @@ const updateUserRegisterService = async (body) => {
     );
   });
 };
+
+const userRegisterServiceV2 = async (body) => {
+
+  //Check if user is already registered
+  const existingUser = await userSchema.findOne({email:body.email})
+  if(existingUser){
+    throw new Error('Email Already exist', 400)
+  }
+
+  else{ 
+    var hashedPassword = await bcrypt.hash(body.password, salt);
+    const newUser = new userSchema();
+    newUser.first_name = body.first_name;
+    newUser.last_name = body.last_name;
+    newUser.email = body.email;
+    newUser.phone = body.phone;
+    newUser.password = hashedPassword;
+    newUser.register_complete = true;
+    const saveUser = await newUser.save(); 
+
+    var token = jwt.sign({ id: saveUser._id }, 'intralogicitsolutions', {
+      expiresIn: 86400 // expires in 24 hours
+  });
+
+    return {saveUser, token};
+  }
+}
+
+const userRegisterServiceGoogle = async (body) => {
+
+  const existingUser = await userSchema.findOne({email:body.email})
+  if(existingUser){
+    var token = jwt.sign({ id: existingUser._id }, 'intralogicitsolutions', {
+      expiresIn: 86400 // expires in 24 hours
+  });
+    return {existingUser, token}
+  }
+else{
+  const newUser = new userSchema();
+  newUser.first_name = body.first_name;
+  newUser.last_name = body.last_name;
+  newUser.register_complete = true;
+  newUser.email = body.email;
+/*   newUser.phone = body.phone; */
+  newUser.googleAuth = true;
+
+  const saveUser = await newUser.save(); 
+
+  var token = jwt.sign({ id: saveUser._id }, 'intralogicitsolutions', {
+    expiresIn: 86400 // expires in 24 hours
+});
+
+  return {saveUser, token};
+  }
+}
+
+const userRegisterServiceCheckFlag = async (body) => {
+
+  const User = await userSchema.findOne({email:body.email})
+  
+  if(User){
+    var token = jwt.sign({ id: User._id }, 'intralogicitsolutions', {
+      expiresIn: 86400 // expires in 24 hours
+  });
+    return {User, token};
+  }
+ 
+ else {
+  const User = new userSchema()
+  User.googleAuth = false;
+  var message = 'New Registration'
+  return {User, message};
+  }
+}
+
+const userLoginServiceV2 = async(body) => {
+
+  const existingUser = await userSchema.findOne({email:body.email})
+  const comparePassword= await bcrypt.compare(body.password, existingUser.password)
+      if(comparePassword == false)
+      {
+          throw new Error(`Entered Password is Wrong!`);
+      }
+      else {
+      var token = jwt.sign({ id: existingUser._id },'intralogicitsolutions', {
+      expiresIn: 86400 // expires in 24 hours
+      });
+      return {existingUser,token};
+      }
+
+}; 
+
 module.exports = {
+  userLoginServiceV2,
+  userRegisterServiceCheckFlag,
+  userRegisterServiceGoogle,
+  userRegisterServiceV2,
   userRegisterService,
   userLoginService,
   linkedInLoginService,

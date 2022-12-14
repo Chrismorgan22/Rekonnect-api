@@ -12,8 +12,26 @@ const userController = require("../controllers/user_controller");
 
 router.post(
   func.urlCons.URL_USER_REGISTRATION,
-  userController.userRegistration
+  userController.userRegistrationV2
+  );
+  
+router.post(
+  func.urlCons.URL_USER_REGISTRATION_GOOGLE,
+  userController.userRegistrationGoogle
+); 
+
+router.post(
+  func.urlCons.URL_USER_REGISTRATION_CHECK_FLAG,
+  userController.userRegistrationCheckFlag
 );
+
+router.post(
+  func.urlCons. URL_USER_LOGIN,
+  userController.userLoginV2
+  );
+  
+/*   router.post(func.urlCons.URL_USER_LOGIN, userController.userLogin); */
+
 router.post("/email", async (req, res) => {
   try {
     var transporter = nodemailer.createTransport({
@@ -61,7 +79,64 @@ router.post("/email", async (req, res) => {
     console.log(error);
   }
 });
-router.post(func.urlCons.URL_USER_LOGIN, userController.userLogin);
+
+
+
+
+/* try nodemailer */
+router.post("/emailV2", async (req, res) => {
+  try {
+    var transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: "reachus@rekonnect.in",
+        pass: "glhfbcqbcmfymefx",
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
+
+    fs.readFile("index_2.html", { encoding: "utf-8" }, function (err, html) {
+      if (err) {
+        console.log(err);
+      } else {
+        var template = handlebars.compile(html);
+        var replacements = {
+          firstName: "Amogh",
+          lastName: "Bagkar",
+        };
+        var htmlToSend = template(replacements);
+        console.log("hello world");
+        var mailOptions = {
+          from: "ReKonnect India <reachus@rekonnect.in>",
+          to: "amogh.bloombit@gmail.com",
+          subject: "Are You Still Looking Out For a Job?",
+          html: htmlToSend,
+        };
+        transporter.sendMail(mailOptions, function (err, info) {
+          if (err) {
+            console.log(err);
+            return err
+          } else {
+            console.log(info);
+            return info
+          }
+          // func.msCons.successJson['data'] = docs;
+          // return resolve(func.msCons.successJson)
+        });
+      }
+    }); 
+  } catch (error) {
+    console.log(error);
+    return error
+  }
+});
+/* nodemailer end */
+
+
 router.post(func.urlCons.URL_LINKED_LOGIN, userController.linkedInLogin);
 router.get(func.urlCons.URL_USER_LIST, userController.getUserList);
 router.post(

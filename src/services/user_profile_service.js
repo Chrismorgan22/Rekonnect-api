@@ -1,9 +1,68 @@
 const func = require('../config/function');
+
 const UserDetailSchema = require('../model/user_model');
 const CandidateDetailSchema = require('../model/candidate_model');
+const EmployerDetailSchema = require('../model/employer_model');
+const MentorDetailSchema = require('../model/mentor_model');
+const BookingDetailSchema = require('../model/booking_model _v2')
+
 const ExpertDetailSchema = require('../model/expert_model');
 const { ObjectId } = require('bson');
+var jwt = require('jsonwebtoken');
 
+const getUserProfileServiceV2 = async (req) => {
+
+    const token = req.body[0];
+    var data ;
+    await jwt.verify(token, 'intralogicitsolutions', async function(err, decoded) {
+        if (err){
+            data = err.message
+    }
+        const existingUser = await UserDetailSchema.findById({_id: decoded.id})
+        data = existingUser;
+    })
+    if(data.role == 'candidate'){
+    var data2 = await CandidateDetailSchema.findOne({user_id: data._id})
+    return {data,data2};
+    } else if (data.role == 'employer') {
+    var data2 = await EmployerDetailSchema.findOne({user_id: data._id})
+    return {data,data2}
+    } else if (data.role == 'mentor'){
+        var data2 = await MentorDetailSchema.findOne({user_id: data._id})
+        return {data,data2}
+    } else{
+        message = 'Role not found'
+        return message
+    }
+
+}
+
+const getMentorProfileService = async (req) => {
+    const token = req.body[0];
+
+    var data ;
+    await jwt.verify(token, 'intralogicitsolutions', async function(err, decoded) {
+        if (err){
+            data = err.message
+    }
+    const existingUser = await UserDetailSchema.findById({_id: decoded.id})
+
+        data = existingUser;
+    })
+    
+    const findMentor = await MentorDetailSchema.findOne({user_id: data._id})
+
+    const obj = {
+        firstName : data.first_name,
+        lastName : data.last_name,
+        landmark : findMentor.address_details.landmark,
+        state : findMentor.address_details.state,
+        zip_code : findMentor.address_details.zip_code,
+    }
+
+    return obj;
+}
+ 
 const getUserProfileService = async (req) => {
     return new Promise(async (resolve, reject) => {
         await UserDetailSchema.aggregate([
@@ -12,7 +71,7 @@ const getUserProfileService = async (req) => {
                     _id: new ObjectId(req.params.user_id)
                 },
             },
-            {
+            {  
                 $lookup: {
                     from: "user_role_details",
                     localField: "_id",
@@ -63,8 +122,8 @@ const getUserProfileService = async (req) => {
                 func.msCons.errorJson["error"] = err;
                 return resolve(func.msCons.errorJson);
             } else {
-                docs[0]['user_role'] = docs[0]['user_role_details'][0].role;
-                delete (docs[0]['user_role_details'])
+               /*  docs[0]['user_role'] = docs[0]['user_role_details'][0].role;
+                delete (docs[0]['user_role_details']) */
                 if (docs[0]['candidate_details'].length === 0) {
                     delete (docs[0]['candidate_details']);
                 }
@@ -133,4 +192,4 @@ const updateUserProfileService = async (req) => {
     })
 }
 
-module.exports = { getUserProfileService, updateUserProfileService }
+module.exports = { getMentorProfileService, getUserProfileServiceV2, getUserProfileService, updateUserProfileService }

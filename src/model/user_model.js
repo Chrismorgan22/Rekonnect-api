@@ -27,6 +27,9 @@ let userSchema = new mongoose.Schema({
   password: {
     type: String,
   },
+  confirm_password: {
+    type: String,
+  },
   token: {
     type: String,
   },
@@ -39,7 +42,7 @@ let userSchema = new mongoose.Schema({
   },
   is_deleted: {
     type: Boolean,
-    default: false,
+    default: false, 
   },
   status: {
     type: Boolean,
@@ -53,5 +56,17 @@ let userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  googleAuth: {
+    type: Boolean,
+    default: false,
+  },
+  role: {
+    type: String,
+    default: 'candidate',
+  },
+  bio: {
+    type: String,
+    default: '',
+  }
 });
 module.exports = mongoose.model("user_details", userSchema);

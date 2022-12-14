@@ -1,9 +1,8 @@
 const getHealth = async (req, res) => {
     try {
-        let mongourl = process.env.DATABASE_URL
         let result = {
             success: true,
-            message: `Server health is fine and working...  MONGO URL: ${mongourl}`
+            message: `Server health is fine...`
         }
         return res.send(result)
     } catch (err) {

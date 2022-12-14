@@ -1,6 +1,13 @@
 const func = require('../config/function');
 const JobDetailSchema = require('../model/job_model');
 const { ObjectId } = require('bson');
+
+
+const getJobServiceV2 = async (req) => {
+    const findJob = await JobDetailSchema.find()
+    return findJob
+}
+
 const postJobService = async (body) => {
     console.log(body);
     return new Promise(async (resolve, reject) => {
@@ -68,6 +75,7 @@ const getJobService = async (req) => {
         );
     });
 }
+
 
 const filterJobService = async (req) => {
     let query = {};
@@ -168,4 +176,4 @@ const getJobDetailsService = async (req) => {
         );
     });
 }
-module.exports = { postJobService, getJobService, filterJobService, getJobDetailsService }
+module.exports = { getJobServiceV2, postJobService, getJobService, filterJobService, getJobDetailsService }

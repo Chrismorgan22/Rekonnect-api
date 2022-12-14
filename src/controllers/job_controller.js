@@ -20,6 +20,15 @@ const getJob = async (req, res) => {
   }
 };
 
+const getJobV2 = async (req, res) => {
+  try {
+    const getJobData = await jobService.getJobServiceV2(req);
+    return res.send(getJobData);
+  } catch (err) {
+    return res.send(err);
+  }
+};
+
 const filterJob = async (req, res) => {
   try {
     const getJobData = await jobService.filterJobService(req);
@@ -47,4 +56,4 @@ const getAllJobs = async (req, res) => {
     return res.status(500).json(error);
   }
 };
-module.exports = { postJob, getJob, filterJob, getJobDetails, getAllJobs };
+module.exports = { getJobV2, postJob, getJob, filterJob, getJobDetails, getAllJobs };

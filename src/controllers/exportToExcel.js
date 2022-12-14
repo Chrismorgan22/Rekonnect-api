@@ -44,12 +44,12 @@ const helperExport = async (userId) => {
         const data = mainData;
         // console.log(typeof data.first_name);
         data.education_type = data.education_data.education_type;
-        data.experience_type = data.experience_data.experience_type;
+        /* data.experience_type = data.experience_data.experience_type; */
         data.current_carrer = data.current_career.name;
         salary_max = data.salary_range.max;
         salary_min = data.salary_range.min;
 
-        data.state = data.address_details.state.name;
+      /*   data.state = data.address_details.state.name; */
         data.zip_code = data.address_details.zip_code;
         data.address_details = null;
 
@@ -79,13 +79,13 @@ const helperExport = async (userId) => {
       // console.log(newBody, "new booty");
       data.push(newBody);
     });
-    // console.log(data[77], "final!!");
+/*     // console.log(data[77], "final!!");
     const headingColumnNames = Object.keys(data[77]);
     //Write Column Title in Excel file
     let headingColumnIndex = 1;
     headingColumnNames.forEach((heading) => {
       ws.cell(1, headingColumnIndex++).string(heading);
-    });
+    }); */
     //Write Data in Excel file
     let rowIndex = 2;
     data.forEach((record) => {

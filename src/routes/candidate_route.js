@@ -4,13 +4,23 @@ let func = require("../config/function");
 let paginatedResults = require("../middleware/paginate_result");
 const candidateDetails = require("../model/candidate_model");
 const candidateController = require("../controllers/candidate_controller");
+/* TESTTTTTTTTTTTTTTT */
+
+router.post(func.urlCons.URL_EDIT_EXP,candidateController.editExp);
+router.post(func.urlCons.URL_ADD_EXP,candidateController.addExp);
+router.post(func.urlCons.URL_ADD_EDU,candidateController.addEdu);
+router.post(func.urlCons.URL_EDIT_EDU,candidateController.editEdu);
+router.post(func.urlCons.URL_EDIT_INFO,candidateController.editInfo);
+router.post(func.urlCons.URL_ADD_SKILL,candidateController.addSkill);
+router.post(func.urlCons.URL_EDIT_SKILL,candidateController.editSkill);
+
 router.post(
   func.urlCons.URL_CANDIDATE_REGISTRATION,
-  candidateController.candidateRegistration
+  candidateController.candidateRegistrationV2
 );
 router.post(
   func.urlCons.URL_CANDIDATE_LOGIN,
-  candidateController.candidateLogin
+  candidateController.candidateLoginV2
 );
 router.get(
   func.urlCons.URL_GET_CANDIDATE,

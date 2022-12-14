@@ -1,13 +1,22 @@
 const func = require('../config/function');
 const CandidateDetailSchema = require('../model/candidate_model');
-const { ObjectId } = require('bson');
+const { ObjectId } = require('mongodb').ObjectID
 var jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 var fs = require('fs');
 var handlebars = require('handlebars');
 let http = require('https');
 var qs = require('querystring');
+const userSchema = require('../model/user_model');
+
+const candidateSchema = require('../model/candidate_model');
 const userRoleSchema = require('../model/user_role_model');
+const bcrypt = require("bcrypt");
+const { log } = require('console');
+
+// const saltRounds = 10;
+const salt = "$2b$12$ESEMmLu3Wn30WG.Na1RHzO";
+
 const candidateRegisterService = async (body) => {
     console.log(body);
 
@@ -243,4 +252,282 @@ const linkedInCandidateEmail = async (body) => {
         req.end();
     })
 }
-module.exports = { candidateRegisterService, candidateLoginService, getCandidateListService, linkedInLoginService, linkedInCandidateDataService, linkedInCandidateEmail }
+
+const candidateRegisterV2 = async(body) => {
+    // Save Candidate Role in User Model
+    const existingUser = await userSchema.findOne({email:body.email});
+    existingUser.role = 'candidate';
+    const data = await existingUser.save(); 
+
+    // Save Candidate
+   const newCandidate = new candidateSchema();
+    newCandidate.user_id = body.user_id; 
+   newCandidate.address_details.street = body.address_details.street;
+   newCandidate.address_details.landmark = body.address_details.landmark;
+   newCandidate.address_details.state = body.address_details.state;
+   newCandidate.address_details.zip_code = body.address_details.zip_code;
+   const data2 = await newCandidate.save();
+   var token = jwt.sign({ id: data2.user_id }, 'intralogicitsolutions', {
+    expiresIn: 86400 // expires in 24 hours
+});
+
+  return {data2, token, data};
+}
+
+const candidateLoginV2 = async(body) => {
+
+    const existingUser = await userSchema.findOne({email:body.email})
+
+    const comparePassword= await bcrypt.compare(body.password, existingUser.password)
+        if(comparePassword == false)
+        {
+            throw new Error(`Entered Password is Wrong!`);
+        }
+        else {
+        var token = jwt.sign({ id: existingUser._id },'intralogicitsolutions', {
+        expiresIn: 86400 // expires in 24 hours
+        });
+        return {existingUser,token};
+        }
+
+}; 
+
+const editExp = async(body) => {
+
+    const token = body.localData[0];
+    var data ;
+    await jwt.verify(token, 'intralogicitsolutions', async function(err, decoded) {
+        if (err){
+
+            data = err.message
+    }
+        const existingUser = await userSchema.findById({_id: decoded.id})
+        data = existingUser;
+    })
+
+
+    const existingCandd = await CandidateDetailSchema.findOne({user_id: data._id})
+
+    var exisistingExpArray = [];
+
+    for(i=0;i<existingCandd.experience_data.length; i++){
+        exisistingExpArray.push(existingCandd.experience_data[i])
+    }
+
+    for (const obj of exisistingExpArray) {
+        if (obj._id == body.exp_id) {
+            obj.experience_details.designation = body.job_title;
+            obj.experience_details.company = body.company_name;
+            obj.experience_details.state.name = body.state;
+            obj.experience_details.start_date = body.start_date;
+            obj.experience_details.end_date = body.end_date;
+            obj.experience_details.job_description = body.job_desc;
+          break;
+        }
+      }
+
+       const addedEdu = await CandidateDetailSchema.updateOne({
+        user_id: data._id
+    }, {   $set: 
+            {experience_data: exisistingExpArray}
+    })
+    return addedEdu; 
+};
+
+const addExp = async(body) => {
+    const token = body.localData[0];
+    var data ;
+    await jwt.verify(token, 'intralogicitsolutions', async function(err, decoded) {
+        if (err){
+
+            data = err.message
+    }
+        const existingUser = await userSchema.findById({_id: decoded.id})
+        data = existingUser;
+    })
+
+        const obj = {
+            experience_details:{
+                designation: body.job_title,
+                company: body.company_name,
+                state: {name: body.state},
+                start_date: body.start_date,
+                end_date: body.end_date,
+                job_description: body.job_desc,
+            },
+        }
+
+        const workExp = await CandidateDetailSchema.updateOne({
+            user_id: data._id
+        }, {   $push: 
+                {experience_data: obj}
+        })
+        return workExp;
+};
+
+const addEdu = async(body) => {
+    const token = body.localData[0];
+    var data ;
+    await jwt.verify(token, 'intralogicitsolutions', async function(err, decoded) {
+        if (err){
+
+            data = err.message
+    }
+        const existingUser = await userSchema.findById({_id: decoded.id})
+        data = existingUser;
+    })
+
+        const obj = {
+            education_details:{
+                school_name: body.education_college,
+                degree_name: body.education_course,
+                start_date: body.education_startdate,
+                end_date: body.education_enddate,
+            },
+        }
+
+        const workEdu = await CandidateDetailSchema.updateOne({
+            user_id: data._id
+        }, {   $push: 
+                {education_data: obj}
+        })
+        return workEdu;
+        
+};
+
+const editEdu = async(body) => {
+
+    const token = body.localData[0];
+    var data ;
+    await jwt.verify(token, 'intralogicitsolutions', async function(err, decoded) {
+        if (err){
+
+            data = err.message
+    }
+        const existingUser = await userSchema.findById({_id: decoded.id})
+        data = existingUser;
+    })
+
+    const existingCandd = await CandidateDetailSchema.findOne({user_id: data._id})
+
+    var exisistingEduArray = [];
+
+    for(i=0;i<existingCandd.education_data.length; i++){
+        exisistingEduArray.push(existingCandd.education_data[i])
+    }
+
+    for (const obj of exisistingEduArray) {
+        if (obj._id == body.education_id) {
+            obj.education_details.school_name = body.education_college;
+            obj.education_details.degree_name = body.education_course;
+            obj.education_details.start_date = body.education_startdate;
+            obj.education_details.end_date = body.education_enddate;
+          break;
+        }
+      }
+
+       const addedEdu = await CandidateDetailSchema.updateOne({
+        user_id: data._id
+    }, {   $set: 
+            {education_data: exisistingEduArray}
+    })
+    return addedEdu;  
+
+};
+
+const editInfo = async(body) => {
+    const token = body.localData[0];
+    var data ;
+    await jwt.verify(token, 'intralogicitsolutions', async function(err, decoded) {
+        if (err){
+
+            data = err.message
+    }
+        const existingUser = await userSchema.findById({_id: decoded.id})
+        data = existingUser;
+    })
+
+    const obj = {
+        street: body.address_street,
+          zip_code: body.address_zipcode ,
+          state: {
+            name: body.address_state,
+          },
+          landmark: body.address_landmark,
+    }
+
+    const newAddress = await CandidateDetailSchema.updateOne({
+        user_id: data._id
+    }, {   $set: 
+            {address_details: obj}
+    })
+
+    return newAddress;
+};
+
+const addSkill = async(body) => {
+    const token = body.localData[0];
+    var data ;
+    await jwt.verify(token, 'intralogicitsolutions', async function(err, decoded) {
+        if (err){
+
+            data = err.message
+    }
+        const existingUser = await userSchema.findById({_id: decoded.id})
+        data = existingUser;
+    })
+
+        const obj = {
+            name: body.skill_name,
+            duration: body.skill_duration
+        }
+
+        const addedSkill = await CandidateDetailSchema.updateOne({
+            user_id: data._id
+        }, {   $push: 
+                {technical_skills: obj}
+        })
+        return addedSkill;
+
+};
+
+const editSkil = async(body) => {
+    const token = body.localData[0];
+    var data ;
+    await jwt.verify(token, 'intralogicitsolutions', async function(err, decoded) {
+        if (err){
+
+            data = err.message
+    }
+        const existingUser = await userSchema.findById({_id: decoded.id})
+        data = existingUser;
+    })
+
+    const existingCandd = await CandidateDetailSchema.findOne({user_id: data._id})
+
+    var exisistingSkillsArray = [];
+
+    for(i=0;i<existingCandd.technical_skills.length; i++){
+        exisistingSkillsArray.push(existingCandd.technical_skills[i])
+    }
+
+    for (const obj of exisistingSkillsArray) {
+        if (obj._id == body.skill_id) {
+            obj.name = body.skill_name;
+            obj.duration = body.skill_duration;
+          break;
+        }
+      }
+
+      const addedSkill = await CandidateDetailSchema.updateOne({
+        user_id: data._id
+    }, {   $set: 
+            {technical_skills: exisistingSkillsArray}
+    })
+    return addedSkill;  
+};
+
+
+
+
+module.exports = { editExp, addExp, editEdu, addEdu, editInfo, addSkill, editSkil, candidateLoginV2, candidateRegisterV2, candidateRegisterService, candidateLoginService, getCandidateListService, linkedInLoginService, linkedInCandidateDataService, linkedInCandidateEmail }

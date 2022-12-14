@@ -1,6 +1,6 @@
 // const { String } = require("bson");
 let mongoose = require("mongoose");
-let { ObjectId } = require("bson");
+let { ObjectId } = require('mongodb').ObjectID
 let candidateSchema = new mongoose.Schema({
   user_id: {
     type: ObjectId,
@@ -45,14 +45,15 @@ let candidateSchema = new mongoose.Schema({
     //
     // }
   },
-  education_data: {
-    education_type: {
-      type: String,
 
-      default: true,
-    },
-    education_details: [
-      {
+  education_data: [{
+
+    education_details: {
+        edu_id: {
+          type: ObjectId,
+          unique: true,
+          required: true
+        },
         school_name: {
           type: String,
         },
@@ -69,20 +70,23 @@ let candidateSchema = new mongoose.Schema({
           type: String,
         },
         start_date: {
-          month: {
+          type: String,
+/*           month: {
             type: String,
           },
           year: {
             type: String,
-          },
+          }, */
         },
         end_date: {
-          month: {
+          type: String,
+
+/*           month: {
             type: String,
           },
           year: {
             type: String,
-          },
+          }, */
         },
         grade: {
           type: String,
@@ -93,15 +97,17 @@ let candidateSchema = new mongoose.Schema({
         description: {
           type: String,
         },
-      },
-    ],
-  },
-  experience_data: {
-    experience_type: {
-      type: String,
     },
-    experience_details: [
-      {
+  }],
+
+  experience_data: [{
+
+    experience_details: {
+        exp_id: {
+          type: ObjectId,
+          unique: true,
+          required: true
+        },
         designation: {
           type: String,
         },
@@ -140,8 +146,7 @@ let candidateSchema = new mongoose.Schema({
           type: String,
         },
       },
-    ],
-  },
+  }],
 
   soft_skills: [
     {
@@ -157,15 +162,21 @@ let candidateSchema = new mongoose.Schema({
   ],
   technical_skills: [
     {
-      id: {
-        // required: true
+      skill_id: {
+        type: ObjectId,
+          unique: true,
+          required: true
       },
       name: {
         type: String,
         // required: true
       },
-    },
-  ],
+      duration: {
+        type: Number,
+      },
+    }
+    ],
+  
   current_career: {
     id: {
       type: String,
