@@ -315,7 +315,7 @@ const editExp = async(body) => {
     }
 
     for (const obj of exisistingExpArray) {
-        if (obj._id == body.experience_id) {
+        if (obj._id == body.exp_id) {
             obj.experience_details.designation = body.job_title;
             obj.experience_details.company = body.company_name;
             obj.experience_details.state.name = body.state;
@@ -513,8 +513,8 @@ const editSkil = async(body) => {
 
     for (const obj of exisistingSkillsArray) {
         if (obj._id == body.skill_id) {
-            obj.name = body.name;
-            obj.duration = body.duration;
+            obj.name = body.skill_name;
+            obj.duration = body.skill_duration;
           break;
         }
       }

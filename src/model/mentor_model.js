@@ -55,7 +55,7 @@ const mentorSchema = new Schema(
         ref: "mentor_booking",
       },
     ],
-    available_slots : {
+    available_slots : [{
       slot : [{
         start_time1: String,
         end_time1: String,
@@ -77,7 +77,7 @@ const mentorSchema = new Schema(
         saturday: Boolean,
         sunday: Boolean,
       },
-    }
+    }],
   },
   { timestamps: true }
 );
